@@ -20,5 +20,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-.kiro
-.vscode
+# Local IDE / Editor
+.kiro/
+.vscode/
