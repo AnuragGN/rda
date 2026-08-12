@@ -1,0 +1,6 @@
+
+
+email validation
+
+https://blog.mailtrap.io/html5-email-validation-tutorial/
+https://www.regular-expressions.info/email.html

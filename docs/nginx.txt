@@ -1,0 +1,50 @@
+
+
+# Install on Ubuntu
+$ sudo apt update
+$ sudo apt install nginx
+
+
+/etc/apache2/port.conf
+Listen 8010     #GNA mdemo
+Listen 8011     #JCF
+Listen 8012     #GMF
+Listen 8013     #HGA
+Listen 8014     #FIG
+Listen 8015     #NIF
+
+/etc/ngnix/sites-available/xx.conf
+
+#Test nginx config
+sudo nginx -t
+
+
+sudo systemctl stop nginx
+sudo systemctl start nginx
+sudo systemctl restart nginx
+
+#If you are making configuration changes, Nginx can often reload without dropping connections.
+sudo systemctl reload nginx
+
+#Nginx is configured to start automatically when the server boots. If this is not what you want, you can disable this behavior by typing:
+sudo systemctl disable nginx
+sudo systemctl enable nginx
+
+
+
+proxy_set_header        X-Forwarded-Proto  https;
+proxy_set_header        X-Forwarded-Host $server_name;
+proxy_set_header        X-VerifiedViaNginx yes;
+
+
+#CORS Correction
+        if ($request_method = 'POST') {
+                add_header 'Access-Control-Allow-Origin' '*';
+                #add_header 'Access-Control-Allow-Credentials' 'true';
+                add_header 'Access-Control-Allow-Methods' 'POST';
+                #add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+        }
+
+https://serverfault.com/questions/69350/launch-nginx-on-startup
+To start nginx on boot:
+    sudo systemctl enable nginx

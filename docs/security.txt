@@ -1,0 +1,190 @@
+#https://developers.google.com/tag-platform/tag-manager/web/csp
+#script-src: *.google-analytics.com
+#img-src: *.google-analytics.com *.analytics.google.com
+#connect-src: *.google-analytics.com *.analytics.google.com
+
+https://webdock.io/en/docs/how-guides/security-guides/how-to-configure-security-headers-in-nginx-and-apache
+Check headers: https://geekflare.com/tools/http-headers-test
+
+Start with
+add_header Content-Security-Policy "default-src 'self'; font-src *;img-src * data:; script-src *; style-src *";
+add_header Strict-Transport-Security "max-age=300; includeSubDomains";
+add_header X-XSS-Protection "1; mode=block";
+add_header X-Frame-Options "SAMEORIGIN";
+add_header X-Content-Type-Options nosniff;
+add_header Referrer-Policy "strict-origin";
+
+
+# Security headers
+add_header Content-Security-Policy "default-src 'self' www.google-analytics.com ajax.googleapis.com www.google.com google.com gstatic.com www.gstatic.com connect.facebook.net facebook.com;";
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
+add_header X-XSS-Protection "1; mode=block";
+add_header X-Frame-Options DENY;
+add_header X-Content-Type-Options nosniff;
+add_header Referrer-Policy "origin";
+
+
+include /etc/nginx/conf.d/*.conf;
+include /etc/nginx/sites-enabled/*;
+
+
+add_header Content-Security-Policy "default-src 'none'; script-src 'self' www.google-analytics.com ajax.googleapis.com www.google.com google.com gstatic.com www.gstatic.com; connect-src 'self'; img-src 'self'; style-src 'self'; base-uri 'self'; form-action 'self';";
+
+
+add_header Content-Security-Policy "default-src 'self' www.google-analytics.com ajax.googleapis.com www.google.com google.com gstatic.com www.gstatic.com;";
+
+script-src 'self' www.google-analytics.com ajax.googleapis.com;
+
+
+HSTS
+***********************************************************************************************************************
+1. HTTP Strict Transport Security (HSTS)
+***********************************************************************************************************************
+
+This header instructs a user agent to only use HTTPs connections and it also declared by Strict-Transport-Security.
+This will prevents web browsers from accessing web servers over non-HTTPS connections. Currently all major web
+browsers support HTTP strict transport security.
+
+https://www.nginx.com/blog/http-strict-transport-security-hsts-and-nginx/
+
+server {
+    listen 443 ssl;
+    server_name www.example.com;
+
+Use time in minutes for TESTING
+    add_header Strict-Transport-Security "max-age=300; includeSubDomains";
+    OR
+    add_header Strict-Transport-Security "max-age=300; includeSubDomains" always;
+
+Set long time when tested
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+    OR
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+}
+
+5 minutes:
+    max-age=300; includeSubDomains
+1 week:
+    max-age=604800; includeSubDomains
+1 month:
+    max-age=2592000; includeSubDomains
+
+=> You need to place the add_header directive in the top‑level server block.
+
+=> if a block includes an add_header directive itself, it does not inherit headers from enclosing blocks, and you need
+   to redeclare all add_header directives:
+
+=> The always parameter ensures that the header is set for all responses, including internally generated error responses.
+   Older versions of NGINX (prior to version 1.7.5 or NGINX Plus R5) don’t support the always parameter and do not set the
+   header on internally generated error responses.
+
+server {
+    listen 443 ssl;
+
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+
+    # This 'location' block inherits the STS header
+    location / {
+        root /usr/share/nginx/html;
+    }
+
+    # Because this 'location' block contains another 'add_header' directive,
+    # we must redeclare the STS header
+    location /servlet {
+        add_header X-Served-By "My Servlet Handler";
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always; <<<=== REQUIRED !!!
+        proxy_pass http://localhost:8080;
+    }
+}
+
+***********************************************************************************************************************
+2. Content Security Policy (CSP)  => https://content-security-policy.com/
+***********************************************************************************************************************
+
+The Content-Security-Policy header is an improved version of the X-XSS-Protection header and provides an additional
+layer of security. It is very powerful header aims to prevent XSS and data injection attacks. CSP instruct browser
+to load allowed content to load on the website. All major browsers currently offer full or partial support for content
+security policy.
+
+You can also implement CSP in Nginx by adding the following entry in /etc/nginx/sites-enabled/example.conf file:
+
+add_header Content-Security-Policy "default-src 'self'; font-src *;img-src * data:; script-src *; style-src *";
+
+
+default-src => JavaScript, Images, CSS, Fonts, AJAX requests, Frames, HTML5 Media
+script-src 'self' js.example.com; => JavaScript
+style-src 'self' css.example.com; => stylesheets or CSS
+img-src 'self' img.example.com; => Images
+connect-src 'self'; =>XMLHttpRequest (AJAX), WebSocket, fetch(), <a ping> or EventSource
+font-src font.example.com;
+object-src 'self'; <object>, <embed> or <applet>
+media-src media.example.com; => HTML5 <audio>, <video> elements
+frame-src 'self';
+
+child-src 'self'; => Defines valid sources for web workers and nested browsing contexts loaded using elements such as <frame> and <iframe>
+form-action 'self'; => Defines valid sources that can be used as an HTML <form> action.
+sandbox allow-forms allow-scripts; => allow-forms allow-same-origin allow-scripts allow-popups, allow-modals, allow-orientation-lock, allow-pointer-lock, allow-presentation, allow-popups-to-escape-sandbox, and allow-top-navigation
+frame-ancestors 'none'; => Defines valid sources for embedding the resource using <frame> <iframe> <object> <embed> <applet>. Setting this directive to 'none' should be roughly equivalent to X-Frame-Options: DENY
+plugin-types application/pdf;
+
+base-uri 'self';
+
+report-to groupName;
+worker-src 'none';
+prefetch-src 'none'
+navigate-to example.com
+
+add_header Content-Security-Policy "default-src 'self';";
+add_header Content-Security-Policy "default-src 'self';" always;
+
+
+***********************************************************************************************************************
+3. X-XSS-Protection
+***********************************************************************************************************************
+You can implement XSS protection using the three options depending on the specific need.
+
+X-XSS-Protection: 0 : This will disables the filter entirely.
+X-XSS-Protection: 1 : This will enables the filter but only sanitizes potentially malicious scripts.
+X-XSS-Protection: 1; mode=block : This will enables the filter and completely blocks the page.
+
+add_header X-XSS-Protection "1; mode=block";
+
+
+***********************************************************************************************************************
+4. X-Frame-Options
+***********************************************************************************************************************
+
+There are three ways to configure X-Frame-Options:
+
+DENY : This will disables iframe features completely.
+SAMEORIGIN : iframe can be used only by someone on the same origin.
+ALLOW-FROM : This will allows pages to be put in iframes only from specific URLs.
+
+add_header X-Frame-Options "SAMEORIGIN";
+
+
+***********************************************************************************************************************
+5. X-Content-Type-Options
+***********************************************************************************************************************
+
+The x-content-type header also called "Browser Sniffing Protection" to tell the browser to follow the MIME types
+indicated in the header. It is used to prevents web browser such as, Internet Explorer and Google Chrome from
+sniffing a response away from the declared Content-Type. nosniff header does not protect all sniffing-related
+vulnerabilities. Also there is no valid value for this header except nosniff.
+
+To add the X-Frame-Options header in Nginx, add the following line in your Nginx web server default configuration file /etc/nginx/sites-enabled/webdock
+
+add_header X-Content-Type-Options nosniff;
+
+***********************************************************************************************************************
+6. Referrer-Policy
+***********************************************************************************************************************
+
+The Referrer-Policy is a security header field that identifies the address of the webpage that requested the current
+webpage. By checking the referrer, the new webpage can see where the request originated. The Referrer-Policy can be
+configured to cause the browser to not inform the destination site any URL information.
+
+To add the Referrer-Policy header in Nginx, add the following line in your Nginx web server default configuration file /etc/nginx/sites-enabled/example:
+
+add_header Referrer-Policy "strict-origin";
+

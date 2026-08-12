@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AdvisorPortal — Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #f0f4f8; margin: 0; }
+
+    /* Sidebar */
+    #sidebar {
+      position: fixed; left: 0; top: 0; height: 100vh;
+      width: 240px; background: #0a3d52;
+      transition: width 0.3s ease;
+      z-index: 1000; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    #sidebar.collapsed { width: 60px; }
+    #sidebar.collapsed .nav-label { display: none; }
+    #sidebar.collapsed .sidebar-logo-text { display: none; }
+    #sidebar.collapsed .profile-info { display: none; }
+
+    /* Topbar */
+    #topbar {
+      position: fixed; top: 0; left: 240px; right: 0;
+      height: 56px; background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      z-index: 999; transition: left 0.3s ease;
+      display: flex; align-items: center;
+      padding: 0 1.5rem; gap: 1rem;
+    }
+    body.sidebar-collapsed #topbar { left: 60px; }
+
+    /* Main content */
+    #mainContent {
+      margin-left: 240px; margin-top: 56px;
+      padding: 1.5rem; transition: margin-left 0.3s ease;
+      min-height: calc(100vh - 56px);
+    }
+    body.sidebar-collapsed #mainContent { margin-left: 60px; }
+
+    /* Nav items */
+    .nav-item-custom {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px; color: rgba(255,255,255,0.75);
+      border-radius: 6px; cursor: pointer;
+      text-decoration: none; font-size: 0.85rem;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .nav-item-custom:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .nav-item-custom.active { background: #0e7490; color: #fff; }
+    .nav-item-custom i { width: 18px; text-align: center; flex-shrink: 0; }
+
+    /* KPI cards */
+    .kpi-card { background:#fff; border-radius:10px; padding:1rem 1.1rem; box-shadow:0 2px 12px rgba(0,0,0,0.07); border-left:5px solid #0e7490; height:100%; }
+    .kpi-trend-up { color: #198754; font-size:0.72rem; font-weight:600; }
+    .kpi-trend-down { color: #dc3545; font-size:0.72rem; font-weight:600; }
+
+    /* Section cards */
+    .dash-card { background:#fff; border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.07); margin-bottom:1.5rem; overflow:hidden; }
+    .dash-card-header { background:#0e7490; color:#fff; padding:0.7rem 1rem; font-weight:600; font-size:0.88rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; flex-shrink:0; }
+    .dash-card-header a { color:rgba(255,255,255,0.85); font-size:0.78rem; text-decoration:none; }
+    .dash-card-header a:hover { color:#fff; }
+    .dash-card-body { padding:1rem; }
+
+    /* Activity timeline */
+    .timeline-item { display:flex; gap:12px; padding:0.5rem 0; position:relative; }
+    .timeline-item:not(:last-child)::before { content:''; position:absolute; left:11px; top:28px; bottom:-4px; width:2px; background:#e5e7eb; }
+    .timeline-dot { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.65rem; flex-shrink:0; margin-top:2px; }
+    .timeline-text { font-size:0.82rem; color:#374151; flex:1; }
+    .timeline-time { font-size:0.72rem; color:#9ca3af; white-space:nowrap; }
+
+    /* Task rows */
+    .task-row { display:flex; align-items:center; gap:10px; padding:0.55rem 0; border-bottom:1px solid #f3f4f6; }
+    .task-row:last-child { border-bottom:none; }
+    .task-row.done .task-name { text-decoration:line-through; color:#9ca3af; }
+    .task-name { font-size:0.84rem; font-weight:600; color:#1a202c; flex:1; }
+    .task-sub { font-size:0.72rem; color:#6b7280; }
+
+    /* Charity rank rows */
+    .charity-rank-row { padding:0.5rem 0; border-bottom:1px solid #f3f4f6; }
+    .charity-rank-row:last-child { border-bottom:none; }
+    .rank-num { font-weight:700; color:#0e7490; font-size:0.9rem; width:20px; }
+    .charity-bar { height:4px; background:#e5e7eb; border-radius:2px; margin-top:4px; }
+    .charity-bar-fill { height:100%; background:#0e7490; border-radius:2px; }
+
+    /* Status badges */
+    .sbadge { display:inline-block; padding:0.18em 0.55em; border-radius:4px; font-size:0.7rem; font-weight:600; white-space:nowrap; }
+    .sbadge-green { background:#dcfce7; color:#166534; }
+    .sbadge-yellow { background:#fef9c3; color:#854d0e; }
+    .sbadge-blue { background:#dbeafe; color:#1e40af; }
+    .sbadge-orange { background:#ffedd5; color:#9a3412; }
+    .sbadge-red { background:#fee2e2; color:#991b1b; }
+    .sbadge-gray { background:#f3f4f6; color:#374151; }
+    .sbadge-purple { background:#ede9fe; color:#5b21b6; }
+    .sbadge-teal { background:#ccfbf1; color:#0f766e; }
+
+    /* Header select */
+    .hdr-select { background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:#fff; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; }
+    .hdr-select option { color:#1a202c; background:#fff; }
+
+    /* Mini stat pills */
+    .mini-pill { display:inline-flex; align-items:center; gap:5px; padding:0.25rem 0.65rem; border-radius:20px; font-size:0.75rem; font-weight:600; }
+
+    /* Progress bar */
+    .fund-progress { height:4px; background:#e5e7eb; border-radius:2px; margin-top:5px; }
+    .fund-progress-fill { height:100%; background:#0e7490; border-radius:2px; transition:width 0.5s ease; }
+
+    /* Sponsor tree */
+    .sponsor-header-row { background:#f0f9fb; border:1px solid #b2e0ea; border-radius:6px; padding:0.6rem 0.9rem; margin-bottom:0.4rem; cursor:pointer; user-select:none; display:flex; align-items:center; justify-content:space-between; transition:background 0.15s; }
+    .sponsor-header-row:hover { background:#d9f0f5; }
+    .fund-tree-item { border-left:3px solid #0e7490; padding:0.5rem 0.75rem; margin-bottom:0.35rem; background:#fafeff; border-radius:0 6px 6px 0; }
+    .fund-tree-item:hover { background:#e8f7fb; }
+    .fund-link { font-size:0.73rem; color:#0e7490; text-decoration:none; margin-right:0.6rem; }
+    .fund-link:hover { text-decoration:underline; }
+
+    /* Collapsible */
+    .collapsible-body { overflow:hidden; transition:max-height 0.35s ease, opacity 0.35s ease; }
+    .collapsible-body.closed { max-height:0 !important; opacity:0; }
+
+    /* Topbar search */
+    .topbar-search { border:1px solid #e5e7eb; border-radius:20px; padding:0.3rem 0.9rem; font-size:0.82rem; outline:none; width:220px; }
+    .topbar-search:focus { border-color:#0e7490; }
+
+    /* Avatar */
+    .avatar-circle { width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:#fff; flex-shrink:0; }
+
+    /* Notification badge */
+    .notif-badge { position:absolute; top:-4px; right:-4px; background:#dc3545; color:#fff; font-size:0.6rem; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; }
+
+    /* Sidebar logo area */
+    .sidebar-logo { display:flex; align-items:center; gap:10px; padding:1rem 14px 0.75rem; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:0.5rem; }
+    .sidebar-logo-icon { color:#0e7490; background:#fff; width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+    .sidebar-logo-text { color:#fff; font-weight:700; font-size:1rem; white-space:nowrap; }
+
+    /* Sidebar toggle btn */
+    .sidebar-toggle-btn { background:none; border:none; color:rgba(255,255,255,0.7); cursor:pointer; padding:4px 8px; border-radius:4px; font-size:1rem; }
+    .sidebar-toggle-btn:hover { color:#fff; background:rgba(255,255,255,0.1); }
+
+    /* Sidebar nav area */
+    .sidebar-nav { flex:1; padding:0 8px; overflow-y:auto; overflow-x:hidden; }
+    .sidebar-nav::-webkit-scrollbar { width:4px; }
+    .sidebar-nav::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.2); border-radius:2px; }
+
+    /* Sidebar profile */
+    .sidebar-profile { padding:0.75rem 10px; border-top:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; gap:10px; }
+    .profile-info { overflow:hidden; }
+    .profile-name { color:#fff; font-size:0.8rem; font-weight:600; white-space:nowrap; }
+    .profile-role { color:rgba(255,255,255,0.55); font-size:0.7rem; white-space:nowrap; }
+
+    /* Topbar breadcrumb */
+    .topbar-breadcrumb { font-size:0.82rem; color:#6b7280; }
+    .topbar-breadcrumb span { color:#1a202c; font-weight:600; }
+
+    /* Date range pill */
+    .date-range-pill { background:#f0f9fb; border:1px solid #b2e0ea; color:#0e7490; font-size:0.75rem; font-weight:600; padding:0.25rem 0.7rem; border-radius:20px; white-space:nowrap; }
+
+    /* Chart stat pills */
+    .chart-pill { display:inline-flex; align-items:center; gap:4px; padding:0.2rem 0.6rem; border-radius:12px; font-size:0.72rem; font-weight:600; }
+
+    /* Task filter tabs */
+    .task-filter-tabs { display:flex; gap:0; border-bottom:2px solid #e5e7eb; margin-bottom:0.75rem; }
+    .task-tab { padding:0.4rem 0.9rem; font-size:0.8rem; font-weight:600; color:#6b7280; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:color 0.15s, border-color 0.15s; }
+    .task-tab.active { color:#0e7490; border-bottom-color:#0e7490; }
+    .task-tab:hover { color:#0e7490; }
+
+    /* Recommendation item */
+    .recomm-item { padding:0.6rem 0; border-bottom:1px solid #f3f4f6; }
+    .recomm-item:last-child { border-bottom:none; }
+
+    /* DAF item */
+    .daf-item { display:flex; align-items:center; gap:10px; padding:0.55rem 0; border-bottom:1px solid #f3f4f6; }
+    .daf-item:last-child { border-bottom:none; }
+
+    /* Ticket item */
+    .ticket-item { display:flex; align-items:flex-start; gap:10px; padding:0.55rem 0; border-bottom:1px solid #f3f4f6; }
+    .ticket-item:last-child { border-bottom:none; }
+
+    /* Institutional claims table */
+    .claims-table th { font-size:0.75rem; color:#6b7280; font-weight:600; text-transform:uppercase; letter-spacing:0.03em; border-bottom:2px solid #e5e7eb; padding:0.5rem 0.6rem; }
+    .claims-table td { font-size:0.82rem; padding:0.5rem 0.6rem; vertical-align:middle; border-bottom:1px solid #f3f4f6; }
+    .claims-table tfoot td { font-weight:700; font-size:0.82rem; border-top:2px solid #e5e7eb; border-bottom:none; }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .row-eq-height > [class*="col-"] > .dash-card { margin-bottom: 1.5rem; }
+      .row-charts > [class*="col-"] > .dash-card { margin-bottom: 1.5rem; }
+    }
+    @media (max-width: 768px) {
+      #sidebar { width: 60px; }
+      #sidebar .nav-label, #sidebar .sidebar-logo-text, #sidebar .profile-info { display:none; }
+      #topbar { left: 60px; }
+      #mainContent { margin-left: 60px; }
+      .row-eq-height > [class*="col-"] { flex-direction: column; }
+      .row-kpi > [class*="col-"] { flex: 0 0 50%; }
+    }
+
+    /* Section spacing */
+    .section-row { margin-bottom: 1.5rem; }
+
+    /* ── Equal-height card rows ─────────────────────────────────────────────── */
+    /* Every row that contains side-by-side cards must stretch cards to same height */
+    .row-eq-height { align-items: stretch; }
+    .row-eq-height > [class*="col-"] { display: flex; flex-direction: column; }
+    .row-eq-height > [class*="col-"] > .dash-card { flex: 1; display: flex; flex-direction: column; margin-bottom: 0; }
+    .row-eq-height > [class*="col-"] > .dash-card > .dash-card-body { flex: 1; display: flex; flex-direction: column; }
+
+    /* KPI row — all cards same height */
+    .row-kpi > [class*="col-"] { display: flex; }
+    .row-kpi > [class*="col-"] > .kpi-card { flex: 1; }
+
+    /* Chart row — equal height cards */
+    .row-charts > [class*="col-"] { display: flex; flex-direction: column; }
+    .row-charts > [class*="col-"] > .dash-card { flex: 1; display: flex; flex-direction: column; margin-bottom: 0; }
+    .row-charts > [class*="col-"] > .dash-card > .dash-card-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .row-charts .chart-wrap { flex: 1; min-height: 0; }
+
+    /* Scrollable card bodies for activity/tasks to match height */
+    .dash-card-body-scroll { overflow-y: auto; }
+
+    /* Divider label inside card body */
+    .body-section-label { font-size: 0.75rem; font-weight: 700; color: #374151; text-transform: uppercase; letter-spacing: 0.04em; padding-bottom: 0.4rem; border-bottom: 2px solid #e5e7eb; margin-bottom: 0.6rem; }
+
+    /* Logout btn */
+    .logout-btn { background:none; border:none; color:rgba(255,255,255,0.55); cursor:pointer; padding:4px; font-size:0.85rem; }
+    .logout-btn:hover { color:#fff; }
+
+    /* Chart containers */
+    .chart-wrap { position:relative; }
+
+    /* Doughnut center text */
+    .doughnut-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; pointer-events:none; }
+    .doughnut-center-val { font-size:1.1rem; font-weight:700; color:#1a202c; line-height:1.1; }
+    .doughnut-center-lbl { font-size:0.65rem; color:#6b7280; }
+
+    /* Sparkline chart */
+    .sparkline-wrap { position:relative; }
+
+    /* Priority dot */
+    .priority-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+    /* Topbar ms-auto area */
+    .topbar-right { display:flex; align-items:center; gap:0.75rem; margin-left:auto; }
+  </style>
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<div id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon"><i class="fa-solid fa-chart-line"></i></div>
+    <span class="sidebar-logo-text">AdvisorPortal</span>
+    <button class="sidebar-toggle-btn ms-auto" onclick="toggleSidebar()" title="Toggle sidebar">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="#" class="nav-item-custom active">
+      <i class="fa-solid fa-gauge"></i>
+      <span class="nav-label">Dashboard</span>
+    </a>
+    <a href="#" class="nav-item-custom">
+      <i class="fa-solid fa-wallet"></i>
+      <span class="nav-label">Donor Funds</span>
+    </a>
+    <a href="#" class="nav-item-custom">
+      <i class="fa-solid fa-file-contract"></i>
+      <span class="nav-label">DAF Applications</span>
+    </a>
+    <a href="#" class="nav-item-custom">
+      <i class="fa-solid fa-hand-holding-heart"></i>
+      <span class="nav-label">Recommendations</span>
+    </a>
+    <a href="#" class="nav-item-custom">
+      <i class="fa-solid fa-headset"></i>
+      <span class="nav-label">Service Tickets</span>
+    </a>
+    <a href="#" class="nav-item-custom">
+      <i class="fa-solid fa-landmark"></i>
+      <span class="nav-label">Institutional Claims</span>
+    </a>
+    <a href="#" class="nav-item-custom">
+      <i class="fa-solid fa-chart-bar"></i>
+      <span class="nav-label">Reports</span>
+    </a>
+    <a href="#" class="nav-item-custom">
+      <i class="fa-solid fa-gear"></i>
+      <span class="nav-label">Settings</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-profile">
+    <div class="avatar-circle" style="background:#0e7490; width:36px; height:36px; font-size:0.8rem;">JA</div>
+    <div class="profile-info" style="flex:1; min-width:0;">
+      <div class="profile-name">James Anderson</div>
+      <div class="profile-role">Senior Advisor</div>
+    </div>
+    <button class="logout-btn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+  </div>
+</div>
+
+<!-- ===== TOPBAR ===== -->
+<div id="topbar">
+  <button class="sidebar-toggle-btn" onclick="toggleSidebar()" style="color:#6b7280; font-size:1.1rem;">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <div class="topbar-breadcrumb">
+    <i class="fa-solid fa-house" style="font-size:0.75rem; color:#9ca3af;"></i>
+    &nbsp;<span>Dashboard</span>
+  </div>
+  <div class="topbar-right">
+    <input type="text" class="topbar-search" placeholder="Search donors, funds..." />
+    <div style="position:relative; cursor:pointer;">
+      <i class="fa-solid fa-bell" style="font-size:1.1rem; color:#6b7280;"></i>
+      <span class="notif-badge">3</span>
+    </div>
+    <div class="date-range-pill"><i class="fa-regular fa-calendar" style="font-size:0.7rem;"></i> Apr 1 – Apr 18, 2024</div>
+    <div class="avatar-circle" style="background:#0e7490; cursor:pointer;">JA</div>
+  </div>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div id="mainContent">
+
+  <!-- SECTION 1: KPI ROW -->
+  <div class="row g-3 section-row row-kpi">
+    <!-- KPI 1 -->
+    <div class="col-6 col-md-3">
+      <div class="kpi-card" style="border-left-color:#0e7490;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:#6b7280; font-weight:600;">Total AUM</span>
+          <div style="width:30px; height:30px; border-radius:8px; background:#e0f2fe; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-dollar-sign" style="color:#0e7490; font-size:0.8rem;"></i>
+          </div>
+        </div>
+        <div style="font-size:1.6rem; font-weight:700; color:#1a202c; line-height:1.1;">$4.285M</div>
+        <div class="kpi-trend-up mt-1"><i class="fa-solid fa-arrow-up"></i> 3.2% vs last month</div>
+      </div>
+    </div>
+    <!-- KPI 2 -->
+    <div class="col-6 col-md-3">
+      <div class="kpi-card" style="border-left-color:#198754;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:#6b7280; font-weight:600;">Active Donors</span>
+          <div style="width:30px; height:30px; border-radius:8px; background:#dcfce7; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-users" style="color:#198754; font-size:0.8rem;"></i>
+          </div>
+        </div>
+        <div style="font-size:1.6rem; font-weight:700; color:#1a202c; line-height:1.1;">24</div>
+        <div class="kpi-trend-up mt-1"><i class="fa-solid fa-arrow-up"></i> 2 new this month</div>
+      </div>
+    </div>
+    <!-- KPI 3 -->
+    <div class="col-6 col-md-3">
+      <div class="kpi-card" style="border-left-color:#6366f1;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:#6b7280; font-weight:600;">Total Funds</span>
+          <div style="width:30px; height:30px; border-radius:8px; background:#ede9fe; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-layer-group" style="color:#6366f1; font-size:0.8rem;"></i>
+          </div>
+        </div>
+        <div style="font-size:1.6rem; font-weight:700; color:#1a202c; line-height:1.1;">12</div>
+        <div style="font-size:0.72rem; color:#6b7280; margin-top:0.25rem;">Across 2 sponsors</div>
+      </div>
+    </div>
+    <!-- KPI 4 -->
+    <div class="col-6 col-md-3">
+      <div class="kpi-card" style="border-left-color:#fd7e14;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:#6b7280; font-weight:600;">Pending Grants</span>
+          <div style="width:30px; height:30px; border-radius:8px; background:#ffedd5; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-hand-holding-heart" style="color:#fd7e14; font-size:0.8rem;"></i>
+          </div>
+        </div>
+        <div style="font-size:1.6rem; font-weight:700; color:#1a202c; line-height:1.1;">$128.5K</div>
+        <div class="kpi-trend-down mt-1"><i class="fa-solid fa-arrow-down"></i> 5 pending review</div>
+      </div>
+    </div>
+    <!-- KPI 5 -->
+    <div class="col-6 col-md-3">
+      <div class="kpi-card" style="border-left-color:#dc3545;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:#6b7280; font-weight:600;">Open Tickets</span>
+          <div style="width:30px; height:30px; border-radius:8px; background:#fee2e2; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-ticket" style="color:#dc3545; font-size:0.8rem;"></i>
+          </div>
+        </div>
+        <div style="font-size:1.6rem; font-weight:700; color:#1a202c; line-height:1.1;">7</div>
+        <div class="kpi-trend-up mt-1"><i class="fa-solid fa-arrow-up"></i> 2 new this week</div>
+      </div>
+    </div>
+    <!-- KPI 6 -->
+    <div class="col-6 col-md-3">
+      <div class="kpi-card" style="border-left-color:#0891b2;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:#6b7280; font-weight:600;">Grants Disbursed YTD</span>
+          <div style="width:30px; height:30px; border-radius:8px; background:#cffafe; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-circle-check" style="color:#0891b2; font-size:0.8rem;"></i>
+          </div>
+        </div>
+        <div style="font-size:1.6rem; font-weight:700; color:#1a202c; line-height:1.1;">$892.4K</div>
+        <div class="kpi-trend-up mt-1"><i class="fa-solid fa-arrow-up"></i> 12.4% vs last year</div>
+      </div>
+    </div>
+    <!-- KPI 7 -->
+    <div class="col-6 col-md-3">
+      <div class="kpi-card" style="border-left-color:#7c3aed;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:#6b7280; font-weight:600;">Contributions YTD</span>
+          <div style="width:30px; height:30px; border-radius:8px; background:#ede9fe; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-arrow-trend-up" style="color:#7c3aed; font-size:0.8rem;"></i>
+          </div>
+        </div>
+        <div style="font-size:1.6rem; font-weight:700; color:#1a202c; line-height:1.1;">$1.24M</div>
+        <div class="kpi-trend-up mt-1"><i class="fa-solid fa-arrow-up"></i> 8.1% vs last year</div>
+      </div>
+    </div>
+    <!-- KPI 8 -->
+    <div class="col-6 col-md-3">
+      <div class="kpi-card" style="border-left-color:#d97706;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em; color:#6b7280; font-weight:600;">Pending Recommendations</span>
+          <div style="width:30px; height:30px; border-radius:8px; background:#fef3c7; display:flex; align-items:center; justify-content:center;">
+            <i class="fa-solid fa-clock" style="color:#d97706; font-size:0.8rem;"></i>
+          </div>
+        </div>
+        <div style="font-size:1.6rem; font-weight:700; color:#1a202c; line-height:1.1;">5</div>
+        <div style="font-size:0.72rem; color:#6b7280; margin-top:0.25rem;">Awaiting approval</div>
+      </div>
+    </div>
+  </div><!-- /KPI ROW -->
+
+  <!-- SECTION 2: CHARTS ROW -->
+  <div class="row g-3 section-row row-charts align-items-stretch">
+    <!-- Chart A: AUM Trend -->
+    <div class="col-md-5">
+      <div class="dash-card h-100">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-chart-line me-2"></i>AUM Growth — Last 12 Months</span>
+          <div style="display:flex; gap:6px;">
+            <span class="chart-pill" style="background:#ccfbf1; color:#0f766e;">Peak: $4.285M</span>
+            <span class="chart-pill" style="background:#dcfce7; color:#166534;">Growth: +33.9%</span>
+          </div>
+        </div>
+        <div class="dash-card-body">
+          <div class="chart-wrap" style="height:220px; position:relative; flex:1;">
+            <canvas id="aumChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Chart B: Grants by Category -->
+    <div class="col-md-4">
+      <div class="dash-card h-100">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-chart-bar me-2"></i>Grants by Category — 2024</span>
+        </div>
+        <div class="dash-card-body">
+          <div class="chart-wrap" style="height:220px; position:relative; flex:1;">
+            <canvas id="grantsChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Chart C: Fund Allocation -->
+    <div class="col-md-3">
+      <div class="dash-card h-100">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-chart-pie me-2"></i>Fund Allocation</span>
+        </div>
+        <div class="dash-card-body">
+          <div class="chart-wrap" style="height:170px; position:relative;">
+            <canvas id="allocationChart"></canvas>
+            <div class="doughnut-center">
+              <div class="doughnut-center-val">4</div>
+              <div class="doughnut-center-lbl">Funds</div>
+            </div>
+          </div>
+          <div style="margin-top:0.5rem;">
+            <div style="display:flex; flex-wrap:wrap; gap:4px; font-size:0.68rem;">
+              <span style="display:flex; align-items:center; gap:3px;"><span style="width:8px;height:8px;border-radius:50%;background:#0e7490;display:inline-block;"></span>Smith (22.9%)</span>
+              <span style="display:flex; align-items:center; gap:3px;"><span style="width:8px;height:8px;border-radius:50%;background:#0891b2;display:inline-block;"></span>Green (27.3%)</span>
+              <span style="display:flex; align-items:center; gap:3px;"><span style="width:8px;height:8px;border-radius:50%;background:#06b6d4;display:inline-block;"></span>Johnson (28.0%)</span>
+              <span style="display:flex; align-items:center; gap:3px;"><span style="width:8px;height:8px;border-radius:50%;background:#67e8f9;display:inline-block;"></span>Heritage (21.8%)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /CHARTS ROW -->
+
+  <!-- SECTION 3: DONOR FUNDS + DAF APPLICATIONS -->
+  <div class="row g-3 section-row row-eq-height">
+    <!-- Donor Funds Balances -->
+    <div class="col-md-6">
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-wallet me-2"></i>Donor Funds Balances</span>
+          <input type="text" placeholder="Search funds..." style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3); color:#fff; font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:4px; outline:none; width:140px;" />
+        </div>
+        <div class="dash-card-body">
+
+          <!-- Sponsor 1 (expanded) -->
+          <div class="sponsor-header-row" onclick="toggleCollapse('sponsor1')">
+            <div>
+              <div style="font-size:0.83rem; font-weight:700; color:#0a3d52;">
+                <i class="fa-solid fa-building me-2" style="color:#0e7490;"></i>Community Foundation West
+              </div>
+              <div style="font-size:0.72rem; color:#6b7280; margin-top:2px;">2 funds &nbsp;·&nbsp; Total: $2,150,000</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="sbadge sbadge-teal">$2.15M</span>
+              <i class="fa-solid fa-chevron-down" id="sponsor1-icon" style="color:#0e7490; font-size:0.75rem; transition:transform 0.3s;"></i>
+            </div>
+          </div>
+          <div class="collapsible-body" id="sponsor1" style="max-height:300px;">
+            <div class="fund-tree-item">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-size:0.82rem; font-weight:600; color:#1a202c;">Smith Family Fund</div>
+                  <div style="font-size:0.7rem; color:#6b7280;">45% of sponsor total</div>
+                </div>
+                <div style="font-size:0.85rem; font-weight:700; color:#0e7490;">$980,000</div>
+              </div>
+              <div class="fund-progress"><div class="fund-progress-fill" style="width:45%;"></div></div>
+              <div style="margin-top:6px;">
+                <a href="#" class="fund-link">Fund Overview</a>
+                <a href="#" class="fund-link">Disbursement History</a>
+                <a href="#" class="fund-link">Contribution History</a>
+                <a href="#" class="fund-link">Clients</a>
+              </div>
+            </div>
+            <div class="fund-tree-item">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-size:0.82rem; font-weight:600; color:#1a202c;">Green Future Endowment</div>
+                  <div style="font-size:0.7rem; color:#6b7280;">55% of sponsor total</div>
+                </div>
+                <div style="font-size:0.85rem; font-weight:700; color:#0e7490;">$1,170,000</div>
+              </div>
+              <div class="fund-progress"><div class="fund-progress-fill" style="width:55%;"></div></div>
+              <div style="margin-top:6px;">
+                <a href="#" class="fund-link">Fund Overview</a>
+                <a href="#" class="fund-link">Disbursement History</a>
+                <a href="#" class="fund-link">Contribution History</a>
+                <a href="#" class="fund-link">Clients</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sponsor 2 (collapsed) -->
+          <div class="sponsor-header-row mt-2" onclick="toggleCollapse('sponsor2')">
+            <div>
+              <div style="font-size:0.83rem; font-weight:700; color:#0a3d52;">
+                <i class="fa-solid fa-building me-2" style="color:#0e7490;"></i>Northern Trust Advisors
+              </div>
+              <div style="font-size:0.72rem; color:#6b7280; margin-top:2px;">2 funds &nbsp;·&nbsp; Total: $2,135,000</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="sbadge sbadge-teal">$2.135M</span>
+              <i class="fa-solid fa-chevron-right" id="sponsor2-icon" style="color:#0e7490; font-size:0.75rem; transition:transform 0.3s;"></i>
+            </div>
+          </div>
+          <div class="collapsible-body closed" id="sponsor2" style="max-height:0;">
+            <div class="fund-tree-item">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-size:0.82rem; font-weight:600; color:#1a202c;">Johnson Charitable Fund</div>
+                  <div style="font-size:0.7rem; color:#6b7280;">56% of sponsor total</div>
+                </div>
+                <div style="font-size:0.85rem; font-weight:700; color:#0e7490;">$1,200,000</div>
+              </div>
+              <div class="fund-progress"><div class="fund-progress-fill" style="width:56%;"></div></div>
+              <div style="margin-top:6px;">
+                <a href="#" class="fund-link">Fund Overview</a>
+                <a href="#" class="fund-link">Disbursement History</a>
+                <a href="#" class="fund-link">Contribution History</a>
+                <a href="#" class="fund-link">Clients</a>
+              </div>
+            </div>
+            <div class="fund-tree-item">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-size:0.82rem; font-weight:600; color:#1a202c;">Heritage Education Fund</div>
+                  <div style="font-size:0.7rem; color:#6b7280;">44% of sponsor total</div>
+                </div>
+                <div style="font-size:0.85rem; font-weight:700; color:#0e7490;">$935,000</div>
+              </div>
+              <div class="fund-progress"><div class="fund-progress-fill" style="width:44%;"></div></div>
+              <div style="margin-top:6px;">
+                <a href="#" class="fund-link">Fund Overview</a>
+                <a href="#" class="fund-link">Disbursement History</a>
+                <a href="#" class="fund-link">Contribution History</a>
+                <a href="#" class="fund-link">Clients</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- DAF Applications Summary -->
+    <div class="col-md-6">
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-file-contract me-2"></i>DAF Applications Summary</span>
+          <a href="#">View All</a>
+        </div>
+        <div class="dash-card-body">
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:0.75rem;">
+            <span class="mini-pill" style="background:#dcfce7; color:#166534;"><i class="fa-solid fa-circle-check" style="font-size:0.65rem;"></i> Approved: 2</span>
+            <span class="mini-pill" style="background:#fef9c3; color:#854d0e;"><i class="fa-solid fa-clock" style="font-size:0.65rem;"></i> Pending: 2</span>
+            <span class="mini-pill" style="background:#dbeafe; color:#1e40af;"><i class="fa-solid fa-paper-plane" style="font-size:0.65rem;"></i> Submitted: 1</span>
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <select class="hdr-select" style="background:#f0f9fb; border:1px solid #b2e0ea; color:#0e7490; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px;">
+              <option>All Sponsors</option>
+              <option>Community Foundation West</option>
+              <option>Northern Trust Advisors</option>
+            </select>
+          </div>
+
+          <!-- DAF Items -->
+          <div class="daf-item">
+            <div class="avatar-circle" style="background:#0e7490; width:32px; height:32px; font-size:0.7rem; flex-shrink:0;">JN</div>
+            <div style="flex:1; min-width:0;">
+              <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Jennifer Nguyen</div>
+              <div style="font-size:0.71rem; color:#6b7280;">Community Foundation West &nbsp;·&nbsp; Apr 18, 2024</div>
+            </div>
+            <span class="sbadge sbadge-blue">Submitted</span>
+            <i class="fa-solid fa-eye" style="color:#0e7490; cursor:pointer; font-size:0.85rem;"></i>
+          </div>
+          <div class="daf-item">
+            <div class="avatar-circle" style="background:#198754; width:32px; height:32px; font-size:0.7rem; flex-shrink:0;">MT</div>
+            <div style="flex:1; min-width:0;">
+              <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Michael Torres</div>
+              <div style="font-size:0.71rem; color:#6b7280;">Northern Trust Advisors &nbsp;·&nbsp; Apr 15, 2024</div>
+            </div>
+            <span class="sbadge sbadge-yellow">Pending</span>
+            <i class="fa-solid fa-eye" style="color:#0e7490; cursor:pointer; font-size:0.85rem;"></i>
+          </div>
+          <div class="daf-item">
+            <div class="avatar-circle" style="background:#6366f1; width:32px; height:32px; font-size:0.7rem; flex-shrink:0;">RC</div>
+            <div style="flex:1; min-width:0;">
+              <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Robert Chen</div>
+              <div style="font-size:0.71rem; color:#6b7280;">Community Foundation West &nbsp;·&nbsp; Apr 12, 2024</div>
+            </div>
+            <span class="sbadge sbadge-green">Approved</span>
+            <i class="fa-solid fa-eye" style="color:#0e7490; cursor:pointer; font-size:0.85rem;"></i>
+          </div>
+          <div class="daf-item">
+            <div class="avatar-circle" style="background:#dc3545; width:32px; height:32px; font-size:0.7rem; flex-shrink:0;">SP</div>
+            <div style="flex:1; min-width:0;">
+              <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Sarah Patterson</div>
+              <div style="font-size:0.71rem; color:#6b7280;">Northern Trust Advisors &nbsp;·&nbsp; Apr 10, 2024</div>
+            </div>
+            <span class="sbadge sbadge-yellow">Pending</span>
+            <i class="fa-solid fa-eye" style="color:#0e7490; cursor:pointer; font-size:0.85rem;"></i>
+          </div>
+          <div class="daf-item">
+            <div class="avatar-circle" style="background:#d97706; width:32px; height:32px; font-size:0.7rem; flex-shrink:0;">DL</div>
+            <div style="flex:1; min-width:0;">
+              <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">David Liu</div>
+              <div style="font-size:0.71rem; color:#6b7280;">Community Foundation West &nbsp;·&nbsp; Apr 8, 2024</div>
+            </div>
+            <span class="sbadge sbadge-green">Approved</span>
+            <i class="fa-solid fa-eye" style="color:#0e7490; cursor:pointer; font-size:0.85rem;"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /SECTION 3 -->
+
+  <!-- SECTION 4: SERVICE REQUESTS -->
+  <div class="row g-3 section-row">
+    <div class="col-12">
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-headset me-2"></i>Service Requests</span>
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <select class="hdr-select">
+              <option>All Sponsors</option>
+              <option>Community Foundation West</option>
+              <option>Northern Trust Advisors</option>
+            </select>
+            <select class="hdr-select">
+              <option>Doughnut View</option>
+              <option>Bar View</option>
+            </select>
+            <a href="#">View All</a>
+          </div>
+        </div>
+        <div class="dash-card-body">
+          <div class="row g-3">
+            <!-- Ticket Doughnut -->
+            <div class="col-md-3">
+              <div style="font-size:0.78rem; font-weight:600; color:#374151; margin-bottom:0.5rem;">Tickets by Status</div>
+              <div style="position:relative; height:160px;">
+                <canvas id="ticketChart"></canvas>
+                <div class="doughnut-center">
+                  <div class="doughnut-center-val">18</div>
+                  <div class="doughnut-center-lbl">Total</div>
+                </div>
+              </div>
+              <div style="margin-top:0.6rem; font-size:0.72rem;">
+                <div style="display:flex; justify-content:space-between; padding:2px 0;"><span style="display:flex; align-items:center; gap:5px;"><span style="width:8px;height:8px;border-radius:50%;background:#28a745;display:inline-block;"></span>Open</span><strong>3</strong></div>
+                <div style="display:flex; justify-content:space-between; padding:2px 0;"><span style="display:flex; align-items:center; gap:5px;"><span style="width:8px;height:8px;border-radius:50%;background:#ffc107;display:inline-block;"></span>In Progress</span><strong>2</strong></div>
+                <div style="display:flex; justify-content:space-between; padding:2px 0;"><span style="display:flex; align-items:center; gap:5px;"><span style="width:8px;height:8px;border-radius:50%;background:#6c757d;display:inline-block;"></span>Closed</span><strong>8</strong></div>
+                <div style="display:flex; justify-content:space-between; padding:2px 0;"><span style="display:flex; align-items:center; gap:5px;"><span style="width:8px;height:8px;border-radius:50%;background:#dc3545;display:inline-block;"></span>Escalated</span><strong>1</strong></div>
+                <div style="display:flex; justify-content:space-between; padding:2px 0;"><span style="display:flex; align-items:center; gap:5px;"><span style="width:8px;height:8px;border-radius:50%;background:#17a2b8;display:inline-block;"></span>Resolved</span><strong>4</strong></div>
+              </div>
+            </div>
+            <!-- Ticket Trend -->
+            <div class="col-md-3">
+              <div style="font-size:0.78rem; font-weight:600; color:#374151; margin-bottom:0.5rem;">Tickets This Month by Day</div>
+              <div style="height:160px;">
+                <canvas id="ticketTrendChart"></canvas>
+              </div>
+              <div style="font-size:0.7rem; color:#6b7280; margin-top:0.4rem; text-align:center;">Apr 1 – Apr 18, 2024</div>
+            </div>
+            <!-- Recent Tickets -->
+            <div class="col-md-6">
+              <div style="font-size:0.78rem; font-weight:600; color:#374151; margin-bottom:0.5rem;">Recent Tickets</div>
+              <div class="ticket-item">
+                <div style="width:28px; height:28px; border-radius:6px; background:#fee2e2; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <i class="fa-solid fa-triangle-exclamation" style="color:#dc3545; font-size:0.7rem;"></i>
+                </div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:0.82rem; font-weight:600; color:#1a202c;">Fund Statement Discrepancy</div>
+                  <div style="font-size:0.71rem; color:#6b7280;">Smith Family Fund &nbsp;·&nbsp; Apr 17, 2024</div>
+                </div>
+                <span class="sbadge sbadge-red">Escalated</span>
+              </div>
+              <div class="ticket-item">
+                <div style="width:28px; height:28px; border-radius:6px; background:#fef9c3; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <i class="fa-solid fa-spinner" style="color:#d97706; font-size:0.7rem;"></i>
+                </div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:0.82rem; font-weight:600; color:#1a202c;">Investment Allocation Update</div>
+                  <div style="font-size:0.71rem; color:#6b7280;">Johnson Charitable Fund &nbsp;·&nbsp; Apr 16, 2024</div>
+                </div>
+                <span class="sbadge sbadge-yellow">In Progress</span>
+              </div>
+              <div class="ticket-item">
+                <div style="width:28px; height:28px; border-radius:6px; background:#dcfce7; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <i class="fa-solid fa-circle-check" style="color:#198754; font-size:0.7rem;"></i>
+                </div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:0.82rem; font-weight:600; color:#1a202c;">Grant Disbursement Confirmation</div>
+                  <div style="font-size:0.71rem; color:#6b7280;">Green Future Endowment &nbsp;·&nbsp; Apr 14, 2024</div>
+                </div>
+                <span class="sbadge sbadge-green">Open</span>
+              </div>
+              <div class="ticket-item">
+                <div style="width:28px; height:28px; border-radius:6px; background:#dbeafe; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <i class="fa-solid fa-file-lines" style="color:#1e40af; font-size:0.7rem;"></i>
+                </div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:0.82rem; font-weight:600; color:#1a202c;">Quarterly Report Request</div>
+                  <div style="font-size:0.71rem; color:#6b7280;">Heritage Education Fund &nbsp;·&nbsp; Apr 12, 2024</div>
+                </div>
+                <span class="sbadge sbadge-blue">Open</span>
+              </div>
+              <div class="ticket-item">
+                <div style="width:28px; height:28px; border-radius:6px; background:#f3f4f6; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                  <i class="fa-solid fa-check" style="color:#6b7280; font-size:0.7rem;"></i>
+                </div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:0.82rem; font-weight:600; color:#1a202c;">Beneficiary Update Request</div>
+                  <div style="font-size:0.71rem; color:#6b7280;">Smith Family Fund &nbsp;·&nbsp; Apr 10, 2024</div>
+                </div>
+                <span class="sbadge sbadge-gray">Resolved</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /SECTION 4 -->
+
+  <!-- SECTION 5: PENDING RECOMMENDATIONS + INSTITUTIONAL CLAIMS -->
+  <div class="row g-3 section-row row-eq-height">
+    <!-- Pending Recommendations -->
+    <div class="col-md-7">
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-hand-holding-heart me-2"></i>Pending Recommendations</span>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <select class="hdr-select">
+              <option>All Sponsors</option>
+              <option>Community Foundation West</option>
+              <option>Northern Trust Advisors</option>
+            </select>
+            <a href="#">View All</a>
+          </div>
+        </div>
+        <div class="dash-card-body">
+          <div style="font-size:0.78rem; font-weight:600; color:#374151; margin-bottom:0.4rem;">Recommendation Amounts by Org</div>
+          <div style="height:110px; margin-bottom:0.75rem;">
+            <canvas id="recommChart"></canvas>
+          </div>
+          <!-- Recommendation Items -->
+          <div class="recomm-item">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+              <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Habitat for Humanity</div>
+              <div style="font-size:0.88rem; font-weight:700; color:#0e7490;">$5,000</div>
+            </div>
+            <div style="font-size:0.71rem; color:#6b7280; margin:2px 0;">Recommended by James Anderson &nbsp;·&nbsp; Smith Family Fund</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px; margin-top:4px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span class="sbadge sbadge-yellow">Pending</span>
+                <span style="font-size:0.7rem; color:#9ca3af;">Apr 16, 2024</span>
+              </div>
+              <button style="font-size:0.72rem; background:#0e7490; color:#fff; border:none; border-radius:4px; padding:0.2rem 0.6rem; cursor:pointer;">Create Ticket</button>
+            </div>
+          </div>
+          <div class="recomm-item">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+              <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Children's Hospital Foundation</div>
+              <div style="font-size:0.88rem; font-weight:700; color:#0e7490;">$10,000</div>
+            </div>
+            <div style="font-size:0.71rem; color:#6b7280; margin:2px 0;">Recommended by Sarah Chen &nbsp;·&nbsp; Green Future Endowment</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px; margin-top:4px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span class="sbadge sbadge-yellow">Pending</span>
+                <span style="font-size:0.7rem; color:#9ca3af;">Apr 15, 2024</span>
+              </div>
+              <button style="font-size:0.72rem; background:#0e7490; color:#fff; border:none; border-radius:4px; padding:0.2rem 0.6rem; cursor:pointer;">Create Ticket</button>
+            </div>
+          </div>
+          <div class="recomm-item">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+              <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Environmental Defense Fund</div>
+              <div style="font-size:0.88rem; font-weight:700; color:#0e7490;">$3,500</div>
+            </div>
+            <div style="font-size:0.71rem; color:#6b7280; margin:2px 0;">Recommended by James Anderson &nbsp;·&nbsp; Johnson Charitable Fund</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px; margin-top:4px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span class="sbadge sbadge-blue">Under Review</span>
+                <span style="font-size:0.7rem; color:#9ca3af;">Apr 14, 2024</span>
+              </div>
+              <button style="font-size:0.72rem; background:#f0f9fb; color:#0e7490; border:1px solid #b2e0ea; border-radius:4px; padding:0.2rem 0.6rem; cursor:pointer;">View Ticket</button>
+            </div>
+          </div>
+          <div class="recomm-item">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+              <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">American Red Cross</div>
+              <div style="font-size:0.88rem; font-weight:700; color:#0e7490;">$2,500</div>
+            </div>
+            <div style="font-size:0.71rem; color:#6b7280; margin:2px 0;">Recommended by Robert Chen &nbsp;·&nbsp; Heritage Education Fund</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px; margin-top:4px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span class="sbadge sbadge-yellow">Pending</span>
+                <span style="font-size:0.7rem; color:#9ca3af;">Apr 13, 2024</span>
+              </div>
+              <button style="font-size:0.72rem; background:#0e7490; color:#fff; border:none; border-radius:4px; padding:0.2rem 0.6rem; cursor:pointer;">Create Ticket</button>
+            </div>
+          </div>
+          <div class="recomm-item">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+              <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Local Food Bank</div>
+              <div style="font-size:0.88rem; font-weight:700; color:#0e7490;">$1,000</div>
+            </div>
+            <div style="font-size:0.71rem; color:#6b7280; margin:2px 0;">Recommended by James Anderson &nbsp;·&nbsp; Smith Family Fund</div>
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px; margin-top:4px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span class="sbadge sbadge-yellow">Pending</span>
+                <span style="font-size:0.7rem; color:#9ca3af;">Apr 11, 2024</span>
+              </div>
+              <button style="font-size:0.72rem; background:#0e7490; color:#fff; border:none; border-radius:4px; padding:0.2rem 0.6rem; cursor:pointer;">Create Ticket</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Institutional Claims -->
+    <div class="col-md-5">
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-landmark me-2"></i>Institutional Claims</span>
+        </div>
+        <div class="dash-card-body">
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:0.9rem;">
+            <span class="mini-pill" style="background:#ccfbf1; color:#0f766e;"><i class="fa-solid fa-dollar-sign" style="font-size:0.65rem;"></i> Total AUM: $4.285M</span>
+            <span class="mini-pill" style="background:#fef9c3; color:#854d0e;"><i class="fa-solid fa-clock" style="font-size:0.65rem;"></i> Total Pending: $217.7K</span>
+          </div>
+          <table class="claims-table w-100">
+            <thead>
+              <tr>
+                <th>Sponsor</th>
+                <th>AUM</th>
+                <th>Pending</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div style="font-size:0.82rem; font-weight:600; color:#1a202c;">Community Foundation West</div>
+                  <div style="height:4px; background:#e5e7eb; border-radius:2px; margin-top:4px; width:100%;">
+                    <div style="height:100%; background:#0e7490; border-radius:2px; width:50.6%;"></div>
+                  </div>
+                </td>
+                <td style="font-weight:600; color:#0e7490;">$2,150,000</td>
+                <td>$112,500</td>
+                <td><span class="sbadge sbadge-yellow">Pending</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div style="font-size:0.82rem; font-weight:600; color:#1a202c;">Northern Trust Advisors</div>
+                  <div style="height:4px; background:#e5e7eb; border-radius:2px; margin-top:4px; width:100%;">
+                    <div style="height:100%; background:#0891b2; border-radius:2px; width:49.4%;"></div>
+                  </div>
+                </td>
+                <td style="font-weight:600; color:#0e7490;">$2,135,000</td>
+                <td>$105,200</td>
+                <td><span class="sbadge sbadge-blue">Submitted</span></td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr style="background:#f0f9fb;">
+                <td>Total</td>
+                <td style="color:#0e7490;">$4,285,000</td>
+                <td>$217,700</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <!-- AUM vs Pending visual breakdown -->
+          <div style="margin-top:1.2rem;">
+            <div class="body-section-label">AUM vs Pending Grants — by Sponsor</div>
+            <div style="height:140px; margin-top:0.5rem;">
+              <canvas id="claimsChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Summary stats grid -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-top:1rem;">
+            <div style="background:#f0f9fb; border-radius:8px; padding:0.6rem 0.8rem; text-align:center;">
+              <div style="font-size:1.1rem; font-weight:700; color:#0e7490;">$4.285M</div>
+              <div style="font-size:0.7rem; color:#6b7280; margin-top:2px;">Total AUM</div>
+            </div>
+            <div style="background:#fef9c3; border-radius:8px; padding:0.6rem 0.8rem; text-align:center;">
+              <div style="font-size:1.1rem; font-weight:700; color:#854d0e;">$217.7K</div>
+              <div style="font-size:0.7rem; color:#6b7280; margin-top:2px;">Total Pending</div>
+            </div>
+            <div style="background:#dcfce7; border-radius:8px; padding:0.6rem 0.8rem; text-align:center;">
+              <div style="font-size:1.1rem; font-weight:700; color:#166534;">2</div>
+              <div style="font-size:0.7rem; color:#6b7280; margin-top:2px;">Active Sponsors</div>
+            </div>
+            <div style="background:#ede9fe; border-radius:8px; padding:0.6rem 0.8rem; text-align:center;">
+              <div style="font-size:1.1rem; font-weight:700; color:#5b21b6;">5.1%</div>
+              <div style="font-size:0.7rem; color:#6b7280; margin-top:2px;">Pending / AUM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /SECTION 5 -->
+
+  <!-- SECTION 6: ACTIVITY FEED + UPCOMING TASKS -->
+  <div class="row g-3 section-row row-eq-height">
+    <!-- Recent Activity Feed -->
+    <div class="col-md-5">
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-bolt me-2"></i>Recent Activity</span>
+        </div>
+        <div class="dash-card-body dash-card-body-scroll" style="max-height:480px;">
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#dcfce7; color:#166534;"><i class="fa-solid fa-check"></i></div>
+            <div class="timeline-text">
+              <strong>Grant approved</strong> — Habitat for Humanity
+              <div style="font-size:0.75rem; color:#6b7280;">$5,000 disbursed from Smith Family Fund</div>
+            </div>
+            <div class="timeline-time">2h ago</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#dbeafe; color:#1e40af;"><i class="fa-solid fa-file"></i></div>
+            <div class="timeline-text">
+              <strong>New DAF application</strong> — Jennifer Nguyen
+              <div style="font-size:0.75rem; color:#6b7280;">Community Foundation West</div>
+            </div>
+            <div class="timeline-time">4h ago</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#fef9c3; color:#854d0e;"><i class="fa-solid fa-arrow-up"></i></div>
+            <div class="timeline-text">
+              <strong>Ticket escalated</strong> — Fund Statement Discrepancy
+              <div style="font-size:0.75rem; color:#6b7280;">Smith Family Fund</div>
+            </div>
+            <div class="timeline-time">6h ago</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#dcfce7; color:#166534;"><i class="fa-solid fa-dollar-sign"></i></div>
+            <div class="timeline-text">
+              <strong>Contribution received</strong> — Smith Family Fund
+              <div style="font-size:0.75rem; color:#6b7280;">$25,000 from Robert Chen</div>
+            </div>
+            <div class="timeline-time">Yesterday</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#dbeafe; color:#1e40af;"><i class="fa-solid fa-heart"></i></div>
+            <div class="timeline-text">
+              <strong>Recommendation submitted</strong> — Red Cross
+              <div style="font-size:0.75rem; color:#6b7280;">$2,500 from Heritage Education Fund</div>
+            </div>
+            <div class="timeline-time">Yesterday</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#ffedd5; color:#9a3412;"><i class="fa-solid fa-pen"></i></div>
+            <div class="timeline-text">
+              <strong>DAF application updated</strong> — Michael Torres
+              <div style="font-size:0.75rem; color:#6b7280;">Northern Trust Advisors</div>
+            </div>
+            <div class="timeline-time">2d ago</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#dcfce7; color:#166534;"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="timeline-text">
+              <strong>Grant disbursed</strong> — Red Cross
+              <div style="font-size:0.75rem; color:#6b7280;">$2,500 from Heritage Education Fund</div>
+            </div>
+            <div class="timeline-time">2d ago</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#dbeafe; color:#1e40af;"><i class="fa-solid fa-user-plus"></i></div>
+            <div class="timeline-text">
+              <strong>New donor onboarded</strong> — David &amp; Amy Park
+              <div style="font-size:0.75rem; color:#6b7280;">Community Foundation West</div>
+            </div>
+            <div class="timeline-time">3d ago</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#fef9c3; color:#854d0e;"><i class="fa-solid fa-ticket"></i></div>
+            <div class="timeline-text">
+              <strong>Ticket opened</strong> — Investment Allocation Update
+              <div style="font-size:0.75rem; color:#6b7280;">Johnson Charitable Fund</div>
+            </div>
+            <div class="timeline-time">3d ago</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:#dcfce7; color:#166534;"><i class="fa-solid fa-rotate"></i></div>
+            <div class="timeline-text">
+              <strong>Fund balance updated</strong> — Heritage Education Fund
+              <div style="font-size:0.75rem; color:#6b7280;">Northern Trust Advisors</div>
+            </div>
+            <div class="timeline-time">4d ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upcoming Tasks -->
+    <div class="col-md-7">
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-list-check me-2"></i>Upcoming Tasks</span>
+        </div>
+        <div class="dash-card-body">
+          <div class="task-filter-tabs">
+            <div class="task-tab active" onclick="filterTasks('all', this)">All</div>
+            <div class="task-tab" onclick="filterTasks('pending', this)">Pending</div>
+            <div class="task-tab" onclick="filterTasks('overdue', this)">Overdue</div>
+          </div>
+
+          <div class="task-row" data-status="pending">
+            <input type="checkbox" class="task-checkbox" style="flex-shrink:0; cursor:pointer; accent-color:#0e7490;" onchange="toggleTask(this)" />
+            <div style="flex:1; min-width:0;">
+              <div class="task-name">Review grant recommendation</div>
+              <div class="task-sub">Smith Family Fund</div>
+            </div>
+            <span class="sbadge sbadge-orange" style="font-size:0.68rem;">Due Apr 20</span>
+            <div class="priority-dot" style="background:#dc3545;" title="High Priority"></div>
+            <span class="sbadge sbadge-yellow">Pending</span>
+          </div>
+
+          <div class="task-row" data-status="pending">
+            <input type="checkbox" class="task-checkbox" style="flex-shrink:0; cursor:pointer; accent-color:#0e7490;" onchange="toggleTask(this)" />
+            <div style="flex:1; min-width:0;">
+              <div class="task-name">Send quarterly statement</div>
+              <div class="task-sub">All Donors</div>
+            </div>
+            <span class="sbadge sbadge-gray" style="font-size:0.68rem;">Due Apr 22</span>
+            <div class="priority-dot" style="background:#d97706;" title="Medium Priority"></div>
+            <span class="sbadge sbadge-yellow">Pending</span>
+          </div>
+
+          <div class="task-row" data-status="overdue">
+            <input type="checkbox" class="task-checkbox" style="flex-shrink:0; cursor:pointer; accent-color:#0e7490;" onchange="toggleTask(this)" />
+            <div style="flex:1; min-width:0;">
+              <div class="task-name">Follow up on DAF application</div>
+              <div class="task-sub">Michael Torres</div>
+            </div>
+            <span class="sbadge sbadge-red" style="font-size:0.68rem;">Due Apr 19</span>
+            <div class="priority-dot" style="background:#dc3545;" title="High Priority"></div>
+            <span class="sbadge sbadge-red">Overdue</span>
+          </div>
+
+          <div class="task-row" data-status="pending">
+            <input type="checkbox" class="task-checkbox" style="flex-shrink:0; cursor:pointer; accent-color:#0e7490;" onchange="toggleTask(this)" />
+            <div style="flex:1; min-width:0;">
+              <div class="task-name">Update investment allocation</div>
+              <div class="task-sub">Johnson Charitable Fund</div>
+            </div>
+            <span class="sbadge sbadge-gray" style="font-size:0.68rem;">Due Apr 25</span>
+            <div class="priority-dot" style="background:#6b7280;" title="Low Priority"></div>
+            <span class="sbadge sbadge-yellow">Pending</span>
+          </div>
+
+          <div class="task-row" data-status="pending">
+            <input type="checkbox" class="task-checkbox" style="flex-shrink:0; cursor:pointer; accent-color:#0e7490;" onchange="toggleTask(this)" />
+            <div style="flex:1; min-width:0;">
+              <div class="task-name">Schedule donor meeting</div>
+              <div class="task-sub">Robert Chen</div>
+            </div>
+            <span class="sbadge sbadge-orange" style="font-size:0.68rem;">Due Apr 21</span>
+            <div class="priority-dot" style="background:#d97706;" title="Medium Priority"></div>
+            <span class="sbadge sbadge-yellow">Pending</span>
+          </div>
+
+          <div class="task-row" data-status="overdue">
+            <input type="checkbox" class="task-checkbox" style="flex-shrink:0; cursor:pointer; accent-color:#0e7490;" onchange="toggleTask(this)" />
+            <div style="flex:1; min-width:0;">
+              <div class="task-name">Process contribution receipt</div>
+              <div class="task-sub">Green Future Endowment</div>
+            </div>
+            <span class="sbadge sbadge-red" style="font-size:0.68rem;">Due Apr 18</span>
+            <div class="priority-dot" style="background:#dc3545;" title="High Priority"></div>
+            <span class="sbadge sbadge-red">Overdue</span>
+          </div>
+
+          <div class="task-row" data-status="pending">
+            <input type="checkbox" class="task-checkbox" style="flex-shrink:0; cursor:pointer; accent-color:#0e7490;" onchange="toggleTask(this)" />
+            <div style="flex:1; min-width:0;">
+              <div class="task-name">Annual fund review</div>
+              <div class="task-sub">Heritage Education Fund</div>
+            </div>
+            <span class="sbadge sbadge-gray" style="font-size:0.68rem;">Due Apr 30</span>
+            <div class="priority-dot" style="background:#6b7280;" title="Low Priority"></div>
+            <span class="sbadge sbadge-yellow">Pending</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /SECTION 6 -->
+
+  <!-- SECTION 7: TOP CHARITIES + GRANT CATEGORY BREAKDOWN -->
+  <div class="row g-3 section-row row-eq-height">
+    <!-- Top Charities -->
+    <div class="col-md-6">
+      <div class="dash-card" style="height:100%;">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-trophy me-2"></i>Top Charities by Grant Volume</span>
+        </div>
+        <div class="dash-card-body">
+          <div class="charity-rank-row">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="rank-num">1</span>
+              <div style="flex:1;">
+                <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Children's Hospital Foundation</div>
+                <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                  <span class="sbadge sbadge-blue" style="font-size:0.65rem;">Healthcare</span>
+                </div>
+              </div>
+              <div style="font-size:0.85rem; font-weight:700; color:#0e7490;">$48,500</div>
+            </div>
+            <div class="charity-bar"><div class="charity-bar-fill" style="width:100%;"></div></div>
+          </div>
+          <div class="charity-rank-row">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="rank-num">2</span>
+              <div style="flex:1;">
+                <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Habitat for Humanity</div>
+                <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                  <span class="sbadge sbadge-orange" style="font-size:0.65rem;">Housing</span>
+                </div>
+              </div>
+              <div style="font-size:0.85rem; font-weight:700; color:#0e7490;">$35,200</div>
+            </div>
+            <div class="charity-bar"><div class="charity-bar-fill" style="width:73%;"></div></div>
+          </div>
+          <div class="charity-rank-row">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="rank-num">3</span>
+              <div style="flex:1;">
+                <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">American Red Cross</div>
+                <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                  <span class="sbadge sbadge-red" style="font-size:0.65rem;">Social Services</span>
+                </div>
+              </div>
+              <div style="font-size:0.85rem; font-weight:700; color:#0e7490;">$28,900</div>
+            </div>
+            <div class="charity-bar"><div class="charity-bar-fill" style="width:60%;"></div></div>
+          </div>
+          <div class="charity-rank-row">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="rank-num">4</span>
+              <div style="flex:1;">
+                <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Environmental Defense Fund</div>
+                <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                  <span class="sbadge sbadge-green" style="font-size:0.65rem;">Environment</span>
+                </div>
+              </div>
+              <div style="font-size:0.85rem; font-weight:700; color:#0e7490;">$22,400</div>
+            </div>
+            <div class="charity-bar"><div class="charity-bar-fill" style="width:46%;"></div></div>
+          </div>
+          <div class="charity-rank-row">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="rank-num">5</span>
+              <div style="flex:1;">
+                <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Local Food Bank</div>
+                <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                  <span class="sbadge sbadge-red" style="font-size:0.65rem;">Social Services</span>
+                </div>
+              </div>
+              <div style="font-size:0.85rem; font-weight:700; color:#0e7490;">$18,700</div>
+            </div>
+            <div class="charity-bar"><div class="charity-bar-fill" style="width:39%;"></div></div>
+          </div>
+          <div class="charity-rank-row">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="rank-num">6</span>
+              <div style="flex:1;">
+                <div style="font-size:0.83rem; font-weight:600; color:#1a202c;">Arts Council</div>
+                <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+                  <span class="sbadge sbadge-purple" style="font-size:0.65rem;">Arts &amp; Culture</span>
+                </div>
+              </div>
+              <div style="font-size:0.85rem; font-weight:700; color:#0e7490;">$12,300</div>
+            </div>
+            <div class="charity-bar"><div class="charity-bar-fill" style="width:25%;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grant Category Breakdown -->
+    <div class="col-md-6">
+      <div class="dash-card">
+        <div class="dash-card-header">
+          <span><i class="fa-solid fa-chart-pie me-2"></i>Grant Category Breakdown — YTD</span>
+        </div>
+        <div class="dash-card-body">
+          <div class="row align-items-center">
+            <div class="col-7">
+              <div style="height:220px;">
+                <canvas id="categoryChart"></canvas>
+              </div>
+            </div>
+            <div class="col-5">
+              <div style="font-size:0.75rem;">
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f3f4f6;">
+                  <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#0e7490;display:inline-block;"></span>Education</span>
+                  <strong>32%</strong>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f3f4f6;">
+                  <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#0891b2;display:inline-block;"></span>Healthcare</span>
+                  <strong>22%</strong>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f3f4f6;">
+                  <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#06b6d4;display:inline-block;"></span>Environment</span>
+                  <strong>18%</strong>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f3f4f6;">
+                  <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#67e8f9;display:inline-block;"></span>Arts &amp; Culture</span>
+                  <strong>14%</strong>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 0; border-bottom:1px solid #f3f4f6;">
+                  <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#a5f3fc;display:inline-block;"></span>Social Services</span>
+                  <strong>10%</strong>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 0;">
+                  <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#cffafe;display:inline-block;"></span>Other</span>
+                  <strong>4%</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /SECTION 7 -->
+
+</div><!-- /mainContent -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ===== SIDEBAR TOGGLE =====
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const body = document.body;
+  sidebar.classList.toggle('collapsed');
+  body.classList.toggle('sidebar-collapsed');
+}
+
+// ===== SPONSOR COLLAPSE =====
+function toggleCollapse(id) {
+  const body = document.getElementById(id);
+  const icon = document.getElementById(id + '-icon');
+  const isClosed = body.classList.contains('closed');
+  if (isClosed) {
+    body.classList.remove('closed');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    if (icon) { icon.className = 'fa-solid fa-chevron-down'; icon.style.transform = ''; }
+  } else {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      body.classList.add('closed');
+    });
+    if (icon) { icon.className = 'fa-solid fa-chevron-right'; icon.style.transform = ''; }
+  }
+}
+
+// ===== TASK CHECKBOX TOGGLE =====
+function toggleTask(checkbox) {
+  const row = checkbox.closest('.task-row');
+  if (checkbox.checked) {
+    row.classList.add('done');
+  } else {
+    row.classList.remove('done');
+  }
+}
+
+// ===== TASK FILTER TABS =====
+function filterTasks(filter, tabEl) {
+  document.querySelectorAll('.task-tab').forEach(t => t.classList.remove('active'));
+  tabEl.classList.add('active');
+  document.querySelectorAll('.task-row').forEach(row => {
+    if (filter === 'all') {
+      row.style.display = '';
+    } else {
+      row.style.display = row.dataset.status === filter ? '' : 'none';
+    }
+  });
+}
+
+// ===== CHARTS =====
+document.addEventListener('DOMContentLoaded', function () {
+
+  // Default chart font
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = '#6b7280';
+
+  // 1. AUM Line Chart
+  const aumCtx = document.getElementById('aumChart').getContext('2d');
+  new Chart(aumCtx, {
+    type: 'line',
+    data: {
+      labels: ['May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr'],
+      datasets: [{
+        label: 'AUM ($M)',
+        data: [3.2, 3.4, 3.5, 3.6, 3.7, 3.75, 3.8, 3.9, 4.0, 4.1, 4.2, 4.285],
+        borderColor: '#0e7490',
+        backgroundColor: 'rgba(14,116,144,0.1)',
+        borderWidth: 2,
+        pointBackgroundColor: '#0e7490',
+        pointRadius: 3,
+        pointHoverRadius: 5,
+        tension: 0.4,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ' $' + ctx.parsed.y.toFixed(3) + 'M'
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 10 } }
+        },
+        y: {
+          grid: { color: '#f3f4f6' },
+          ticks: {
+            font: { size: 10 },
+            callback: val => '$' + val + 'M'
+          },
+          min: 3.0
+        }
+      }
+    }
+  });
+
+  // 2. Grants Horizontal Bar Chart
+  const grantsCtx = document.getElementById('grantsChart').getContext('2d');
+  new Chart(grantsCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Education','Healthcare','Environment','Arts & Culture','Social Services','Other'],
+      datasets: [{
+        label: 'Amount ($)',
+        data: [285000, 198000, 156000, 124000, 89400, 40000],
+        backgroundColor: ['#0e7490','#0891b2','#06b6d4','#67e8f9','#a5f3fc','#e0f2fe'],
+        borderRadius: 6,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ' $' + ctx.parsed.x.toLocaleString()
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: '#f3f4f6' },
+          ticks: {
+            font: { size: 9 },
+            callback: val => '$' + (val/1000) + 'K'
+          }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { font: { size: 10 } }
+        }
+      }
+    }
+  });
+
+  // 3. Allocation Doughnut
+  const allocCtx = document.getElementById('allocationChart').getContext('2d');
+  new Chart(allocCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Smith Family Fund','Green Future','Johnson Charitable','Heritage Education'],
+      datasets: [{
+        data: [980000, 1170000, 1200000, 935000],
+        backgroundColor: ['#0e7490','#0891b2','#06b6d4','#67e8f9'],
+        borderWidth: 2,
+        borderColor: '#fff',
+        hoverOffset: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '65%',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ' $' + (ctx.parsed/1000).toFixed(0) + 'K (' + ((ctx.parsed/4285000)*100).toFixed(1) + '%)'
+          }
+        }
+      }
+    }
+  });
+
+  // 4. Ticket Doughnut
+  const ticketCtx = document.getElementById('ticketChart').getContext('2d');
+  new Chart(ticketCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Open','In Progress','Closed','Escalated','Resolved'],
+      datasets: [{
+        data: [3, 2, 8, 1, 4],
+        backgroundColor: ['#28a745','#ffc107','#6c757d','#dc3545','#17a2b8'],
+        borderWidth: 2,
+        borderColor: '#fff',
+        hoverOffset: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '60%',
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed } }
+      }
+    }
+  });
+
+  // 5. Ticket Trend Sparkline
+  const trendCtx = document.getElementById('ticketTrendChart').getContext('2d');
+  new Chart(trendCtx, {
+    type: 'line',
+    data: {
+      labels: Array.from({length:18}, (_,i) => 'Apr '+(i+1)),
+      datasets: [{
+        data: [1,0,2,1,3,0,1,2,1,0,2,3,1,0,1,2,1,1],
+        borderColor: '#0e7490',
+        backgroundColor: 'rgba(14,116,144,0.08)',
+        borderWidth: 1.5,
+        pointRadius: 2,
+        pointBackgroundColor: '#0e7490',
+        tension: 0.4,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { title: ctx => ctx[0].label, label: ctx => ' Tickets: ' + ctx.parsed.y } } },
+      scales: {
+        x: { display: false },
+        y: { display: false, min: 0 }
+      }
+    }
+  });
+
+  // 6. Recommendation Horizontal Bar
+  const recommCtx = document.getElementById('recommChart').getContext('2d');
+  new Chart(recommCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Habitat for Humanity','Children\'s Hospital','Env. Defense','Red Cross','Food Bank'],
+      datasets: [{
+        data: [5000, 10000, 3500, 2500, 1000],
+        backgroundColor: ['#0e7490','#0891b2','#06b6d4','#67e8f9','#a5f3fc'],
+        borderRadius: 4,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ' $' + ctx.parsed.x.toLocaleString() } }
+      },
+      scales: {
+        x: {
+          grid: { color: '#f3f4f6' },
+          ticks: { font: { size: 9 }, callback: val => '$' + (val/1000) + 'K' }
+        },
+        y: { grid: { display: false }, ticks: { font: { size: 9 } } }
+      }
+    }
+  });
+
+  // 7. Category Polar Area
+  const catCtx = document.getElementById('categoryChart').getContext('2d');
+  new Chart(catCtx, {
+    type: 'polarArea',
+    data: {
+      labels: ['Education','Healthcare','Environment','Arts & Culture','Social Services','Other'],
+      datasets: [{
+        data: [32, 22, 18, 14, 10, 4],
+        backgroundColor: [
+          'rgba(14,116,144,0.75)',
+          'rgba(8,145,178,0.75)',
+          'rgba(6,182,212,0.75)',
+          'rgba(103,232,249,0.75)',
+          'rgba(165,243,252,0.75)',
+          'rgba(207,250,254,0.75)'
+        ],
+        borderColor: ['#0e7490','#0891b2','#06b6d4','#67e8f9','#a5f3fc','#cffafe'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed.r + '%' } }
+      },
+      scales: {
+        r: {
+          grid: { color: '#f3f4f6' },
+          ticks: { display: false },
+          pointLabels: { display: false }
+        }
+      }
+    }
+  });
+
+  // 8. Claims grouped bar (AUM vs Pending per sponsor)
+  const claimsCtx = document.getElementById('claimsChart').getContext('2d');
+  new Chart(claimsCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Community Foundation West', 'Northern Trust Advisors'],
+      datasets: [
+        {
+          label: 'AUM',
+          data: [2150000, 2135000],
+          backgroundColor: '#0e7490',
+          borderRadius: 5,
+          borderSkipped: false
+        },
+        {
+          label: 'Pending Grants',
+          data: [112500, 105200],
+          backgroundColor: '#fbbf24',
+          borderRadius: 5,
+          borderSkipped: false
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 10, padding: 8 } },
+        tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': $' + ctx.parsed.y.toLocaleString() } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 9 } } },
+        y: {
+          grid: { color: '#f3f4f6' },
+          ticks: { font: { size: 9 }, callback: v => '$' + (v/1000000).toFixed(1) + 'M' }
+        }
+      }
+    }
+  });
+
+}); // end DOMContentLoaded
+</script>
+</body>
+</html>

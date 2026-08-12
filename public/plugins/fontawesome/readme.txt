@@ -1,0 +1,1 @@
+Version fontawesome-free-5.11.2-web

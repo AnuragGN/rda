@@ -1,0 +1,21 @@
+
+#NOTE: user alk will not be able to ssh
+
+adduser alk
+passwd alk
+mkdir -p /var/sftp/alk
+chown alk:alk /var/sftp/alk
+
+vi /etc/ssh/sshd_config
+********************************
+Match User alk
+ForceCommand internal-sftp
+PasswordAuthentication yes
+ChrootDirectory /var/sftp
+PermitTunnel no
+AllowAgentForwarding no
+AllowTcpForwarding no
+X11Forwarding no
+********************************
+
+systemctl restart sshd

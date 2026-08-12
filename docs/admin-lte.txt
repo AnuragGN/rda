@@ -1,0 +1,19 @@
+
+Current Version => admin LTE 3.1.0
+
+https://adminlte.io/themes/v3/
+
+
+~public/adminlte
+
+refactored some js libs/plugins
+
+
+External js libs
+~plugins/~
+
+
+-------------
+    {{-- jquery-ui.js, if required, must come before bootstrap.bundle.min.js for tooltip to work--}}
+    <script src="/ma/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/ma/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

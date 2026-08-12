@@ -1,0 +1,44 @@
+
+sudo su
+
+New Client - HGA to GNA
+-----------------------
+
+#Create client directory
+sudo su
+cd /www
+cp -R hga gna
+chgrp -R www-data gna
+chown -R www-data gna
+
+#file permissions
+chmod 775 gna/lamp/rda/storage
+
+#Pull latest code
+cd /www/gna/lamp/rda
+git pull
+#git reset --hard
+
+#.env file
+# change client & db connection
+
+#conf file
+  cd /etc/apache2/sites-available
+  cp hga.conf gna.conf
+  cp gmf.giftingnetwork.conf gna.giftingnetwork.conf
+
+  cd /etc/apache2/sites-enabled
+  ln -s ./../sites-available/gna.conf .
+  ln -s ./../sites-available/gna.giftingnetwork.conf .
+
+#php artisan
+php artisan config:clear
+php artisan cache:clear
+php artisan route:clear
+php artisan view:clear
+php artisan key:generate
+php artisan config:cache
+
+
+#restart apache
+sudo service apache2 restart

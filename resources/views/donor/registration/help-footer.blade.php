@@ -1,0 +1,2 @@
+
+<p>HGA HELP FOOTER</p>

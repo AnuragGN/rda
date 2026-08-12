@@ -1,0 +1,64 @@
+tr {
+    border-bottom: 0px solid #ccc;
+}
+#body {
+    color: #7E7E73;
+    font-family: AvenirLTStd;
+}
+
+.hga-footer {
+    font-size: 12px;
+    margin-top: 54px;
+    background: #3d3d3d;
+    color: white;
+    padding: 51px 0;
+}
+
+.form-title {
+    font-size: 24px;
+}
+table {
+    width: 100%;
+    table-layout: auto;
+}
+
+.tp_nav li a:visited {
+    color: #7E7F73;
+}
+
+
+.tp_nav {
+
+    display: inline-flex;
+}
+.secondaryColor {
+    background-color: #f1e6e6 !important;
+}
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.sticky + .content {
+    padding-top: 102px;
+}
+h3 {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #051844;
+}
+a:visited {
+    color: #7E7F73;
+}
+.menu_enable{
+    margin-left: 10px;
+}
+@media (min-width: 320px) and (max-width: 480px) {
+    .hga-footer img.logo {
+        margin-bottom: 6px;
+        max-width: 150px;
+        margin-left: 0px;
+    }
+}

@@ -1,0 +1,92 @@
+
+body {
+    font-family: "halyard-display", sans-serif;
+}
+
+.content-header h1 {
+    font-weight: 600;
+    color: #333333;
+}
+.page-subtitle {
+    border-bottom: 1px solid #666;
+}
+
+
+.gn-powered-by a {
+    color: #000;
+}
+
+
+/* JCF Fund statement */
+.fund-pool.pool-indented {
+    background: none!important;
+    border: none!important;
+    box-shadow: none!important;
+    padding: 0 0 0 1rem!important;
+}
+
+.pool-jcf-raw {
+    padding: 0!important;
+    margin: 0.25rem 0 0.5rem 0;
+    background: none!important;;
+    border: none!important;;
+    box-shadow: none!important;;
+}
+
+.pool-jcf-raw.fund-pool .pool-kv span {
+    font-weight: normal;
+}
+
+.fund-pool.pool-container {
+    padding: 0!important;
+    margin: 0.25rem 0 0.5rem 0;
+    background: none!important;;
+    border: none!important;;
+    box-shadow: none!important;;
+}
+.fund-pool.pool-container > .pool-values {
+    border-top: none!important;
+    padding: 0!important;
+}
+
+.fund-pool.pool-container .pool-kv span {
+    font-weight: normal;
+}
+
+.cls-end-balance {
+    /*padding-top: 8px;*/
+    /*border-top: 2px solid #000;*/
+    /*margin-top: 12px;*/
+}
+.gn-navbar .navbar-brand {
+    padding: 0;
+}
+.gn-navbar .nbnav-desktop a.dropdown-item div .subtitle,
+.gn-navbar .nbnav-mobile .nav-item a.nav-link div .subtitle {
+    display: block;
+}
+
+.row-history p.fund-date {
+    font-size: 15px;
+    color: #646464;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+.row-history p.fund-to {
+    margin-bottom: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+.chart-box .show-more {
+    display: block;
+}
+.chart-box .chart-wrapper {
+    /*place-holder*/
+    max-height: 502px;
+    overflow: hidden;
+}
+
+.cfp_link {
+    margin: -3rem 0 2rem 0;
+    text-align: right;
+}

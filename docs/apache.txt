@@ -1,0 +1,19 @@
+
+Apache config - how to enable additional ports
+------------------------------------------------
+1. Add additional ports in the /etc/apache2/ports.conf like so:
+Listen 80
+Listen 8888
+2. Now in your VirtualHost file add that port like so:
+/etc/apache2/sites-available/xx.conf
+<VirtualHost *:80 *:8888>
+   ....
+</VirtualHost>
+3. Restart apache2:
+sudo apache2ctl restart
+------------------------------------------------
+
+
+Open port on Ubuntu
+
+ufw allow 8080/tcp

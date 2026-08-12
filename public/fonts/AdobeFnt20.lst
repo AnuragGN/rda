@@ -1,0 +1,230 @@
+%!Adobe-FontList 1.20
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:AvenirLTStd-Black
+FamilyName:Avenir LT Std
+StyleName:95 Black
+FullName:Avenir LT Std 95 Black
+MenuName:Avenir LT Std 65 Medium
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:M:\Initiatives\2019_DAF\DAF_Portal_Mockup Folder\Document fonts\Linotype - AvenirLTStd-Black.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:29376
+FileModTime:1450406396
+WeightClass:750
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Avenir LT Std 95 Black
+NameArray:0,Win,1,Avenir LT Std 65 Medium
+NameArray:0,Win,16,Avenir LT Std
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:AvenirLTStd-Book
+FamilyName:Avenir LT Std
+StyleName:45 Book
+FullName:Avenir LT Std 45 Book
+MenuName:Avenir LT Std 45 Book
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:M:\Initiatives\2019_DAF\DAF_Portal_Mockup Folder\Document fonts\Linotype - AvenirLTStd-Book.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:28908
+FileModTime:1450384843
+WeightClass:350
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Avenir LT Std 45 Book
+NameArray:0,Win,1,Avenir LT Std 45 Book
+NameArray:0,Win,16,Avenir LT Std
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:AvenirLTStd-Heavy
+FamilyName:Avenir LT Std
+StyleName:85 Heavy
+FullName:Avenir LT Std 85 Heavy
+MenuName:Avenir LT Std 55 Roman
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:M:\Initiatives\2019_DAF\DAF_Portal_Mockup Folder\Document fonts\Linotype - AvenirLTStd-Heavy.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:29104
+FileModTime:1450384844
+WeightClass:700
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Avenir LT Std 85 Heavy
+NameArray:0,Win,1,Avenir LT Std 55 Roman
+NameArray:0,Win,16,Avenir LT Std
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:AvenirLTStd-Medium
+FamilyName:Avenir LT Std
+StyleName:65 Medium
+FullName:Avenir LT Std 65 Medium
+MenuName:Avenir LT Std 65 Medium
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:M:\Initiatives\2019_DAF\DAF_Portal_Mockup Folder\Document fonts\Linotype - AvenirLTStd-Medium.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:30884
+FileModTime:1450384844
+WeightClass:500
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Avenir LT Std 65 Medium
+NameArray:0,Win,1,Avenir LT Std 65 Medium
+NameArray:0,Win,16,Avenir LT Std
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:AvenirLTStd-Roman
+FamilyName:Avenir LT Std
+StyleName:55 Roman
+FullName:Avenir LT Std 55 Roman
+MenuName:Avenir LT Std 55 Roman
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:M:\Initiatives\2019_DAF\DAF_Portal_Mockup Folder\Document fonts\Linotype - AvenirLTStd-Roman.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:28640
+FileModTime:1450406396
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Avenir LT Std 55 Roman
+NameArray:0,Win,1,Avenir LT Std 55 Roman
+NameArray:0,Win,16,Avenir LT Std
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:MinionPro-Regular
+FamilyName:Minion Pro
+StyleName:Regular
+FullName:Minion Pro
+MenuName:Minion Pro
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:M:\Initiatives\2019_DAF\DAF_Portal_Mockup Folder\Document fonts\MinionPro-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:218640
+FileModTime:1363382732
+WeightClass:400
+WidthClass:5
+AngleClass:0
+DesignSize:110
+NameArray:0,Mac,4,Minion Pro
+NameArray:0,Win,1,Minion Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:BemboStd-Italic
+FamilyName:Bembo Std
+StyleName:Italic
+FullName:Bembo Std Italic
+MenuName:Bembo Std
+StyleBits:1
+WritingScript:Roman
+OutlineFileName:M:\Initiatives\2019_DAF\DAF_Portal_Mockup Folder\Document fonts\Monotype  - BemboStd-Italic.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:47660
+FileModTime:1450384843
+WeightClass:400
+WidthClass:5
+AngleClass:1
+NameArray:0,Mac,4,Bembo Std Italic
+NameArray:0,Win,1,Bembo Std
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Wingdings-Regular
+FamilyName:Wingdings
+StyleName:Regular
+FullName:Wingdings
+MenuName:Wingdings
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:M:\Initiatives\2019_DAF\DAF_Portal_Mockup Folder\Document fonts\wingding.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:82180
+FileModTime:1523489650
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Wingdings
+NameArray:0,Win,1,Wingdings
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Wingdings3
+FamilyName:Wingdings 3
+StyleName:Regular
+FullName:Wingdings 3
+MenuName:Wingdings 3
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:M:\Initiatives\2019_DAF\DAF_Portal_Mockup Folder\Document fonts\WINGDNG3_0.TTF
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:35328
+FileModTime:1011738142
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Wingdings 3
+NameArray:0,Win,1,Wingdings 3
+%EndFont
+

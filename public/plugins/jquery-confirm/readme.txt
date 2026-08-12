@@ -1,0 +1,1 @@
+Version jquery-confirm-v3.3.4

@@ -1,0 +1,151 @@
+body:first-of-type #footer .footer-btm{
+    margin-top: -8px;
+}
+#footer p {
+    color: #376190;
+    margin: 0;
+}
+
+#footer .footer-left p.address {
+    font-size: 14px;
+    line-height: 18px;
+}
+#footer .footer-left p.address span {
+    font-size: 16px;
+}
+
+#footer .footer-left ul {
+    list-style: none outside none;
+    height: 30px;
+    margin: 10px 0 0;
+    padding: 0;
+}
+
+#footer .footer-left ul li {
+    display: block;
+    height: 30px;
+    float: left;
+    margin-right: 5px;
+    width: 30px;
+}
+
+#footer .footer-right .fsm {
+    float: left;
+    width: 23%;
+    margin-right: 10px;
+}
+
+#footer .footer-right #fsm ul {
+    list-style: none outside none;
+    margin: 0 0 15px 0;
+    padding: 0;
+}
+
+#footer .footer-right #fsm ul li {
+    padding: 0;
+    margin: 0;
+    line-height: 16px;
+}
+
+#footer .footer-right #fsm ul li a {
+    font-size: 11px;
+}
+
+#footer .footer-right #fsm ul li a span {
+    font-size: 13px;
+}
+#footer {
+    background: url(/images/gmf/footer-bg.png) no-repeat 0 0;
+    background-size: cover;
+    overflow: hidden;
+    padding: 20px 0;
+    border-top: #023679 solid 1px;
+}
+.footer-wrapper {
+}
+#footer .footer-left {
+    position: relative;
+}
+#footer .footer-right {
+    margin: 0;
+}
+#footer .footer-right #fsm {
+}
+#footer .footer-btm {
+    margin: 0;
+}
+
+@media (max-width: 480px){
+    #footer .footer-left {
+        position: relative;
+        margin-left: 15px;
+    }
+}
+
+.cfns {
+    background: url(/images/gmf/cf-logo.png) no-repeat left center;
+    bottom: 17px;
+    color: #666;
+    display: block;
+    font-size: 9px;
+    line-height: 18px;
+    padding-left: 80px;
+    float: left;
+    margin-top: 10px;
+}
+.copyright {
+    margin-top: 10px;
+    bottom: 17px;
+    color: #666;
+    display: block;
+    font-size: 11px;
+    line-height: 18px;
+    float: right;
+    text-align: right;
+    letter-spacing: -.25px;
+}
+
+#footer a:link, #footer a:visited { color: #376190; }
+
+a.fb {
+    background: url(/images/gmf/ico_fb.png);
+    display: block;
+    height: 30px;
+    margin-right: 2px;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 30px;
+}
+
+a.twitter {
+    background: url(/images/gmf/ico_twitter.png);
+    display: block;
+    height: 30px;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 30px;
+}
+/* GN CUSTOM */
+.copyright,
+#footer .footer-right #fsm ul li a {
+    font-size: 12px;
+}
+#footer .footer-right #fsm ul li a span {
+    font-weight: 600;
+}
+.cfns {
+    font-size: 12px;
+    padding-left: 72px;
+}
+#footer .footer-left p.address {
+    font-size: 13px;
+    margin-top: -4px;
+}
+#footer .footer-left p.address span {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 28px;
+}
+#footer {
+    border-top: solid 1px #c4c4c4;
+}

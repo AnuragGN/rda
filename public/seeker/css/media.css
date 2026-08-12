@@ -1,0 +1,10 @@
+
+/* Small devices (landscape phones, less than 768px)*/
+@media (max-width: 767.98px) {
+    .col-form-label.text-right {
+        text-align: left!important;
+    }
+    .min-width-tb {
+    	min-width: 700px;
+    }
+}

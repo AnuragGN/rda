@@ -1,0 +1,92 @@
+/* =========================================================
+   COMMON BRANDING CSS
+   Used by ALL clients (multi-tenant / white-label)
+   Styles apply ONLY when corresponding body class exists
+   ========================================================= */
+
+/* =========================================================
+   ACCENT (PRIMARY COLOR)
+   Applies ONLY if body has `.has-brand-accent`
+   ========================================================= */
+
+.has-brand-accent .btn-accent {
+    background-color: var(--brand-accent);
+    border-color: var(--brand-accent);
+    color: #fff;
+}
+
+.has-brand-accent .btn-accent:hover,
+.has-brand-accent .btn-accent:focus,
+.has-brand-accent .btn-accent:active {
+    opacity: 0.9;
+    color: #fff;
+}
+
+/* Disabled state */
+.has-brand-accent .btn-accent.disabled,
+.has-brand-accent .btn-accent:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Outline accent button */
+.has-brand-accent .btn-outline-accent {
+    background-color: transparent;
+    border-color: var(--brand-accent);
+    color: var(--brand-accent);
+}
+
+.has-brand-accent .btn-outline-accent:hover {
+    background-color: var(--brand-accent);
+    color: #fff;
+}
+
+/* Accent text */
+.has-brand-accent .text-accent {
+    color: var(--brand-accent);
+}
+
+/* Accent background */
+.has-brand-accent .bg-accent {
+    background-color: var(--brand-accent);
+    color: #fff;
+}
+
+/* Accent borders */
+.has-brand-accent .border-accent {
+    border-color: var(--brand-accent) !important;
+}
+
+/* Accent links */
+.has-brand-accent a.brand-link {
+    color: var(--brand-accent);
+    text-decoration: none;
+}
+
+.has-brand-accent a.brand-link:hover {
+    text-decoration: underline;
+}
+
+/* Accent badges */
+.has-brand-accent .badge-accent {
+    background-color: var(--brand-accent);
+    color: #fff;
+}
+
+/* =========================================================
+   BACKGROUND COLOR
+   Applies ONLY if body has `.has-brand-bg`
+   ========================================================= */
+
+.has-brand-bg .bg-brand {
+    background-color: var(--brand-bg);
+}
+
+/* =========================================================
+   SECONDARY / TEXT COLOR
+   Applies ONLY if body has `.has-brand-secondary`
+   ========================================================= */
+
+.has-brand-secondary .text-brand {
+    color: var(--brand-text);
+}

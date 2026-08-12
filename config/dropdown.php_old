@@ -1,0 +1,34 @@
+<?php
+
+return [
+    'status' => [
+        'open' => 'Open',
+        'in progress' => 'In Progress',
+        'hold' => 'Hold',
+        'closed' => 'Closed'
+    ],
+    'priority' => [
+        'low' => 'Low',
+        'medium' => 'Medium',
+        'high' => 'High',
+        'urgent' => 'Urgent'
+    ],
+    'category' => [
+        'event' => 'Events',
+        'meeting' => 'Meeting',
+        'notes' => 'Notes',
+        'raise cash' => 'Raise Cash',
+        'rebalance portfolio' => 'Rebalance Portfolio'
+    ],
+    'support_staff_status' => [
+        'pending' => 'Pending',
+        'in progress' => 'In Progress',
+        'done' => 'Done',
+    ],
+    'chart_dropdown' => [
+        'pie' => 'Pie Chart',
+        'doughnut' => 'Doughnut Chart',
+    ],
+
+    // Add more dropdowns as needed
+];

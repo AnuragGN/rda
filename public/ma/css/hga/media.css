@@ -1,0 +1,120 @@
+
+img.gn-logo {
+    width: 225px;
+}
+
+/*.gn-content {*/
+    /*padding-bottom: 388px;*/
+/*}*/
+
+.gn-footer img.logo {
+    width: 200px;
+}
+
+/* LARGER THAN */
+
+/*Extra small devices (portrait phones, less than 576px)*/
+/*No media query for `xs` since this is the default in Bootstrap*/
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+
+    img.gn-logo {
+        width: 300px;
+    }
+
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+
+    /*.gn-content {*/
+        /*padding-bottom: 300px;*/
+    /*}*/
+
+    img.gn-logo {
+        width: 400px;
+    }
+    .gn-footer .llr {
+        border-right: 1px solid white;
+    }
+
+    .navbar .nav-phone, .navbar .nav-login {
+        padding-right: 0.75rem;
+    }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+
+    /*.gn-content {*/
+        /*padding-bottom: 244px;*/
+    /*}*/
+
+    .custom-form .form-title {
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+    .form-account-body {
+        margin-top: -14rem;
+    }
+    .cap-title-big {
+        font-size: 3rem;
+        font-weight: 600;
+    }
+}
+
+/* Extra large devices (large desktops,*/
+@media (min-width: 1200px) {
+    .navbar .nav-phone, .navbar .nav-login {
+        padding-right: 1rem;
+    }
+}
+
+/* SMALLER THAN */
+/* Large devices (desktops, less than 1200px)*/
+@media (max-width: 1199.98px) {
+
+}
+
+/* Medium devices (tablets, less than 992px)*/
+@media (max-width: 991.98px) {
+    .gn-footer img.logo {
+        width: 150px;
+    }
+}
+
+/* Small devices (landscape phones, less than 768px)*/
+@media (max-width: 767.98px) {
+}
+
+/* Extra small devices (portrait phones, less than 576px)*/
+@media (max-width: 575.98px) {
+    .navbar .nav-phone, .navbar .nav-login {
+        text-align: right;
+        width: 100%;
+    }
+    .row-hero .hero-box .overlay, .row-hero .hero-box .caption {
+        min-width: 100%!important;
+    }
+
+}
+/* Extra large devices (large desktops)*/
+/* No media query since the extra-large breakpoint has no upper bound on its width*/
+
+/* IN BETWEEN */
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+}

@@ -1,0 +1,179 @@
+
+STEPS ON SERVER:
+
+1 - Create 'email' tables - jobs, failed-jobs, email-archibe
+2 - Pull latest 'email' code
+3 - supervisor set up
+    # 1. Installing Supervisor
+    $ sudo apt-get install supervisor
+    # 2. Create and update worker config file
+    /etc/supervisor/conf.d/laravel-worker.conf
+    # 3. reread, update and start supervisor
+4 - update .env file to use database emails, instead of sync
+
+
+
+1. Extend MailableQueue
+2. Implement getEmailType()
+3. Set Subject in constructor
+
+
+
+Create mails
+Create DB table & Put in queue
+Send mails
+Retry
+Create failed table & Handle failure
+Update status?
+
+mail-type, contact_id, org_id, subject, to, cc, bcc, body_html, body_text, created_on, updated_on
+
+***************************************************************************************
+php artisan queue:listen --queue a,b,c
+php artisan queue:listen --queue=my_queue
+
+
+php artisan queue:work --tries=3 --timeout=60
+
+php artisan queue:work --queue=high,default
+php artisan queue:work --tries=3
+php artisan queue:work --timeout=60
+php artisan queue:work redis --tries=3 --backoff=3
+
+public $backoff = 3;
+/**
+* Calculate the number of seconds to wait before retrying the job.
+* @return int
+*/
+public function backoff() { return 3; }
+public function backoff() { return [1, 5, 10]; }
+
+php artisan queue:restart
+
+
+# Installing Supervisor
+sudo apt-get install supervisor
+
+/etc/supervisor/conf.d/laravel-worker.conf
+
+[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/forge/app.com/artisan queue:work sqs --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+user=forge
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/home/forge/app.com/worker.log
+stopwaitsecs=3600
+
+
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start laravel-worker:*
+sudo supervisorctl stop all
+sudo supervisorctl start all
+
+***************************************************************************************
+#Retrying Failed Jobs
+php artisan queue:failed
+
+php artisan queue:retry JOB_ID
+php artisan queue:retry 5 6 7 8 9 10
+php artisan queue:retry --range=5-10
+php artisan queue:retry --queue=name
+php artisan queue:retry all
+php artisan queue:forget 5
+
+#delete all of your failed jobs from the failed_jobs table
+php artisan queue:flush
+
+php artisan queue:work --once
+php artisan queue:work --max-jobs=5
+php artisan queue:work --stop-when-empty
+php artisan queue:work --max-time=3600
+
+***************************************************************************************
+Job Batching
+php artisan queue:batches-table
+php artisan migrate
+
+
+
+***************************************************************************************
+https://laravel.com/docs/8.x/mail
+https://laravel.com/docs/8.x/mail#queueing-a-mail-message
+https://laravel.com/docs/8.x/queues#dealing-with-failed-jobs
+https://mailtrap.io/blog/laravel-mail-queue/
+http://supervisord.org/index.html
+
+
+Execute the below commands :
+php artisan queue:table (for jobs : created at location : lamp/rda/database/migrations/2021_05_17_073155_create_jobs_table.php)
+php artisan queue:failed-table (for failed jobs : Found already exist in project)
+php artisan migrate (To finally create the table)
+Next we have to set Set in .env file QUEUE_CONNECTION=database
+
+Also settings for sending email in .env file on my local are as below
+
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.sendgrid.net
+MAIL_PORT=587
+MAIL_USERNAME=apikey
+MAIL_PASSWORD=*******
+MAIL_ENCRYPTION=false
+MAIL_FROM_ADDRESS=kishan3089@gmail.com
+
+After that we have to execute
+php artisan cache:clear
+php artisan config:cache
+
+That's It. Rest work is already there, as have don't have to create Jobs in our project
+because all of our Email classes already implement ShouldQueue and use Queueable, SerializesModels;
+If this wasn't there then only we have to create the Job class.
+
+Laravel 8 : Queueing By Default
+
+Other option to set queue individually was like below :
+
+Mail::to($request->user())->cc($moreUsers)->bcc($evenMoreUsers)->queue(new OrderShipped($order));
+
+But in future we may also required sending urgent email directly without Queue.
+For that we can follow this link : Synchronous Dispatching
+
+Further the main command to monitor and execute the Queue jobs is :
+"php artisan queue:work"
+
+Server setup to run the queue :
+
+The most recommended way to execute this command on the server all the time is to use "Supervisor" on the server. There are some other ways also suggested in the link below.
+
+https://stackoverflow.com/questions/28623001/how-to-keep-laravel-queue-system-running-on-server
+
+https://laravel-news.com/how-to-run-workers-in-production
+
+
+#Queueing A Mail Message
+https://laravel.com/docs/8.x/mail#queueing-a-mail-message
+Mail::to($request->user())
+     ->cc($moreUsers)
+     ->bcc($evenMoreUsers)
+     ->queue(new OrderShipped($order));
+
+#pushing-to-specific-queues
+https://laravel.com/docs/8.x/mail#pushing-to-specific-queues
+
+
+#rendering-mailables - save HTML in your database
+https://laravel.com/docs/8.x/mail#rendering-mailables
+
+$invoice = Invoice::find(1);
+return (new InvoicePaid($invoice))->render();
+
+#previewing-mailables-in-the-browser
+https://laravel.com/docs/8.x/mail#previewing-mailables-in-the-browser
+
+$invoice = App\Models\Invoice::find(1);
+return new App\Mail\InvoicePaid($invoice);

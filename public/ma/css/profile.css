@@ -1,0 +1,115 @@
+.container-fluid.profile-nav {
+    padding-left: 0;
+}
+.profile-nav {
+    /*border-bottom: 1px solid #c4c4c4;*/
+    /*box-shadow: 0 3px 6px 0 rgba(0,0,0,0.1);*/
+    /*padding: 8px 0;*/
+    margin-top: -1rem;
+    /*background: #444;*/
+    background: #00758f!important;
+}
+.profile-nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+.profile-nav ul li {
+    margin-right: 1px;
+    color: #fff;
+    list-style-type: none;
+    transition: 300ms all ease-in-out;
+}
+.profile-nav ul li:hover, .profile-nav ul li.active {
+    /*transition: 400ms all ease-in-out;*/
+    /*color: teal!important;*/
+    /*background: #eee;*/
+}
+.profile-nav ul li a {
+    padding: 8px 1rem;
+    color: #fff;
+    display: block;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.profile-nav ul li a:hover, .profile-nav ul li a.active {
+    color: teal;
+    background: #eee;
+}
+
+.profile-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #f5f5f5;
+}
+.profile-menu ul {
+    list-style: none;
+    padding-left: 1rem;
+}
+.profile-menu ul li {
+    margin: 0.5rem 0;
+    font-weight: 600;
+    min-width: 200px;
+}
+.profile-menu ul li a {
+    text-decoration: none;
+    color: black;
+}
+.profile-menu ul li a:hover {
+    margin-left: -16px;
+    border-radius: 15px;
+    padding: 4px 16px;
+    background: #f5f5f5;
+    color: #000;
+    opacity: 1;
+}
+.profile-menu ul li a.active {
+    background: #f5f5f5;
+    font-weight: 700;
+    margin-left: -16px;
+    border-radius: 15px;
+    padding: 4px 16px;
+}
+.profile-menu .avatar {
+    height: 150px;
+    width: 150px;
+    background: #c4c4c4;
+    border-radius: 100%;
+    margin: 0.5rem 0 1.5rem;
+}
+.profile-view p.name {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+.profile-view p.email {
+    color: #999;
+    font-size: 14px;
+}
+.profile-view p.address {
+
+}
+.profile-view p.phone {
+    margin-bottom: 0;
+}
+
+.profile-edit .form-group {
+    /*margin-bottom: 0.5rem;*/
+}
+
+.profile-edit .form-control {
+    /*height: 34px;*/
+}
+.profile-edit .btn {
+    margin-top: 0.5rem;
+}
+#phones-form input {
+    padding-left: 6px;
+    padding-right: 6px;
+    display: inline-block;
+    width: auto;
+}

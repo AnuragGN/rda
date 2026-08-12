@@ -1,0 +1,248 @@
+
+
+1. Very big /var/log/journal?
+
+check usage
+$ journalctl --disk-usage
+
+a. This will retain the most recent 1000M of data.
+   journalctl --vacuum-size=1000M
+
+
+b. This will delete everything but the last 365 days.
+   journalctl --vacuum-time=365d
+
+
+c. vi /etc/systemd/journald.conf
+    SystemMaxUse=1000M
+
+    $ service systemd-journald restart
+
+
+
+
+-------------------------------------------------
+CentOS
+DO NOT RUN --- sudo yum update - it will update almost all packages!
+$ sudo yum install nfs-utils
+
+https://superuser.com/questions/309834/how-to-run-a-script-on-centos-linux-startup
+/etc/crontab
+@reboot /path/to/script
+
+-------------------------------------------------
+Ubuntu
+sudo apt-get -y update
+>> apt update: updates the package cache (to know which package versions can be installed or upgraded)
+>> apt upgrade: upgrades packages to the new version.
+
+$ sudo apt install nfs-common
+
+###apt --fix-broken install
+-------------------------------------------------
+
+1. Install nfs server
+   sudo apt install -y nfs-kernel-server
+
+2. Create shared directory to serve
+   sudo mkdir /storage
+   sudo chown -R nobody:nogroup /storage
+   sudo chmod -R 777 /storage
+
+3. Add share to nfs exports
+   sudo vi /etc/exports
+
+   Add the following line to /etc/exports.
+   /storage *(rw,sync,no_subtree_check)
+   /storage 192.168.1.5(rw,sync,no_subtree_check)
+
+4. Restart nfs-kernel-server
+   sudo systemctl restart nfs-kernel-server
+
+5. Confirm that the directory is being shared by running
+   sudo exportfs
+
+
+$ systemctl enable nfs-kernel-server
+Synchronizing state of nfs-kernel-server.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable nfs-kernel-server
+
+1. Make a local directory to map to the Filestore file share:
+   mkdir /mnt/cdn/clients/gna
+
+
+mount 10.219.186.202:/cl_home /mnt/cdn
+
+mount 10.128.0.35:/storage/hga /www/hga/lamp/rda/storage/app/hga
+
+
+   sudo mkdir /storage
+   sudo mkdir /storage/nfs
+   sudo mkdir /storage/nfs/nif
+   sudo mkdir /storage/nfs/nif/donor
+   sudo mkdir /storage/nfs/nif/admin
+   sudo mkdir /storage/nfs/nif/grantee
+   sudo mkdir /storage/nfs/nif/agency
+   sudo mkdir /storage/nfs/nif/bulk/
+   sudo mkdir /storage/nfs/nif/bulk/gh/
+   sudo mkdir /storage/nfs/nif/bulk/statements/
+
+   sudo mkdir /storage/nfs
+   sudo mkdir /storage/nfs/hga
+   sudo mkdir /storage/nfs/hga/donor
+   sudo mkdir /storage/nfs/hga/admin
+   sudo mkdir /storage/nfs/hga/grantee
+   sudo mkdir /storage/nfs/hga/agency
+   sudo mkdir /storage/nfs/hga/bulk/
+   sudo mkdir /storage/nfs/hga/bulk/gh/
+   sudo mkdir /storage/nfs/hga/bulk/statements/
+
+   sudo mkdir /storage/nfs
+   sudo mkdir /storage/nfs/gna
+   sudo mkdir /storage/nfs/gna/donor
+   sudo mkdir /storage/nfs/gna/admin
+   sudo mkdir /storage/nfs/gna/grantee
+   sudo mkdir /storage/nfs/gna/agency
+   sudo mkdir /storage/nfs/gna/bulk/
+   sudo mkdir /storage/nfs/gna/bulk/gh/
+   sudo mkdir /storage/nfs/gna/bulk/statements/
+
+   sudo chown -R nobody:nogroup /storage
+   sudo chmod -R 777 /storage/nfs
+
+
+   /storage/nfs/gna *(rw,sync,no_subtree_check)
+   /storage/nfs/nif *(rw,sync,no_subtree_check)
+   /storage/nfs/hga *(rw,sync,no_subtree_check)
+
+
+QA:
+mount 10.128.0.35:/storage/qa-nfs/nif /www/nif/lamp/rda/storage/nfs/nif
+mount 10.128.0.35:/storage/qa-nfs/nif /usr/local/apache/nfs/nif
+
+UAT:
+mount 10.128.0.61:/storage/uat-nfs/hgav2 /www/uat/hgav2/lamp/rda/storage/nfs/hga
+mount 10.128.0.61:/storage/uat-nfs/hgav2 /usr/local/apache/nfs/hgav2
+
+mount 10.128.0.61:/storage/uat-nfs/nif /www/nif/lamp/rda/storage/nfs/qa/nif
+mount 10.128.0.61:/storage/uat-nfs/hga /usr/local/apache/nfs/hga
+mount 10.128.0.61:/storage/uat-nfs/nif /usr/local/apache/nfs/nif
+
+mount 10.128.0.61:/storage/nfs/qa/gna /usr/local/apache/nfs/demo
+
+
+PROD:
+mount 10.128.0.192:/storage/nfs/prod/nif /www/prod/nif/lamp/rda/storage/nfs/nif
+mount 10.128.0.192:/storage/nfs/prod/nif /usr/local/apache/nfs/nif
+
+DEMO:
+mount 10.128.0.61:/storage/nfs/qa/gna /www/gna/lamp/rda/storage/nfs/qa/gna
+
+
+
+apt-get clean
+apt-get autoclean
+apt-get autoremove
+
+
+A - scripts
+A.1 create directory
+    $ mkdir /usr/local/bin/nfs
+A.2 create the following files in /usr/local/bin/nfs
+
+A.2.1 $vi mount.sh
+------------------------------------------------------------------------------------------
+#!/bin/sh
+
+now=$(date)
+
+point=$1
+directory=$2
+
+if mountpoint -q "$directory" ; then
+        echo "$now" : "$directory" is mounted. >> /var/log/nfs-mounted.log
+else
+        echo "$now" : Mounting "$directory" >> /var/log/nfs-mounting.log
+        mount "$point" "$directory" >> /var/log/nfs-mounting.log 2>&1
+fi
+------------------------------------------------------------------------------------------
+
+A.2.2 $ vi check-nfs.sh
+File for Responsive QA (Make changes as necessary)
+------------------------------------------------------------------------------------------
+#!/bin/sh
+
+cd /usr/local/bin/nfs
+
+#GNA
+point=10.128.0.61:/storage/ENV-nfs/gna
+directory=/www/gna/lamp/rda/storage/nfs/gna
+./mount.sh "$point" "$directory"
+
+#NIF
+point=10.128.0.61:/storage/ENV-nfs/nif
+directory=/www/nif/lamp/rda/storage/nfs/nif
+./mount.sh "$point" "$directory"
+
+#HGA
+point=10.128.0.61:/storage/ENV-nfs/hga
+directory=/www/hga/lamp/rda/storage/nfs/hga
+./mount.sh "$point" "$directory"
+
+#JCF
+point=10.128.0.61:/storage/ENV-nfs/jcf
+directory=/www/jcf/lamp/rda/storage/nfs/jcf
+./mount.sh "$point" "$directory"
+
+#MERCY
+point=10.128.0.61:/storage/ENV-nfs/mercy
+directory=/www/mercy/lamp/rda/storage/nfs/mercy
+./mount.sh "$point" "$directory"
+
+#GMF
+point=10.128.0.61:/storage/ENV-nfs/gmf
+directory=/www/gmf/lamp/rda/storage/nfs/gmf
+./mount.sh "$point" "$directory"
+------------------------------------------------------------------------------------------
+
+B. Create directories on Response (or Classic) Server
+
+Go to storage
+/www/CLIENT/lamp/rda/storage
+Create directories
+$ mkdir /www/ENV/CLIENT/lamp/rda/storage/nfs
+$ mkdir /www/ENV/CLIENT/lamp/rda/storage/nfs/CLIENT
+Go to /www/ENV/CLIENT/lamp/rda/storage/nfs/CLIENT
+
+
+mkdir /www/uat/nif/lamp/rda/storage/nfs
+mkdir /www/uat/nif/lamp/rda/storage/nfs/nif
+
+mkdir /www/uat/gna/lamp/rda/storage/nfs
+mkdir /www/uat/gna/lamp/rda/storage/nfs/gna
+
+mkdir /www/uat/hga/lamp/rda/storage/nfs
+mkdir /www/uat/hga/lamp/rda/storage/nfs/hga
+
+mkdir /www/uat/jcf/lamp/rda/storage/nfs
+mkdir /www/uat/jcf/lamp/rda/storage/nfs/jcf
+
+mkdir /www/uat/gmf/lamp/rda/storage/nfs
+mkdir /www/uat/gmf/lamp/rda/storage/nfs/gmf
+
+mkdir /www/uat/mercy/lamp/rda/storage/nfs
+mkdir /www/uat/mercy/lamp/rda/storage/nfs/mercy
+
+- add an entry in crontab
+#every hour
+0 * * * * /usr/local/bin/nfs/check-nfs.sh
+
+
+install composer
+
+sudo apt-get remove composer
+sudo apt-get update
+sudo apt-get install curl
+sudo curl -s https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+

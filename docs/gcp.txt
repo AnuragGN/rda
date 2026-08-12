@@ -1,0 +1,23 @@
+
+New server
+
+#Command to show users and their permissions
+sudo cat /etc/group
+
+rmehra:x:1002:
+alok:x:1003:
+alkesh:x:1004:
+rahul:x:1006:
+
+#Command to show  a list of users type:
+cat /etc/passwd
+
+rmehra:x:1001:1002::/home/rmehra:/bin/bash
+alok:x:1002:1003::/home/alok:/bin/bash
+alkesh:x:1003:1004::/home/alkesh:/bin/bash
+rahul:x:1005:1006::/home/rahul:/bin/bash
+
+#As root, run this command to add your new user to the sudo group (substitute the highlighted word with your new user):
+usermod -aG sudo alkesh
+
+

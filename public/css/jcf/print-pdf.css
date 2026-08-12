@@ -1,0 +1,83 @@
+.indent-1 td:first-child {
+    padding-left: 4px;
+}
+.indent-1 td:last-child {
+    padding-right: 4px;
+}
+.indent-2 td:first-child {
+    padding-left: 24px;
+}
+.indent-2 td:last-child {
+    padding-right: 24px;
+}
+.indent-3 td:first-child {
+    padding-left: 44px;
+    font-size: 14px;
+    color: #757575;
+}
+.indent-3 td:last-child {
+    padding-right: 44px;
+    font-size: 15px;
+    color: #757575;
+}
+
+td {
+    font-size: 15px;
+}
+.cls-end-balance td,
+.cls-default-bold td {
+    font-size: 16px;
+    font-weight: bold;
+}
+.fund-kv.p-fund-pool {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.fs-print main table {
+    width: 100%;
+}
+.fs-print main .fund-pool .pool-values {
+    display: block!important;
+}
+
+/* fund-pool-container */
+.fs-print main table.pool-container {
+    margin-bottom: 30px;
+}
+.fs-print main table.pool-container tr.fund-pool td:nth-child(2) {
+    text-align: right;
+}
+.fs-print main table.pool tr.fund-pool td:nth-child(2) {
+    text-align: right;
+}
+.fs-print main table tr.fund-kv td:nth-child(2) {
+    text-align: right;
+}
+
+.fs-print main .title-box {
+    width: 100%;
+    border-bottom: 1px solid #b4b4b4;
+    margin-top: 30px;
+    margin-bottom: 12px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+}
+.fs-print main .title {
+    font-size: 125%;
+    font-weight: bold;
+    color: #424242;
+}
+.fs-print main .sub-title {
+    font-size: 105%;
+    font-weight: bold;
+    border-bottom: 1.5px solid #000;
+    margin-top: 30px;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    padding-left: 4px;
+    color: #424242;
+}
+.fs-print main .date {
+    font-size: 90%;
+    text-align: right;
+}

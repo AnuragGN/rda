@@ -1,0 +1,66 @@
+.gh_data_source {
+    display: none!important;
+}
+
+header, .gn-navbar {
+    /*background: #779b49;*/
+    /*background: linear-gradient( 5deg, white, white, white, #779b49, #779b49 );*/
+    /*background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(230, 242, 236, 1) 100%);*/
+    background: linear-gradient(0deg, #fff 0%, #e6f2ec 100%);
+
+    /*url(/images/gmf/header-bg.png) center top no-repeat;*/
+}
+a:hover {
+    text-decoration: none;
+}
+.gn-navbar {
+    /*padding: .75rem 1rem 0.5rem;*/
+    padding: 0 1rem;
+}
+.gn-navbar .navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.gn-powered-by {
+    border-top: 1px solid #999;
+}
+.gn-footer {
+    /*font-size: 14px;*/
+    /*margin-top: 60px;*/
+    /*background: #00758f!important;*/
+    color: white;
+    /*padding: 0.5rem 0 0;*/
+}
+.gn-footer .social-icon img {
+    width: 20px;
+    margin: 0 3px;
+}
+.gn-footer .gna-ul {
+    list-style: none;
+    padding-left: 0;
+}
+.gn-footer .hga-copyright {
+    text-align: center;
+    width: 100%;
+    margin-top: 1rem;
+    font-size: 11px;
+}
+.gn-footer .contact-details {
+    /*margin-bottom: 1.5rem*/
+}
+.gn-footer .contact-details p {
+    margin-bottom: 0.5rem;
+}
+.fund-pool .pool-values {
+    border-top: 1px solid #e4e4e4;
+    padding: 0.25rem 0 0 1.5rem;
+    margin-top: 0.25rem;
+}
+.cart-grant .item .key {
+    font-size: 0.875rem;
+    color: #757575;
+    font-weight: 600;
+}
+.cart-grant .item {
+    color: #212121;
+}

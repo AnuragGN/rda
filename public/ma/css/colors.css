@@ -1,0 +1,53 @@
+
+.form-make-grant.gn-form2 {
+    /*background: white;*/
+    /*border: none;*/
+    /*padding: 0;*/
+}
+.gn-form2 .form-control {
+    /*border-color: #e4ebdb;*/
+    /*background: #f5f5f5;*/
+    /*border-radius: 2px;*/
+}
+.gn-form2 .col-form-label {
+    /*color: #585951;*/
+}
+
+.form-make-grant.gn-form {
+    /*background: white;*/
+    /*border: none;*/
+    /*padding: 0;*/
+}
+.gn-form .form-control {
+    border-color: #e4ebdb;
+    background: #f5f5f5;
+    border-radius: 2px;
+}
+.gn-form .col-form-label {
+    color: #585951;
+}
+
+.gray50 { color: #FAFAFA; }
+
+.gray100 { color: #F5F5F5; }
+.gray200 { color: #EEEEEE; }
+.gray300 { color: #E0E0E0; }
+.gray400 { color: #BDBDBD; }
+.gray500 { color: #9E9E9E; }
+.gray600 { color: #757575; }
+.gray700 { color: #616161; }
+.gray800 { color: #424242; }
+.gray900 { color: #212121; }
+
+body > .wrapper {
+    background-color: #f4f6f9;
+}
+.total_warning {
+    color: red;
+}
+.inv-total-msg {
+    color: #000000;
+}
+.inv-total-err {
+    color: #ff0000;
+}

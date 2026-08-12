@@ -1,0 +1,511 @@
+***** UBUNTU ***********************************************************************************************************
+$ sudo apt-get install php-curl
+$ sudo service apache2 restart
+
+$ composer require authorizenet/authorizenet:2.0.0
+$ composer require barryvdh/laravel-dompdf (FOR PDF, not for auth-net!)
+Required for GD (for PDF)
+$ apt-get install php7.3-gd
+
+====>>>> eCheck!!!
+------------------
+
+***** REFERENCES *******************************************************************************************************
+
+=== GO LIVE ===
+https://developer.authorize.net/hello_world/go-live.html
+
+=== TESTING GUIDE ===
+https://developer.authorize.net/hello_world/testing_guide.html
+
+=== RESPONSE CODES ===
+https://developer.authorize.net/api/reference/responseCodes.html
+
+
+=== ARB ===
+https://developer.authorize.net/api/reference/features/recurring_billing.html
+https://developer.authorize.net/api/reference/index.html#recurring-billing
+
+
+
+https://support.authorize.net/s/article/Sandbox-FAQ
+
+ACH TEST INPUT
+https://community.developer.authorize.net/t5/Integration-and-Testing/valid-test-checks-for-echeck-net-integration/m-p/17288#M9676
+We do not have any test numbers for eCheck because there is really no real time authorization for electronic check and the only thing that is verified when you submit an eCheck transaction is if the routing number is valid or not. So any valid routing numbers should work along with random account numbers. As long as you are using a test account, then you can use any routing number and just make up the account number.
+
+https://bankorganizer.com/list-of-routing-numbers/#bank-of-america
+
+Region	ACH (electronic/direct)	    ABA (check)	    Wire
+all	    124003116	                124003116	    124003116
+AK	    051000017	                051000017	    026009593
+
+
+Citizens Bank Routing Numbers
+Region	ACH (electronic/direct)	ABA (check)	Wire
+CT	    211170114	            211170114	011500120
+DE	    031101143	            031101143	031101143
+
+HSBC Bank USA Routing Numbers
+Region	ACH (electronic/direct)	ABA (check)	Wire
+all	    021001088	            021001088	021001088
+
+
+
+The minimum data required for transaction requests are
+    - authentication,
+    - payment information, and
+    - payment amount.
+
+For best practices, most transactions will also include information such as a
+    - billing address,
+    - order details, and
+    - customer details.
+
+
+RESPONSE CODE
+If the API request was successfully processed (resultCode = Ok), there will also be a response code to indicate the result of submitting the transaction request to the banking network. In a standard credit card transaction, there are only four possible response codes.
+
+1 - Approved
+2 - Declined
+3 - Error
+4 - Held for Review
+
+1. Response - success and failure
+2. Proper data in database and log
+3. Recent transactions
+4. Email to admin & donor
+
+https://developer.authorize.net/hello_world/testing_guide.html
+
+https://github.com/AuthorizeNet/sdk-php
+https://developer.authorize.net/api/reference/features/acceptjs.html
+
+https://github.com/AuthorizeNet/accept-sample-app/blob/master/README-AcceptHosted.md
+
+https://medium.com/dinssa/ssl-certificates-laravel-homestead-windows-https-f83ec8b3198
+chrome://flags/#allow-insecure-localhost
+
+developer.authorize.net
+
+API LOGIN ID : 9U7yvp9YVE47  == Merchant ID ?
+TRANSACTION KEY : 48bdE57bxLF27fC9 == Merchant Security Key ?
+KEY : Simon
+Public Client Key: 3cfnYqhzcjpTLf7WfbNbNP6KK79QxBUtUgMNRn7r9maRj472nhR9em56KtFFh69f
+
+May 16, 2020
+Client Signature Key: 2A3142D25D6A72621EBABE290479489262CBEB0E8EFF3676A6CA5B2DA85F6DBD3A82098717F353A0C6AE3FA8B4E3BF311BDCF4BBE23CA17952D8CFEB9DC01700
+
+SUCCESS RESPONSE:
+[+
+[
+{
+refId: "ref1589288170",
+messages: {
+resultCode: "Ok",
+message: [
+{
+code: "I00001",
+text: "Successful."
+}
+]
+}
+},
+" Successfully created transaction with Transaction ID: 40048759380 Transaction Response Code: 1 Message Code: 1 Auth Code: UKOX6C Description: This transaction has been approved. "
+]
+]
+
+
+Dear ﻿ALKESH﻿
+
+Congratulations, your new Authorize.Net sandbox account is ready for use. Please take a moment to review this email as it contains important information
+
+Login to the Sandbox Merchant Interface
+
+You can access the Sandbox Merchant Interface at https://sandbox.authorize.net.
+
+Use the Login ID and Password you created when signing up for your sandbox account. If you forgot your credentials, use the links on Sandbox Merchant Interface sign-in page to recover them.
+The default answer to the secret question “What is your Pet Name?” is “Simon”
+Access your API Login ID and Transaction key by clicking Account > API Login ID and Transaction Key in the Sandbox Merchant Interface.
+Always use sandbox in Live Mode. Because the sandbox does not connect to the card networks, you can safely use it in Live Mode without fear of creating actual transactions
+
+Getting Started
+Learn about the  Authorize.Net API Features
+http://app.payment.authorize.net/e/er?utm_campaign=19_Q1%20New%20Sandbox%20Account%20Notice&utm_medium=email&utm_source=Eloqua&s=986383348&lid=746&elqTrackId=38A6EA1F22F048CDA6A0F6F643564171&elq=4ce350d0894d493b83cba48ec159ddeb&elqaid=846&elqat=1
+
+Browse our API Reference guide and try it using the interactive console or look at sample code
+http://app.payment.authorize.net/e/er?utm_campaign=19_Q1%20New%20Sandbox%20Account%20Notice&utm_medium=email&utm_source=Eloqua&s=986383348&lid=745&elqTrackId=CF317C3364D18E0ED53234FEEC1F891C&elq=4ce350d0894d493b83cba48ec159ddeb&elqaid=846&elqat=1
+
+Use the language SDK of your choice on our  Hello World page
+http://app.payment.authorize.net/e/er?utm_campaign=19_Q1%20New%20Sandbox%20Account%20Notice&utm_medium=email&utm_source=Eloqua&s=986383348&lid=744&elqTrackId=BC24060BB45151599AC0E6314B091600&elq=4ce350d0894d493b83cba48ec159ddeb&elqaid=846&elqat=1
+
+
+Testing Your Integration
+Review the Testing Guide , use test card and account numbers to simulate specific error conditions
+Lookup Response (error) codes, read how to correct them using related topics
+Read our FAQs
+
+Getting Help
+Get answers in our developer community forum
+Submit a question using our Developer Support Form
+
+Sincerely,
+
+Authorize.Net
+
+
+Typically, four actors participate in a payment card transaction.
+
+Merchant: A merchant sells products or services to customers, and can use the Authorize.Net Payment Gateway and its API to submit payment transactions.
+Customer: A customer buys products or services from merchants using a payment card from an issuing bank.
+Issuing Bank: An issuing bank provides payment cards to customers and represent customers in disputes.
+Acquiring Bank: An acquiring bank underwrites merchants so the merchants can accept payment cards. Acquiring banks also represent merchants in disputes.
+
+
+The minimum data required for transaction requests are
+ - authentication,
+ - payment information, and
+ - payment amount. For best practices,
+
+most transactions will also include information such as a
+ - billing address,
+ - order details, and
+ - customer details.
+
+<merchantAuthentication>
+	<name>API LOGIN ID</name>
+	<transactionKey>TRANSACTION KEY</transactionKey>
+</merchantAuthentication>
+<transactionType>authCaptureTransaction</transactionType>
+<amount>139.94</amount>
+<payment>
+  <creditCard>
+	<cardNumber>5424000000000015</cardNumber>
+	<expirationDate>1220</expirationDate>
+	<cardCode>999</cardCode>
+  </creditCard>
+</payment>
+<order>
+  <invoiceNumber>INV-12345</invoiceNumber>
+  <description>Golf Supplies</description>
+</order>
+<customer>
+  <id>39432</id>
+  <email>customer@example.com</email>
+</customer>
+<billTo>
+  <firstName>John</firstName>
+  <lastName>Doe</lastName>
+  <address>1234 Main St</address>
+  <city>Pecan Springs</city>
+  <state>TX</state>
+  <zip>44628</zip>
+  <country>USA</country>
+</billTo>
+
+
+Completed Request
+<createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+	<name>API LOGIN ID</name>
+	<transactionKey>TRANSACTION KEY</transactionKey>
+  </merchantAuthentication>
+  <transactionRequest>
+	<transactionType>authCaptureTransaction</transactionType>
+	<amount>139.94</amount>
+	<payment>
+	  <creditCard>
+		<cardNumber>5424000000000015</cardNumber>
+		<expirationDate>1220</expirationDate>
+		<cardCode>999</cardCode>
+	  </creditCard>
+	</payment>
+	<order>
+	  <invoiceNumber>INV-12345</invoiceNumber>
+	  <description>Golf Supplies</description>
+	</order>
+	<lineItems>
+	  <lineItem>
+		<itemId>243</itemId>
+		<name>Golf Bag</name>
+		<description>Blue wheeled golf bag</description>
+		<quantity>1</quantity>
+		<unitPrice>129.99</unitPrice>
+	  </lineItem>
+	  <lineItem>
+		<itemId>42</itemId>
+		<name>Golf Ball</name>
+		<description>Long Drive II Balls</description>
+		<quantity>5</quantity>
+		<unitPrice>1.99</unitPrice>
+	  </lineItem>
+	</lineItems>
+	<customer>
+	  <id>39432</id>
+	  <email>customer@example.com</email>
+	</customer>
+	<billTo>
+	  <firstName>John</firstName>
+	  <lastName>Doe</lastName>
+	  <address>1234 Main St</address>
+	  <city>Pecan Springs</city>
+	  <state>TX</state>
+	  <zip>44628</zip>
+	  <country>USA</country>
+	</billTo>
+	<shipTo>
+	  <firstName>John</firstName>
+	  <lastName>Doe</lastName>
+	  <address>PO Box 3432</address>
+	  <city>Pecan Springs</city>
+	  <state>TX</state>
+	  <zip>44628</zip>
+	  <country>USA</country>
+	</shipTo>
+  </transactionRequest>
+</createTransactionRequest>
+
+
+Connecting to Authorize.Net
+Standard HTTPS POST
+
+API ENDPOINTS
+Production: https://api.authorize.net/xml/v1/request.api
+Sandbox: https://apitest.authorize.net/xml/v1/request.api
+
+
+
+Sample Transaction Response
+
+<createTransactionResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <messages>
+	<resultCode>Ok</resultCode>
+	<message>
+	  <code>I00001</code>
+	  <text>Successful.</text>
+	</message>
+  </messages>
+  <transactionResponse>
+	<responseCode>1</responseCode>
+	<authCode>M8WDJH</authCode>
+	<avsResultCode>Y</avsResultCode>
+	<cvvResultCode>P</cvvResultCode>
+	<cavvResultCode>2</cavvResultCode>
+	<transId>60018491646</transId>
+	<refTransID />
+	<transHash>C506AEC27A28D2FC05A45F3CFC88D0E4</transHash>
+	<accountNumber>XXXX0015</accountNumber>
+	<accountType>Mastercard</accountType>
+	<messages>
+	  <message>
+		<code>1</code>
+		<description>This transaction has been approved.</description>
+	  </message>
+	</messages>
+	<transHashSha2>D7CAC3F4DD234A3832B681A06F4D8C3AD362892D222356F110D75BE2E035E66F3C27B1E9BDA5FF1AC7AF9BF5FA7FDB89F4326D09BE35D6AF723714B6C1508539</transHashSha2>
+  </transactionResponse>
+</createTransactionResponse>
+
+
+RESPONSE CODE
+If the API request was successfully processed (resultCode = Ok),
+there will also be a response code to indicate the result of submitting the transaction request to the banking network.
+In a standard credit card transaction, there are only four possible response codes.
+
+1 - Approved
+2 - Declined
+3 - Error
+4 - Held for Review
+
+REASPONSE REASON CODES
+http://developer.authorize.net/api/reference/responseCodes.html
+
+
+
+
+---------------------------------------------------------------------------------
+Requirements:
+
+The system should be able to accept one-time payments through a “Donate Now” button available at the landing page (or as advised by client), via credit / debit cards and other online payment options (PayPal in particular)
+The system should be able to route payment through a secure payment form, capturing all required information from the Donor
+The system should be able to route the payment and captured details into a pre-designated client bank account
+The system should  be able to provide a payment receipt back to the Donor, via screen display and donor email provided
+
+
+Assumptions:
+
+The client already has a bank account setup, which could be used to receive payments coming via payment gateway.
+---------------------------------------------------------------------------------
+
+
+
+
+
+1. HELLO WORLD!!!
+https://developer.authorize.net/hello_world.html?utm_campaign=19_Q1%20New%20Sandbox%20Account%20Notice&utm_medium=email&utm_source=Eloqua
+
+
+
+https://developer.authorize.net/hello_world.html?utm_campaign=19_Q1%20New%20Sandbox%20Account%20Notice&utm_medium=email&utm_source=Eloqua
+https://developer.authorize.net/api.html
+https://developer.authorize.net/api/reference/features/payment_transactions.html#Basics_of_Credit_Card_Processing
+https://developer.authorize.net/api/reference/index.html#payment-transactions
+https://developer.authorize.net/api/reference/index.html?utm_campaign=19_Q1%20New%20Sandbox%20Account%20Notice&utm_medium=email&utm_source=Eloqua#customer-profiles-create-customer-profile
+
+https://developer.authorize.net/
+https://developer.authorize.net/api.html
+https://www.authorize.net/sign-up.html
+https://www.authorize.net/developers.html
+https://developer.authorize.net/
+https://developer.authorize.net/api/reference/index.html
+https://developer.authorize.net/hello_world/sandbox.html
+
+
+
+https://github.com/AuthorizeNet/accept-sample-app/blob/master/IFrameCommunicator.html
+https://developer.authorize.net/api/reference/features/acceptjs.html#Integrating_the_Hosted_Payment_Information_Form
+https://developer.authorize.net/api/reference/features/acceptjs.html
+
+
+
+refId: "ref1589710168",
+messages: resultCode: "Ok",
+    message:
+        code: "I00001",
+        text: "Successful."
+
+Successfully created transaction with
+Transaction ID: 40049054973
+Transaction Response Code: 1
+Message Code: 1
+
+Auth Code: KU4NRF
+Description: This transaction has been approved. "
+
+
+table name: transaction
+
+// primary key
+id (integer / big integer)
+
+// reference id
+ref_id (string/64)
+
+// from
+contact_id (integer / big integer)
+contact_email (string/128)
+
+// to
+target_type (string / 20) = fund, organization
+target_id (string / 20) = fund_id, organization_id (will have int as string)
+
+// transaction info
+amount (float?)
+currency (string / 3)
+transaction_id (string? / 32)
+transaction_date (date)
+transaction_type (string / 20) = card, bank,
+
+// response info
+response_code (integer)
+response_auth_code (string)
+response_description (string)
+
+// customer comment / note
+note (text / 256)
+
+bill_first_name (string / 32)
+bill_last_name (string / 32)
+bill_address (string / 255) (add1+ add2)
+bill_city (string / 32?) classic system
+bill_state (string ) classic system
+bill_country (string) classic system
+bill_zip (string) classic system
+
+// current/latest status
+status (integer)
+
+created_on / at? classic system
+updated_on / at? classic system
+
+ref_id: "ref1589869856",
+contact_id: 31742,
+contact_email: "alkesh@sageite.com",
+target_type: "fund",
+target_id: "WELTER",
+
+amount: "303.00",
+CURRENCY!!!
+transaction_id: "40049126693",
+transaction_date: "",
+transaction_type: "card",
+
+bill_first_name: "Louis",
+bill_last_name: "Welter",
+bill_address: "316 Lincoln St.",
+bill_city: "Cupertino",
+bill_state: "CA",
+bill_country: "USA",
+bill_zip: "95014",
+
+status: 2,
+note: null,
+
+account_number: "XXXX1111",
+account_type: "Visa",
+
+auth_code: "IJ8R5K",
+response:
+
+
+
+
+table name: transaction
+
+// primary key
+id (integer / big integer)
+
+// reference id
+ref_id (string/64)
+
+// customer
+contact_id (integer / big integer)
+contact_email (string/128)
+
+// from card info / bank info ?
+account_number: "XXXX1111",
+account_type: "Visa",
+
+// to
+target_type (string / 20) = fund, organization
+target_id (string / 20) = fund_id, organization_id (will have int as string)
+
+// transaction info
+amount (float?)
+currency (string / 3)
+transaction_id (string? / 32)
+transaction_date (date)
+transaction_type (string / 20) = card, bank,
+
+// response info
+response (text)
+response_auth_code (string)
+
+// customer comment / note
+note (text / 256)
+
+// customer address
+bill_first_name (string / 32)
+bill_last_name (string / 32)
+bill_address (string / 255) (add1+ add2)
+bill_city (string / 32?) classic system
+bill_state (string ) classic system
+bill_country (string) classic system
+bill_zip (string) classic system
+
+// current/latest status
+status (integer)
+message (string / 256)
+
+created_on / at? classic system
+updated_on / at? classic system

@@ -1,0 +1,49 @@
+
+
+~resources/views/layouts - old nav / page layout
+~resources/views/donor/layouts
+~resources/views/seeker/layouts
+~resources/views/agency/layouts
+
+
+
+URLs / Routes
+ - for donor
+    * default ~/~
+ - for agency pages
+    * ~/agency/~
+ - for grant seeker
+    * ~/gs/~
+ - for admin
+    * ~/admin/~ before signing in
+    * ~/console/~ after signing in
+
+Models
+ - models are common for all user types - no change
+
+ app/Http/Controllers
+ - ~/Admin (User role)
+ - ~/Agency (User role)
+ - ~/Donor (User role)
+ - ~/Seeker (User role)
+ - ~/Auth (common)
+ - ~/Common Controllers
+
+
+resources/views
+ - ~/admin (User role)
+ - ~/agency (User role)
+ - ~/donor (User role)
+ - ~/seeker (User role)
+ - one directory for each client (fig, gmf, gna, hga, jcf)
+ - ~/auth (common)
+ - ~/utils (common)
+ - common directories
+    * ~/charity
+    * ~/content (articles)
+    * ~/donation
+    * ~/errors
+    * ~/external
+    * ~/org (organizations)
+    * ~/pdf (PDF printing)
+    * ~/profiles (User profiles)

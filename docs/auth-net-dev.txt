@@ -1,0 +1,28 @@
+
+***** Sandbox vs Production ********************************************************************************************
+Steps:
+    1. Load proper js file in View
+    Views:
+        - resources/views/donation/_form_donation.blade.php (reads keys from env)
+        - resources/views/transactions/auth-net-form.blade.php (reads keys from env)
+        - TEST (is not part of app): resources/views/transactions/sandbox-init.blade.php
+
+    2. User proper environment name (SANDBOX / PRODUCTION) in API controller call.
+    Source Code:
+        - app/Http/Controllers/AuthorizeNetBaseController.php
+
+    3. User proper MERCHANT_LOGIN_ID, MERCHANT_TRANSACTION_KEY and MERCHANT_PUBLIC_CLIENT_KEY in .env file
+
+You can get "MERCHANT_PUBLIC_CLIENT_KEY" - using MERCHANT_LOGIN_ID and MERCHANT_TRANSACTION_KEY
+https://developer.authorize.net/api/reference/index.html#transaction-reporting-get-merchant-details
+
+Public Client Key
+Account > Settings > Security Settings > General Security Settings > Manage Public Client Key
+
+API Login ID & Transaction Key
+Account > Settings > Security Settings > General Security Settings > API Credentials and Keys
+
+
+https://developer.authorize.net/api/reference/features/acceptjs.html
+
+************************************************************************************************************************

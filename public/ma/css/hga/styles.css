@@ -1,0 +1,89 @@
+body, a, p, h1, h2, h3, h4, h5, h6, .tooltip  {
+    font-family: AvenirLTStd, sans-serif;
+}
+
+header, .gn-navbar {
+    /*background: #779b49;*/
+    /*background: linear-gradient( 5deg, white, white, white, #779b49, #779b49 );*/
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(241,245,237,1) 100%);
+    /* F1F5ED */
+
+    /*url(/images/gmf/header-bg.png) center top no-repeat;*/
+}
+
+.gn-footer {
+    font-size: 12px;
+    background: #666!important;
+    color: white;
+    padding: 1.25rem 0 0;
+}
+.gn-footer .container a {
+    color: #fff;
+}
+.gn-footer .social-icon img {
+    width: 20px;
+    margin: 0 3px;
+}
+.gn-footer .hga-ul {
+    list-style: none;
+    padding-left: 0;
+}
+.gn-footer .hga-ul a {
+    color: #fff;
+}
+.gn-footer .hga-ul a:hover {
+    color: #d4d4d4;
+}
+.gn-footer .hga-copyright {
+    text-align: center;
+    width: 100%;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 11px;
+}
+.gn-footer .hga-links {
+}
+
+.fund-pool .pool-values {
+    border-top: 1px solid #e4e4e4;
+    padding: 0.25rem 0 0 1.5rem;
+    margin-top: 0.25rem;
+}
+
+.row-hero .hero-box .overlay {
+    opacity: 0.2;
+}
+
+.tooltip .tooltip-inner {
+    max-width: 350px !important;
+    background-color: #789d4a;
+    padding: 10px;
+    text-align: left;
+    opacity: 1.0;
+    filter: alpha(opacity=100);
+}
+.gn-powered-by {
+    background: #666!important;
+    border-top: 1px solid #c4c4c4;
+    margin-top: 10px;
+}
+.navbar .nav-phone {
+    font-size: 14px;
+}
+.navbar .nav-login {
+    font-size: 14px;
+    text-align: right;
+}
+.login-card-box {
+    margin-top: 1rem;
+}
+.btn {
+    text-transform: uppercase;
+}
+.content-header h1 {
+    text-transform: uppercase;
+}
+.main-sidebar .hr-divider {
+    margin: 0;
+    border: none;
+}

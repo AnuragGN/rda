@@ -1,0 +1,77 @@
+
+@extends (\App\Helpers\GnUtils::getUserView('layouts.main'), \App\Helpers\GnUtils::isDonorSession() ? ['container' => 'none'] : [])
+
+@section ('content')
+
+    @include('common.page-header', ['pageTitle' => 'Preferences', 'hcXlWidth' => 12])
+
+    <section class="content">
+        <div class="container">
+            <div class="form-wrapper2 form-last2">
+                <div class="row profile-view">
+                    <div class="col-xl-9">
+                        <div class="card gn-shadow profile-info">
+                            <div class="header">
+                                <div class="collapsible-child-visible">
+                                    Set Your Preferences</div>
+                            </div> 
+                            <div class="body">
+                                {{-- @if(session('success'))
+                                    <div class="alert alert-success">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                                @if($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif --}}
+                                <form action="{{ route('user.preferences.save') }}" method="POST">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-sm-11">
+                                            <div class="form-group row">
+                                                <label for="charity_id" class="col-sm-3 col-form-label text-right pr-0">Charity </label>
+                                                <div class="col-sm-6">
+                                                    <select id="charity_id" class="form-control" name="charity">
+                                                        <option value="" disabled selected>Click to select Charity</option>
+                                                        @foreach($charities as $charity)
+                                                            <option value="{{ $charity->id }}" {{ $charity->id == $selectedCharityId ? 'selected' : '' }}>{{ $charity->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="chart" class="col-sm-3 col-form-label text-right pr-0">Chart </label>
+                                                <div class="col-sm-6">
+                                                    <select id="chart" class="form-control" name="chart">
+                                                        <option value="" disabled selected>Click to select Chart</option>
+                                                        @foreach($charts as $chartKey => $chartVal)
+                                                            <option value="{{ $chartKey }}" {{ $chartKey == $selectedChartType ? 'selected' : '' }}>{{ $chartVal }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="form-group row">
+                                                <div class="offset-sm-3 col-sm-5 col-md-4">
+                                                    <input name="save" id="id_save_btn" class="btn btn-accent w100" type="submit" value="Update">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+@endsection
+

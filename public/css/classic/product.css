@@ -1,0 +1,376 @@
+body {
+    font-size: 16px;
+}
+
+/*hga*/
+.row-hero .hero-box .caption {
+    bottom: 2rem!important;
+}
+
+h1, h2, h3, h4 {
+    width: 100%;
+    color: #789d4a;
+    line-height: 1.4;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    padding-bottom: 0.25rem;
+    text-align: left!important;
+    border-bottom: 2px solid #d9d1ca;
+}
+h1, h2, h3 {
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+h1 {
+    font-size: 1.8rem;
+}
+h2 {
+    font-size: 1.6rem;
+}
+h3 {
+    font-size: 1.4rem;
+}
+h4 {
+    font-size: 1.2rem;
+}
+h1, h2, h3, h4 {
+}
+
+.interestListOrgs tbody tr td {
+    /*padding: 0;*/
+    /*font-size: 14px!important;*/
+}
+table tr td.tree-category {
+    font-weight: bold;
+    padding: 12px 0 6px;
+}
+table tr td.tree-sub-category {
+    padding-left: 2rem!important;
+    font-size: 14px;
+}
+
+input[type='checkbox'] {
+    margin-right: 8px;
+}
+
+table.interestListOrgs,
+table.interestListGeographic,
+table.interestListPopulation {
+    margin-top: 12px;
+}
+table.interestListOrgs .formField,
+table.interestListGeographic .formField,
+table.interestListPopulation .formField {
+    width: 50%;
+}
+table.interestListOrgs tr td:first-child,
+table.interestListGeographic tr td:first-child,
+table.interestListPopulation tr td:first-child {
+    padding-left: 1rem;
+}
+td.bar {
+    font-weight: 600;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #d9d1ca;
+}
+
+table.grantTable {
+    padding: 1.5rem 2rem 2rem;
+    margin: 1rem 0;
+    border-collapse: separate;
+    border: 1px solid #f0f0f0!important;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+input[type="text"], input[type="password"], select, textarea {
+    line-height: 1.5;
+    font-size: 1rem;
+    border-radius: 4px;
+    padding: .375rem .75rem;
+    border: 1px solid #7E7E73;
+    background-color: #fff;
+    background-clip: padding-box;
+}
+input[type='text'], input[type="password"], select {
+    height: 34px;
+}
+input[type="file"]  {
+    font-size: 90%;
+}
+textarea {
+    width: 100%;
+}
+.organizationSelector {
+    width: 100%;
+}
+.grantAmount {
+    margin-bottom: 1rem;
+}
+.organizationDetails textarea {
+    width: 100%;
+    height: 4rem;
+}
+.organizationDetailsContainer {
+    border-radius: 4px;
+    padding: 1rem;
+    background: #fff;
+}
+
+#DOTCHE_Module_profile_ChangePasswordModule input[type="password"] {
+    width: 240px;
+}
+
+table.btn-bar {
+    border-top: 1px solid #d9d1ca;
+    margin: 1rem 0;
+}
+
+table.btn-bar .btn {
+    margin: 1rem 0;
+}
+
+h1 a, h2 a, h3 a {
+    color: #789d4a;
+}
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover {
+    text-decoration: none;
+}
+
+.DOTCHE_Module_profile_ContactProfileModule table tr td:first-child {
+    padding-right: 8px;
+}
+
+.DOTCHE_Module_profile_ContactProfileModule table tr td:not(:first-child) {
+    padding-top: 8px;
+}
+/* error messages */
+#DOTCHE_Module_site_MessengerModule table {
+    background-color: pink!important;
+    border: none!important;
+    padding: 0!important;
+    border-radius: 4px;
+}
+#DOTCHE_Module_site_MessengerModule table tr td,
+#DOTCHE_Module_site_MessengerModule table tr td span {
+    height: 40px;
+    padding: 0.5rem 1rem;
+    color: red!important;
+    font-weight: normal!important;
+}
+#DOTCHE_Module_site_MessengerModule table tr td img {
+    height: 20px;
+}
+
+/* Edit Org Profile */
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-info {
+    width: 62%!important;
+}
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-images {
+    width: 30%!important;
+    line-height: 1.5;
+}
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-images tr td {
+    background-color: #ebebeb;
+    border: 1px dashed #ccc;
+    text-align: center;
+    padding-bottom: 16px;
+}
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-images img  {
+    width: 100%;
+    margin-bottom: 12px;
+}
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-images input[type="file"]  {
+    width: 200px;
+    border-radius: 0;
+}
+#DOTCHE_Module_profile_OrgProfileWorkflowModule .button_container {
+    width: 100%;
+    float: left;
+}
+#DOTCHE_Module_profile_OrgProfileWorkflowModule .form-btn-bar {
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+#DOTCHE_Module_profile_OrgProfileWorkflowModule ul {
+    padding-left: 1rem;
+}
+
+#DOTCHE_Module_profile_OrgProfileWorkflowModule .fiscal-org {
+    margin-left: 2rem;
+    background: #f5f5f5;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+table.dotcheV3 th,
+table.dotche1V3 th {
+    background-color: #f5f5f5;
+    padding: 0.5rem!important;
+    border-bottom: 1px solid #ccc;
+    font-size: 14px;
+}
+
+table.dotcheV3 input[type="text"] {
+    height: 28px;
+    color: #7E7E73;
+    padding: .375rem .375rem;
+}
+table.dotcheV3 tr td {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+#cke_programs, #cke_mission, #cke_history, #cke_volunteerism, #cke_objective1, #cke_board, #cke_summary {
+    width: 100%;
+}
+#cke_1_contents, #cke_2_contents, #cke_3_contents, #cke_4_contents, #cke_5_contents {
+    height: 200px;
+}
+
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-doc-upload {
+    background: #f5f5f5;
+}
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-doc-upload tr:first-child {
+    font-size: 90%;
+    border-bottom: 1px solid #c4c4c4;
+}
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-doc-upload tr.document {
+    background: #f0f0f0;
+}
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-doc-upload tr:first-child td {
+    font-weight: 600;
+}
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-doc-upload tr td:first-child {
+    min-width: 200px;
+    font-weight: bold;
+}
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-doc-upload tr td {
+    padding: 5px;
+}
+
+#DOTCHE_Module_profile_OrgProfileWorkflowModule table.org-doc-upload input[type=radio] {
+    margin-right: 8px;
+}
+
+#DOTCHE_Module_donor_ProfileMatching a.act-project {
+    margin-left: 1rem;
+}
+
+.org_match_areas { padding: 0 1rem 1rem; background: #f5f5f5; list-style: none; overflow: auto; }
+.org_match_areas li ul { padding-left: 1rem; float: left; list-style: none; }
+.org_match_areas li ul li { }
+.org_match_areas h3 { font-size: 1rem; margin-bottom: 0.5rem; padding-right: 2rem; }
+
+/*.matched_interest_areas h3 { background: url(/admin/images/icons/star.png) no-repeat 0 5px; }*/
+/*.matched_population_served h3 { background: url(/admin/images/icons/chart_pie.png) no-repeat 0 5px; }*/
+/*.matched_geographic_areas h3 { background: url(/admin/images/icons/map.png) no-repeat 0 5px; }*/
+
+#pager { margin-top: 1rem; margin-left: 0; padding-left: 0; white-space: nowrap; }
+#pager li { display: inline; list-style-type: none; }
+#pager a { padding: 3px 10px; }
+#pager a:link, #pager a:visited { background-color: #d9d1ca; color: #000; text-decoration: none; }
+#pager a:hover { background-color: #d9d1ca; color: #fff; text-decoration: none; }
+
+/* Horizontal Level 3 */
+#DOTCHE_Module_Menu ul#horizontal3 {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#DOTCHE_Module_Menu ul#horizontal3 li {
+    float: left;
+    margin: 0 1rem 0 0;
+}
+#DOTCHE_Module_Menu ul#horizontal3 li.active a {
+    color: #789d4a;
+    font-weight: bold;
+}
+#DOTCHE_Module_Menu ul#horizontal3 a {
+}
+#DOTCHE_Module_Menu ul#horizontal3 a:hover {
+}
+
+
+#DOTCHE_Module_profile_CatalogItemModule h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#DOTCHE_Module_donor_LastViewed .card.rp-card,
+#DOTCHE_Module_site_WorkflowStatusModule .card.rp-card,
+#DOTCHE_Module_Article .card.rp-card {
+    background: #f0edea;
+    border-radius: 0.25rem;
+}
+#DOTCHE_Module_donor_LastViewed .rp-card .card-body,
+#DOTCHE_Module_site_WorkflowStatusModule .rp-card .card-body,
+#DOTCHE_Module_Article .rp-card .card-body {
+    padding: 1.25rem 1.25rem 0.75rem;
+}
+#DOTCHE_Module_donor_LastViewed .card-title,
+#DOTCHE_Module_site_WorkflowStatusModule .card-title,
+#DOTCHE_Module_Article .card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+#DOTCHE_Module_donor_LastViewed .card-sub-title,
+#DOTCHE_Module_site_WorkflowStatusModule .card-sub-title,
+#DOTCHE_Module_Article .card-sub-title {
+    font-size: 1.1rem;
+}
+#DOTCHE_Module_donor_LastViewed p,
+#DOTCHE_Module_site_WorkflowStatusModule p,
+#DOTCHE_Module_Article p {
+    font-size: 95%;
+    margin-bottom: 0.75rem;
+}
+.catalog-city-state {
+    border-bottom: 2px solid #d9d1ca;
+    padding-bottom: 4px;
+}
+h3.organization_name {
+    margin-bottom: 0;
+    border-bottom: 0;
+    padding-bottom: 0;
+    text-transform: none;
+}
+.recently-viewed {
+    font-size: 95%;
+}
+
+/* should be moved to styles.css DOTCHE_Module_donor_MyTopGrants */
+#DOTCHE_Module_donor_FundCharity tbody tr td {
+    font-size: 14px;
+    padding: 0.6rem 0.25rem;
+}
+#DOTCHE_Module_donor_FundCharity thead tr td {
+    font-size: 14px;
+    padding: 0.25rem 0.25rem;
+}
+
+/* styles.css */
+.table-top-title {
+    padding: 1rem 0 0!important;
+}
+
+#DOTCHE_Module_profile_ProgramModule .form-btn-bar {
+    text-align: center;
+}
+
+table.dotcheV3 tr.altRowEven {
+    background: #fff;
+}
+table.dotcheV3 tr.altRowOdd {
+    background-color: #f9f9f9 !important;
+}
+
+.create-project > table {
+    width: auto;
+    padding: 1rem;
+    background: #f5f5f5;
+    border: 1px solid #f0f0f0;
+    border-collapse: separate;
+}

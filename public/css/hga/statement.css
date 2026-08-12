@@ -1,0 +1,253 @@
+table {
+    width: 100%;
+    table-layout: auto;
+    /*table-layout: fixed;*/
+}
+
+/* table header */
+table.fs-table-header {
+    border-collapse: separate;
+    border-spacing: 4px;
+    margin: 1rem 0 0;
+}
+
+table.fs-table-header tr td {
+    vertical-align: baseline;
+    font-size: 13px;
+    padding: 0 8px;
+}
+
+table.fs-table-header .st-period {
+    margin: 0;
+    text-align: right;
+}
+
+table.fs-table-header .fund-contact {
+    letter-spacing: 1px;
+}
+
+table.fs-table-header .contact {
+    text-align: right;
+}
+
+table.fs-table-header .contact p span {
+    color: #139c8e;
+}
+
+table.fs-table-header .fund-name {
+    font-size: 20px;
+    color: #139c8e;
+    font-weight: 600;
+    margin: 2px 0;
+}
+
+table.fs-table-header .fund-id {
+    font-size: 16px;
+    margin: 2px 0;
+}
+
+/* table */
+table.fs-table {
+    border-collapse: separate;
+    border-spacing: 4px;
+    margin: 0 0 2rem;
+}
+
+table.fs-table tr th {
+    padding: 0;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: bottom;
+    font-weight: normal;
+    color: #139c8e;
+}
+
+table.fs-table tr th p {
+    border-bottom: 1px solid #c4c4c4;
+    padding: 4px 8px;
+    margin-bottom: 4px;
+}
+
+table.fs-table tr td {
+    font-size: 13px;
+    padding: 0 8px;
+}
+
+table.fs-table tr td.header {
+    background: #ddeef3;
+    padding: 6px 0.5rem;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+table.fs-table tr td.footnote {
+    font-size: 11px;
+    padding-top: 8px;
+}
+
+table.fs-table td.border-bottom {
+    border-bottom: 1px solid #c4c4c4;
+}
+
+table.fs-table td.border-bottom-thick {
+    border-bottom: 1.5px solid #c4c4c4;
+}
+
+table.fs-table td.border-top-bottom {
+    border-top: 1px solid #c4c4c4;
+    border-bottom: 1.5px solid #c4c4c4;
+}
+
+ holdings summary
+.hs_col_a {
+    width: 45%;
+}
+
+.hs_col_b {
+    width: 20%;
+}
+
+.hs_col_c {
+    width: 20%;
+}
+
+.hs_col_d {
+    width: 15%;
+}
+
+table.fs-table-hs tr td:nth-child(1) {
+}
+
+table.fs-table-hs tr td:nth-child(2) {
+    text-align: right;
+}
+
+table.fs-table-hs tr td:nth-child(3) {
+    text-align: right;
+}
+
+table.fs-table-hs tr td:nth-child(4) {
+    text-align: right;
+}
+
+/* activity summary */
+.as_col_a {
+    width: 85%;
+}
+
+.as_col_b {
+    width: 15%;
+}
+
+table.fs-table-as tr td:nth-child(1) {
+}
+
+table.fs-table-as tr td:nth-child(2) {
+    text-align: right;
+}
+
+/* holdings details */
+.hd_col_a {
+    width: 40%;
+}
+
+.hd_col_b {
+    width: 20%;
+}
+
+.hd_col_c {
+    width: 20%;
+}
+
+.hd_col_d {
+    width: 20%;
+}
+
+table.fs-table-hd tr td:nth-child(1) {
+}
+
+table.fs-table-hd tr td:nth-child(2) {
+    text-align: right;
+}
+
+table.fs-table-hd tr td:nth-child(3) {
+    text-align: right;
+}
+
+table.fs-table-hd tr td:nth-child(4) {
+    text-align: right;
+}
+
+/* contribution details */
+.cd_col_a {
+    width: 15%;
+}
+.cd_col_b {
+    width: 65%;
+}
+.cd_col_c {
+    width: 20%;
+}
+
+table.fs-table-cd tr td:nth-child(1) {
+}
+
+table.fs-table-cd tr td:nth-child(2) {
+}
+
+table.fs-table-cd tr td:nth-child(3) {
+    text-align: right;
+}
+
+/* grant distribution details */
+.gdd_col_a {
+    width: 15%;
+}
+
+.gdd_col_b {
+    width: 40%;
+}
+
+.gdd_col_c {
+    width: 30%;
+}
+
+.gdd_col_d {
+    width: 15%;
+}
+
+table.fs-table-gdd tr td:nth-child(1) {
+}
+
+table.fs-table-gdd tr td:nth-child(2) {
+}
+
+table.fs-table-gdd tr td:nth-child(3) {
+}
+
+table.fs-table-gdd tr td:nth-child(4) {
+    text-align: right;
+}
+
+/*net investment income details*/
+.nii_col_a {
+    width: 85%;
+}
+
+.nii_col_b {
+    width: 15%;
+}
+
+table.fs-table-nii tr td:nth-child(1) {
+}
+
+table.fs-table-nii tr td:nth-child(2) {
+    text-align: right;
+}
+
+.st-footer-note {
+    margin-top: 4rem;
+    font-size: 11px;
+    text-align: center;
+    font-style: italic;
+}

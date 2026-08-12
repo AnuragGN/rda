@@ -1,0 +1,565 @@
+#DOTCHE_Module_profile_RegistrationModule a.buttonCancel {
+    color: #797979;
+    display: table-cell;
+    font: bold 100% Arial, Helvetica, sans-serif;
+    height: 28px;
+    text-align: center;
+    text-decoration: none;
+    width: 160px !important;
+    background-image: none !important;
+    background-color: #efefef !important;
+    border: 1px solid #999;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 0px !important;
+}
+
+.msg_success {
+    white-space:nowrap;
+    color: green;
+    font-size: 18px;
+    font-weight:bold;
+    padding-bottom: 20px;
+    display: inline-block;
+}
+
+
+table.org_list {
+    font-family: Arial;
+    font-size: 14px;
+}
+
+.charitable-catalog-welcome {
+    margin-left: 10px !important;
+    padding-bottom: 30px;
+    margin-top: -90px !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    float: left;
+}
+.catalog-city-state{
+    border-bottom: 1px solid #ccc;
+}
+
+#theForm input[type="radio"] {
+    margin-left: 15px;
+}
+
+#theForm table {
+    padding-left: 0;
+}
+
+#theForm ol {
+    margin-left: 17px !important;
+}
+
+#org_n1 {
+    margin-left: 5px !important;
+    margin-top: 0px !important;
+}
+
+.org_name_c {
+    margin-left: 10px !important;
+}
+
+.alphabet_info {
+    margin-left: 11px !important;
+}
+/*
+#username, #password {
+  width: 200px !important;
+}
+*/
+.pending_table > td {
+    border: none !important;
+}
+
+.pending_table td table tbody > tr:nth-child(2) > td {
+    border: 1px solid #c0c0c0;
+    border-color: #c0c0c0 !important;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.fundName {
+    border: none !important;
+}
+
+.fundAmount {
+    text-align: left;
+}
+
+.xpending_table .fundName {
+    border: none !important;
+}
+
+.fund-overview-button, .grant-history-button, .gift-history-button, .make-a-grant-button {
+    margin-right: 5px;
+    background-color: none;
+}
+
+.fund-overview-button:hover, .grant-history-button:hover, .gift-history-button:hover, .make-a-grant-button:hover {
+    background-color: #c0c0c0;
+}
+
+.less_class, .more_class {
+    cursor: pointer;
+}
+
+.more_class {
+    border-bottom: 3px solid #fff;
+}
+
+.less_class {
+    border-bottom: 3px solid #efefef;
+}
+
+.less_class:hover, .more_class:hover {
+    border-bottom: 3px solid #c0c0c0;
+}
+
+.mainContent {
+    width: 100%;/* 800px !important; */
+}
+.org_photo {
+    width: 100%;
+}
+
+.org_logo {
+    width: 100%;
+}
+
+.project_image {
+    width: 100%;
+}
+#DOTCHE_Module_profile_CatalogItemModule {
+    font-size: 12px !important;
+}
+
+.ac_input {
+    font-size: 16px !important;
+}
+
+#DOTCHE_Module_StaticSHTML table {
+    margin: 0;
+    padding: 0;
+}
+
+#DOTCHE_Module_StaticSHTML th, #DOTCHE_Module_StaticSHTML td {
+    /*  font-size: 16px !important; */
+    margin: 0;
+    border: 0;
+}
+/*
+input[type="text"], input[type="textbox"], input[type="password"], textarea, select {
+  font-size: 16px !important;
+}
+*/
+.logo_display {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+.altRowOdd {
+    background-color: #f2f2f2 !important;
+}
+
+table.dotcheV3 th {
+    font: bold 16px arial, helvetica, sans-serif;
+    text-transform: uppercase;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    padding-left:5px !important;
+    padding-right: 5px !important;
+    text-align: left !important;
+    background-color: #f2f2f2 !important;
+    color: #333;
+}
+
+table.dotche1V3 th {
+    font: bold 16px arial, helvetica, sans-serif;
+    text-transform: uppercase;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    text-align: left !important;
+    background-color: #f2f2f2 !important;
+    color: #333;
+}
+
+
+#DOTCHE_Module_Content .tab {
+    background: #779b49;
+    border: 1px solid #fff;
+    color: #000;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 8px;
+}
+
+#DOTCHE_Module_Content a.button {
+    text-transform: uppercase !important;
+    font-size: 16px !important;
+}
+
+#DOTCHE_Module_Content h1, #DOTCHE_Module_profile_OrgProfileWorkflowModule h1 {
+    background: none;
+    color: #000 !important;
+    text-transform: uppercase !important;
+    font-weight: bold !important;
+    border-bottom: 1px solid #CCC !important;
+    font-size: 26px !important;
+}
+
+#DOTCHE_Module_StaticSHTML {
+    margin-top: 20px;
+}
+
+#DOTCHE_Module_Menu ul#horizontal3 li.active {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-bottom: 0 !important;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#DOTCHE_Module_Menu ul#horizontal3 li.active a {
+    color: #000 !important;
+}
+
+#DOTCHE_Module_Menu ul#horizontal3 li {
+    background: none !important;
+    border-bottom: 1px solid #ccc !important;
+    margin: 10px 0px 0 0px !important;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#DOTCHE_Module_Menu ul#horizontal3 li a {
+    color: #f1e6e6 !important;
+    font-weight: bold !important;
+}
+
+section:not(.faqs) h3 {
+    clear: both;
+}
+
+#mainHead .logo {
+    height: 110px;
+}
+
+.loginForm input {
+    text-transform: none !important;
+}
+
+#DOTCHE_Module_profile_CatalogItemModule #organization_name {
+    font-size: 26px;
+    text-transform: uppercase;
+    font-family: arial;
+    font-weight: bold;
+}
+
+#DOTCHE_Module_profile_CatalogItemModule h3 {
+    margin-top: 15px;
+}
+/*
+input[type=text], textarea, input[type="password"] {
+  font-size: 16px !important;
+  font-family: Arial !important;
+}
+select {
+  font-size: 16px !important;
+  font-family: Arial !important;
+}
+*/
+#DOTCHE_Module_StaticSHTML hr {
+    display: none !important;
+}
+
+
+.formLabel, .formField {
+    font-size: 16px !important;
+}
+
+form[name=recommendation] .formLabel {
+    width: 170px !important;
+}
+
+
+.org_match_areas {
+    margin-left: 0 !important;
+    list-style-type: none !important;
+}
+
+.org_match_areas li ul {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-top: 10px !important;
+}
+
+.org_match_areas h3 {
+    font-size: 18px !important;
+    padding-left: 22px !important;
+    padding-top: 0px !important;
+}
+
+.matched_population_served h3,  .matched_geographic_areas h3, .matched_interest_areas h3 {
+    dispaly: none !important;
+}
+
+.org_match_areas li ul li {
+    padding: 0 !important;
+}
+
+.logo_display {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.org_match h2, .org_match h3  {
+    text-transform: uppercase;
+    font-size: 26px;
+    font-family: Arial;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #051844;
+}
+
+#start_date1, #end_date1 {
+    width: 80px;
+}
+
+#tr_typ {
+    visibility: hidden;
+}
+
+.loginbutton {
+    background: url(../images/icons/arrow_right.png) center center no-repeat #051844 !important;
+}
+
+.loginbutton:hover {
+    background: url(../images/icons/arrow_right.png) center center no-repeat #000 !important;
+}
+/*
+button, input[type="submit"], input[type="button"], a.buttonOK, a.buttonOK:visited, .contentLink submit, input.displayregular {
+  text-transform: uppercase;
+   background: #789d4a;
+    border: 1px solid #3e6d8e;
+    color: #fff;
+    margin: 0;
+    text-decoration: none;
+    font-size: 16px !important;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 4px 16px;
+    border-radius: 8px;
+
+}
+
+button:hover, input[type="submit"]:hover, input[type="button"]:hover, a.buttonOK:hover, .contentLink submit:hover, input.displayregular:hover {
+  background: white;
+  color: #7E7F73;
+border: 1px solid #7E7F73;
+border-radius: 8px;
+}
+*/
+
+.contentLink .regularText img {
+    display: none;
+}
+
+#DOTCHE_Module_donor_FundStatement td {
+    vertical-align: top;
+}
+
+#spnAfterSubstring1 {
+    font-size: 13px;
+}
+
+#DOTCHE_Module_profile_ContactProfileModule select {
+    font-size: 16px !important;
+}
+
+#DOTCHE_Module_donor_MyArticle ul {
+    margin:0;
+}
+
+#DOTCHE_Module_donor_MyArticle .content li {
+    width: 590px;
+}
+
+#DOTCHE_Module_Content table {
+    padding: 0;
+}
+
+#welcome-text p {
+    font-size: 16px;
+}
+
+.givingOpportunitiesDashboard {
+    list-style-type: none !important;
+}
+
+.grant-image {
+    margin-top: -12px;
+}
+
+.fundName {
+    width: 240px;
+    vertical-align: top;
+}
+
+.fundAmount {
+    padding-left: 30px;
+    vertical-align: top;
+}
+
+.titleInline {
+    display: inline;
+}
+
+.organizationName, .grantAmountLabel, .purposeLabel {
+    font-size: 20px;
+    line-height: 30px;
+    text-transform: uppercase;
+}
+
+.organizationSelector {
+    width: 500px;
+    font-size: 18px;
+    font-family: Arial,sans-serif !important;
+    padding: 10px;
+    margin-bottom: 2px;
+}
+
+.explanationText {
+    font-size: 12px;
+}
+
+.grantAmount {
+    font-size: 18px;
+    font-family: Arial,sans-serif;
+    padding: 10px;
+    margin-bottom: 30px;
+}
+
+.organizationDetails textarea {
+    width: 400px;
+    height: 80px;
+    padding: 6px;
+    font-size: 16px;
+    font-family: Arial;
+    font-weight: normal;
+}
+
+.organizationDetailsContainer {
+    background-color: #efefef;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.organizationDetailsContainer input {
+    width: 200px;
+    padding: 6px;
+    font-size: 16px;
+    font-family: Arial;
+    font-weight: normal;
+}
+
+.submitButtonContainer {
+    text-align: center;
+}
+
+.addNewRecommendationButtonContainer {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.tooltip{
+    width: 200px; color:#000;
+    font:lighter 11px/1.3 Arial,sans-serif;
+    text-decoration:none;text-align:center}
+
+.tooltip span.top{padding: 30px 8px 0;
+    background: url(/images/bt.gif) no-repeat top}
+
+.tooltip b.bottom{padding:3px 8px 15px;color: #548912;
+    background: url(/images/bt.gif) no-repeat bottom}
+
+.interestListOrgs {
+    padding: 0px;
+}
+
+.interestListOrgs input[type='checkbox'], .interestListGeographic input[type='checkbox'], .interestListPopulation input[type='checkbox'] {
+    margin-right: 8px;
+}
+
+.interestListGeographic .formField {
+    font-size: 1em;
+}
+
+.interestListPopulation .formField {
+    font-size: 1em;
+}
+
+input.saveButton {
+    background: #789d4a;
+    border: 1px solid #3e6d8e;
+    color: white!important ;
+    display: inline-block;
+    padding: 0.4em 1em;
+    margin: 0;
+    text-decoration: none;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+input.saveNextButton {
+    background: #789d4a;
+    border: 1px solid #3e6d8e;
+    color: white!important;
+    display: inline-block;
+    padding: 0.4em 1em;
+    margin: 0;
+    text-decoration: none;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+input.saveNextButtonGreen {
+    background-color: lightgreen;
+}
+
+input.saveNextButtonGreen:hover {
+    background-color: forestgreen;
+}
+
+input.saveNextButtonBlue {
+    background-color: deepskyblue;
+}
+
+input.saveNextButtonBlue:hover {
+    background-color: cornflowerblue;
+}
+
+input.saveButton:hover, input.saveNextButton:hover {
+    background-color: white;
+    color: #789d4a!important;
+}
+
+td.bar {
+    background: none;
+    color: #333;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-bottom: 1px solid #CCC;
+    font-size: 18px !important;
+}

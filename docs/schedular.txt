@@ -1,0 +1,18 @@
+
+Get an overview of your scheduled tasks and the next time they are scheduled to run
+$ php artisan schedule:list
+
+$ php artisan make:command HourlyUpdate
+
+A new command class is created in the app/Console/Commands directory.
+
+Open the new class and change signature (e.g. "hourly:update")
+
+Implement handle()
+
+Add entry in app/Commands/Kernel.php
+
+Add a single cron configuration entry to server that runs the schedule:run command every minute.
+
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+* * * * * cd /www/jcf/lamp/rda && php artisan schedule:run >> /dev/null 2>&1

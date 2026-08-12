@@ -1,0 +1,109 @@
+
+qa-classic-a
+    - JCF => Done!
+qa-classic-b
+    - FIG => Done!
+qa-hga
+
+=> Create tomcat link if required
+
+0. ps -ef | grep tomcat
+1. /etc/init.d/tomcat stop
+2. delete tomcat from /user/local
+    cd /user/local
+	rm -rf apache-tomcat-8.5.37
+	rm -rf jakarta-tomcat-5.0.28
+2.1 delete file tomcat8
+    cd /user/local
+    rm tomcat8
+3. Copy & untar jakarta from root or alk
+    cd /user/local
+    cp /var/sftp/alk/jakarta-tomcat-5.0.28-20210105.tar.gz .
+4. /etc/init.d/tomcat start => stop
+
+5. Prepare /usr/local/tomcat/webapps/db.xml
+	<db-desc>
+
+        <!-- JCF -->
+        <db-source name="qa-jcf.giftingnetwork.com"
+                default="no"
+                login="qa_jcf_db"
+                password="GnQa@jcf20!"
+                url="jdbc:postgresql://db01qa:5432/qa_jcf_db"
+                driver="org.postgresql.Driver"
+                doStatementPool="yes"
+                statementPoolMax="10"
+                dbPoolMaxConn="20"
+                dbPoolMaxIdle="5"
+                dbPoolMinIdle="2"
+                dbPoolExhaustedAction="1"
+                dbPoolIdleTest="yes"
+                monitorConnections="yes"/>
+
+
+        <!-- GMF -->
+        <db-source name="qa-gmf.giftingnetwork.com"
+                default="no"
+                login="qa_gmf_db"
+                password="GnQa@gmf20!"
+                url="jdbc:postgresql://db01qa:5432/qa_gmf_db"
+                driver="org.postgresql.Driver"
+                doStatementPool="yes"
+                statementPoolMax="10"
+                dbPoolMaxConn="20"
+                dbPoolMaxIdle="5"
+                dbPoolMinIdle="2"
+                dbPoolExhaustedAction="1"
+                dbPoolIdleTest="yes"
+                monitorConnections="yes"/>
+
+	</db-desc>
+
+
+	<db-desc>
+
+        <!-- FIG -->
+        <db-source name="qa-fig.giftingnetwork.com"
+                default="no"
+                login="qa_fig_db"
+                password="GnQa@fig20!"
+                url="jdbc:postgresql://db01qa:5432/qa_fig_db"
+                driver="org.postgresql.Driver"
+                doStatementPool="yes"
+                statementPoolMax="10"
+                dbPoolMaxConn="20"
+                dbPoolMaxIdle="5"
+                dbPoolMinIdle="2"
+                dbPoolExhaustedAction="1"
+                dbPoolIdleTest="yes"
+                monitorConnections="yes"/>
+
+
+        <!-- DEMO V2 -->
+
+	</db-desc>
+
+6. Copy db.xml & app.conf in dotcheAPI/WEB-INF/
+    cd /usr/local/tomcat/webapps
+    cp app.conf dotcheAPI/WEB-INF/
+    cp db.xml dotcheAPI/WEB-INF/
+
+7. /etc/init.d/tomcat start/stop
+
+8. NGINX - add 8080 server block with server config
+
+9. DB verify API token
+
+10 verify => dotche-core/DOTCHE_lib/DOTCHE/APIClient.pm
+
+
+   33  cd dotcheAPI/WEB-INF/
+   43  rm dotcheAPI.war
+   44  rm -rf dotcheAPI/
+   45  cp /tmp/dotcheAPI.war .
+   48  cd dotcheAPI/WEB-INF/
+   73  rm dotcheAPI.war
+  905  cp db.xml dotcheAPI/WEB-INF/
+  906  cp app.conf dotcheAPI/WEB-INF/
+  926  vi /usr/local/tomcat/webapps/dotcheAPI/WEB-INF/db.xml
+

@@ -1,0 +1,109 @@
+??? https://ma.ttias.be/deploying-laravel-websockets-with-nginx-reverse-proxy-and-supervisord/
+
+--------------------------------------------------------------------
+#HTTP Requests #Configuring Trusted Proxies
+https://laravel.com/docs/5.8/requests#configuring-trusted-proxies
+HTTP vs HTTPS
+
+Set local IP of Nginx reverse-proxy-server in app/Http/Middleware/TrustProxies.php
+    protected $proxies = [
+        LOCAL_IP_OF_NGINX_R..P..S
+    ];
+
+--------------------------------------------------------------------
+
+
+https://www.ssllabs.com/ssltest/analyze.html?d=mqa-demo.sageite.com
+
+
+#How To Secure Nginx with Let's Encrypt on Ubuntu 18.04
+https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-18-04
+
+#How to setup Let's Encrypt for Nginx on Ubuntu 18.04
+https://gist.github.com/cecilemuller/a26737699a7e70a7093d4dc115915de8
+
+
+sudo apt-get install software-properties-common
+
+#Install Certbot for Nginx:
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository universe
+sudo add-apt-repository ppa:certbot/certbot
+sudo apt-get update
+sudo apt-get install certbot python-certbot-nginx
+
+
+
+$ sudo systemctl reload nginx
+
+$ sudo certbot --nginx -d example.com -d www.example.com
+$ sudo certbot --nginx
+
+#Verifying Certbot Auto-Renewal
+$ sudo certbot renew --dry-run
+
+
+
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/mqa-demo.sageite.com/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/mqa-demo.sageite.com/privkey.pem
+   Your cert will expire on 2020-07-25. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot again
+   with the "certonly" option. To non-interactively renew *all* of
+   your certificates, run "certbot renew"
+ - Your account credentials have been saved in your Certbot
+   configuration directory at /etc/letsencrypt. You should make a
+   secure backup of this folder now. This configuration directory will
+   also contain certificates and private keys obtained by Certbot so
+   making regular backups of this folder is ideal.
+
+
+https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-18-04
+
+https://stackoverflow.com/questions/47337817/how-to-setup-letsencrypt-for-google-cloud-compute-engine-load-balancer
+$ ./certbot-auto certonly --standalone --email admin@example.com -d example.com -d www.example.com
+
+
+    sudo systemctl reload nginx
+    sudo systemctl restart nginx
+    sudo systemctl stop nginx
+    sudo systemctl start nginx
+    systemctl status nginx.service
+
+
+    cd /etc/nginx/sites-available/
+
+    ln -s ./../sites-available/sageite-mqa-demo.conf .
+    ln -s ./../sites-available/sageite-mqa-fig.conf .
+    ln -s ./../sites-available/sageite-mqa-gmf.conf .
+    ln -s ./../sites-available/sageite-mqa-hga.conf .
+    ln -s ./../sites-available/sageite-mqa-jcf.conf .
+
+    ln -s ./../sites-available/giftingnetwork-mqa-demo.conf .
+    ln -s ./../sites-available/giftingnetwork-mqa-fig.conf .
+    ln -s ./../sites-available/giftingnetwork-mqa-gmf.conf .
+    ln -s ./../sites-available/giftingnetwork-mqa-hga.conf .
+    ln -s ./../sites-available/giftingnetwork-mqa-jcf.conf .
+
+
+1: mqa-demo.giftingnetwork.com
+2: mqa-fig.giftingnetwork.com
+3: mqa-gmf.giftingnetwork.com
+4: mqa-hga.giftingnetwork.com
+5: mqa-jcf.giftingnetwork.com
+6: mqa-demo.sageite.com
+7: mqa-fig.sageite.com
+8: mqa-gmf.sageite.com
+9: mqa-hga.sageite.com
+10: mqa-jcf.sageite.com
+
+
+$ sudo certbot --nginx
+
+- Your cert will expire on 2021-04-19.
+- To obtain a new or tweaked version of this certificate in the future,
+  simply run certbot again with the "certonly" option.
+- To non-interactively renew *all* of your certificates, run "certbot renew"

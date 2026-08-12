@@ -1,0 +1,21 @@
+
+Level 1: .env
+Level 2: ClientInfo
+Level 3: ClientConfig along with config in config/custom/CLIENT_config [CLIENT=jcf|gna|gmf|hga:fig]
+Level 4: ClientEnv along with config in config/ENV/CLIENT_config [CLIENT=jcf|gna|gmf|hga:fig]
+
+ClientConfig - for configuration which remains same on all environments
+ClientEnv - for environment dependent configuration
+
+USAGE UI: CustomUIProvider
+----------------------------------------------------------------------------
+ {{ $custom->text->MAKE_A_GIFT }}
+ {{ $custom->message->DATA_NOT_FOUND }}
+ {{ $custom->feature->PUBLIC_DONATIONS }}
+
+USAGE CODE:
+----------------------------------------------------------------------------
+ ClientConfig::text('GIFT_HISTORY')
+ ClientConfig::message('DATA_NOT_FOUND')
+ ClientConfig::feature('PUBLIC_DONATIONS')
+

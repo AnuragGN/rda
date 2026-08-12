@@ -1,0 +1,148 @@
+HTTPS: https://github.com/USERNAME/REPOSITORY.git
+SSH: git@github.com:USERNAME/REPOSITORY.git
+
+#1 Check current/active branch
+
+$ git branch
+The above will show all the local branches of your repo. The starred branch is your current branch.
+
+To display the current branch you're on, without the other branches listed, you can do the following:
+$ git rev-parse --abbrev-ref HEAD
+
+#2 Fetch latest code from a branch and merge into local
+git pull origin HGA
+
+#Create a New Git Branch
+$ git branch <new_branch_name>
+$ git checkout <new_branch_name> // required as above commanr doesn’t automatically switch to the new branch
+
+#Create New Git Branch From Current Branch
+$ git checkout -b <new_branch_name>
+
+#Create New Git Branch From a Different Branch
+$ git checkout -b <new_branch_name> <specific_different_branch>
+$ git checkout -b new_branch master
+
+#Create a Branch from a Commit
+$ git log
+$ git branch <new_branch_name> 6009fc // '6009fc' is hash
+$ git checkout <new_branch_name>
+
+#Create a Branch from a Tag
+$ git branch <new_branch_name> <tag_name>
+$ git checkout <new_branch_from_tag>
+
+#delete a git branch
+$ git branch -d <branch_name>
+
+# Merge a branch into currently checked out code
+$ git merge -m "HGA merged in master" HGA
+
+Via TortoiseGit Merge a branch into master
+1. Checkout Master
+2. TortoiseGit->Merge
+3. Select branch you want to merge, hit ok
+
+
+# Get changes from master into a branch 'gs-dev'
+git checkout master
+git pull
+git checkout gs-dev
+git pull
+git merge origin/master ???
+git merge master
+#git merge feature master (in single command)
+
+
+# Get changes from a branch 'dev' into the master
+git checkout gs-dev
+git pull
+git checkout master
+git pull origin master
+git merge gs-dev
+git push origin master
+
+
+
+EXAMPLES
+-----------------------------------------------
+#For HGA : Merge master into HGA and then push
+git checkout HGA
+git merge origin/master
+git push
+
+Now go to server and execute this
+git pull origin HGA
+
+-----------------------------------------------
+
+https://docs.microsoft.com/en-us/azure/devops/repos/git/pulling?view=azure-devops&tabs=command-line
+
+Update your branch with the latest changes from master
+Merge: merges the changes from the source branch to the target branch using a merge commit, which becomes part of the commit history.
+git checkout dev
+git pull origin master
+git push
+
+
+
+************************************************************************************************************************
+******** REBASE ********************************************************************************************************
+************************************************************************************************************************
+
+# You may use following if dev is a private branch and no one else see it
+# Also, avoid this as this will over-write history;
+# "git rebase master" will merge will local master
+# "git rebase origin/master" will merge will remote master
+git checkout dev
+git rebase master
+
+
+
+BOTTOM LINE - DON"T REBASE (It's good, but...). It will rewrite history which may lead to more conflicts.
+http://kristopherwilson.com/2015/02/12/stop-merging-master/
+Merging vs. Rebasing
+https://www.atlassian.com/git/tutorials/merging-vs-rebasing
+
+When to Rebase
+So when does it make sense to rebase? Always? Definitely not.
+Rebasing makes the most sense when you’re trying to incorporate others changes into your non-master branch. As part of doing your work outside of master, you don’t want to affect the order in which things happened in master, which merging may do. You want to build your work on top of master.
+It almost always makes sense to rebase your branch with master and never merge master into your branch.
+This also gives the added benefit of solve conflicts in your branch before going to master, rather than solving conflicts in master.
+
+When to Merge
+The inverse of this is that you should never rebase your branch into master, as it rewrites the history of master. Instead, your branch should always be merged into master.
+
+************************************************************************************************************************
+************************************************************************************************************************
+
+
+Git: How to update/checkout a single file from remote origin master?
+
+$ git fetch
+$ git checkout origin/master -- path/to/file
+
+The fetch will download all the recent changes, but it will not put it in your current checked out code (working area).
+The checkout will update the working tree with the particular file from the downloaded changes (origin/master).
+
+************************************************************************************************************************
+List your existing remotes in order to get the name of the remote you want to change.
+$ git remote -v
+
+Change your remote's URL from SSH to HTTPS with the git remote set-url command.
+$ git remote set-url origin https://github.com/USERNAME/REPOSITORY.git
+
+To SSH
+$ git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
+
+
+git commit -m 'my notes' path/to/my/file.ext
+
+
+#Checkout Git Tag
+
+$ git checkout tags/TAG_NAME
+
+
+
+

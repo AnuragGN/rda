@@ -1,0 +1,19 @@
+
+
+20 - FTP (the file transfer protocol) uses port 20 for data transfers
+21 - Likewise, FTP uses port 21 to issue commands and to control the FTP session
+22 - Port 22 is dedicated to SSH, or secure shell login
+23 - Telnet uses port 23 to facilitate remote logins but this port entails unencrypted messaging which is not secure so it’s not really recommended for use
+25 - E-mail routing via SMTP (the simple mail transfer protocol) is achieved on port 25
+43 - Port 43 is dedicated to the WHOIS system which can check who owns a domain
+53 - The domain name service (DNS) makes use of port 53
+67 - DHCP uses port 67 as the server port, and port 68 as the client port
+80 - HTTP, the hypertext transfer protocol, uses port 80 to deliver web pages
+110 - POP3, the e-mail centric “post office protocol” uses port 110
+119 - Port 119 is used by the news transfer protocol, NNTP
+123 - The network time protocol, NTP, uses port 123
+143 - IMAP, another email protocol, makes use of port 143 to retrieve email messages
+161 - SNP or the simple network management protocol uses port 161
+194 - Port 194 is dedicated to IRC, the internet relay chat app
+443 - Port 443 is dedicated to HTTPS, the secure version of HTTP delivered over TLS/SSL
+587 - SMTP, the simple mail transfer protocol, uses port 587 to submit emails

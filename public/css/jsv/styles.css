@@ -1,0 +1,118 @@
+body {
+    font-family: 'Lato', sans-serif;;
+}
+.login-container {
+    min-height: 70vh;
+}
+.gh_data_source {
+    display: none!important;
+}
+a:hover {
+    text-decoration: none;
+}
+
+.gn-navbar {
+    padding: 1rem 1rem;
+}
+.gn-navbar .navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.main-footer {
+    color: #fff!important;
+    padding-top: 1rem;
+    font-size: 1rem;
+}
+.main-footer p, .main-footer a {
+    font-size: 1rem;
+}
+.main-footer .social-icon img {
+    width: 20px;
+    margin: 0 3px;
+}
+.gn-powered-by {
+    border-top: 1px solid #999;
+}
+.gn-powered-by a {
+    font-size: 13px;
+}
+.gn-footer ul.social-icons {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.gn-footer ul.social-icons {
+    line-height: 1;
+    display: flex;
+    align-items: flex-end;
+}
+.gn-footer ul.social-icons li {
+    display: inline;
+}
+.gn-footer ul.social-icons li a {
+    font-size: 1.25rem;
+    margin-right: 1rem;
+}
+.gn-footer ul.social-icons li a img {
+    width: 24px;
+    border-radius: 4px;
+}
+
+/*.gn-footer .hga-copyright {*/
+    /*text-align: center;*/
+    /*width: 100%;*/
+    /*margin-top: 1rem;*/
+    /*font-size: 11px;*/
+/*}*/
+.main-footer .contact-details p {
+    margin-bottom: 0.5rem;
+}
+.main-footer .fcol-one .logo-one {
+    margin-bottom: 1.5rem;
+}
+.main-footer .fcol-one .logo-one img {
+    width: 180px;
+}
+.main-footer .fcol-one .logo-two {
+    margin-bottom: 1.5rem;
+}
+.main-footer .fcol-one .logo-two a:first-child img {
+    width: 180px;
+}
+.main-footer .fcol-one .logo-two a:nth-child(2) img {
+    width: 120px;
+    padding-left: 4px;
+}
+.main-footer .fcol-one .logo-three img {
+    margin-bottom: 2rem;
+}
+.main-footer .fcol-one .logo-three img {
+    width: 100%;
+    max-width: 260px;
+}
+.main-footer .fcol-three {
+
+}
+.main-footer .fcol-three .logo-one {
+    display: flex;
+    margin-bottom: 1rem;
+}
+.main-footer .fcol-three .logo-one img {
+    width: 120px;;
+}
+.main-footer .fcol-three .logo-two {
+    margin-bottom: 1rem;
+}
+.main-footer .fcol-three .logo-two img {
+    width: 172px;;
+}
+.main-footer .fcol-three .logo-three {
+    margin-bottom: 1rem;
+}
+.main-footer .fcol-three .logo-three a:first-child img {
+    width: 110px;;
+}
+.main-footer .fcol-three .logo-three a:nth-child(2) img {
+    max-width: 240px;
+}

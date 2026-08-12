@@ -1,0 +1,209 @@
+
+.gn-content {
+    /*padding-bottom: 200px;*/
+}
+.form-make-grant {
+    /*padding: 1rem;*/
+    /*margin-bottom: 4rem;*/
+
+}
+.st-btn-bar {
+    text-align: right;
+    margin-bottom: 4rem;
+}
+
+/* LARGER THAN */
+
+/*Extra small devices (portrait phones, less than 576px)*/
+/*No media query for `xs` since this is the default in Bootstrap*/
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+
+    .form-make-grant {
+        /*padding: 2rem 1rem;*/
+    }
+    .st-btn-bar a {
+        margin-left: 0.5rem;
+    }
+    .modal-mkf .modal-content {
+        padding: 0 5%;
+    }
+    .jconfirm .jconfirm-box {
+        padding: 1.5rem 1.5rem 0.5rem;
+    }
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+
+    .pt-2-md {
+        padding-top: 0.5rem;
+    }
+    .gn-content {
+        /*padding-bottom: 150px;*/
+    }
+
+    .card-login .col-form-label {
+        text-align: right;
+    }
+
+    .navbar-expand-md .navbar-collapse {
+        padding-top: 24px;
+    }
+
+
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    .login-container {
+        margin-top: 2rem;
+    }
+    .gn-breadcrumbs .breadcrumb {
+        margin-top: -8px;
+    }
+    .history-container .col-lg-8 {
+        padding-right: 2rem;
+    }
+}
+
+/* Extra large devices (large desktops,*/
+@media (min-width: 1200px) {
+
+}
+
+/* SMALLER THAN */
+/* Large devices (desktops, less than 1200px)*/
+@media (max-width: 1199.98px) {
+
+}
+
+/* Medium devices (tablets, less than 992px)*/
+@media (max-width: 991.98px) {
+    .client-info {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .login-card-box {
+        margin-top: 0;
+    }
+    .options-2fa {
+        max-width: 700px;
+        padding: 2rem 2rem;
+    }
+}
+
+/* Small devices (landscape phones, less than 768px)*/
+@media (max-width: 767.98px) {
+    .nav-link-cart {
+        /*display: none;*/
+    }
+    .col-form-label.text-right {
+        text-align: left!important;
+    }
+    .catalog .mag-link {
+        float: left;
+    }
+    ul.gna-ul {
+        margin-top: 1rem;
+    }
+    ul.gna-ul li {
+        display: inline;
+        margin: 1rem 1rem 0 0;
+    }
+    .cap-title-big {
+        font-size: 2rem;
+    }
+}
+
+/* Extra small devices (portrait phones, less than 576px)*/
+@media (max-width: 575.98px) {
+    .content-wrapper>.content {
+         padding: 0;
+    }
+    .container>.form-wrapper {
+        padding: 0.5rem;
+    }
+    .col-l-15 {
+        padding-left: 7.5px;
+    }
+    .col-r-15 {
+        padding-right: 7.5px;
+    }
+    .cart-grant-footer {
+        flex-direction: column;
+    }
+    .cart-grant-footer input {
+        margin-top: 0.5rem;
+    }
+    .st-btn-bar {
+        display: flex;
+        justify-content: space-between;
+    }
+    .st-btn-bar .btn {
+        margin: 4px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    .gn-navbar {
+        padding-top: 30px;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .forgot-password {
+        border: none;
+        background: none;
+    }
+    .th-form .form-group {
+        margin-bottom: 0.5rem;
+    }
+    .form-make-grant .form-group {
+        margin-bottom: 0.5rem;
+    }
+    .fund-pool {
+        padding: 0.5rem 0.75rem;
+    }
+    .donation-view .value {
+        padding-bottom: 0.5rem;
+    }
+    .donation-form .form-group {
+        margin-bottom: 0;
+    }
+    .donation-form .xs-mt-2 {
+        margin-top: .5rem!important;
+    }
+
+    .card-fund-item .actions.agency {
+        display: block;
+    }
+    .card-fund-item .actions.agency a {
+        width: 100%;
+        line-height: 26px;
+        margin: 0 0 8px 0!important;
+    }
+    .cap-title-big {
+        font-size: 1.5rem;
+    }
+
+}
+/* Extra large devices (large desktops)*/
+/* No media query since the extra-large breakpoint has no upper bound on its width*/
+
+/* IN BETWEEN */
+
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+}

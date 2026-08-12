@@ -1,0 +1,22 @@
+
+****************************************************************************
+Vagrant throwing 502 - Bad Gateway
+
+Login to Laravel Homestead Server with PuTTY and Private Key File. then...
+
+cd /etc/php/7.3/mods-available
+
+sudo vi xdebug.ini
+Comment out the first line
+
+;zend_extension=xdebug.so
+xdebug.remote_enable = 0
+xdebug.remote_connect_back = 1
+xdebug.remote_port = 9000
+xdebug.max_nesting_level = 512
+Then restart PHP-FPM
+
+#sudo service nginx restart
+sudo service php7.3-fpm restart
+
+****************************************************************************

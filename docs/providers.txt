@@ -1,0 +1,9 @@
+
+Custom Config
+https://laracasts.com/discuss/channels/laravel/laravel-blade-variables-into-atyield
+https://laravel.com/docs/5.8/views#sharing-data-with-all-views
+
+$php artisan make:provider CustomUIProvider
+
+ON SEREVR
+ - config clear may be required

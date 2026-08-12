@@ -1,0 +1,52 @@
+LOCAL DB
+
+Install Postgres 9.6
+login with user: postgres, password: postgres
+$ psql -U postgres
+	> CREATE USER dev_hga_db WITH PASSWORD 'dev_hga_db';
+	> ALTER USER dev_hga_db WITH SUPERUSER;
+	> ALTER USER dev_hga_db CREATEDB;
+	> ALTER USER dev_hga_db CREATEROLE;
+	#ALTER USER dev_hga_db PASSWORD 'dev_hga_db';
+	> CREATE DATABASE dev_hga_db WITH OWNER = dev_hga_db TEMPLATE = template0;
+	> \l
+	> \du
+	^C / ^D
+
+$ cd C:\Program Files\PostgreSQL\9.6\bin
+$ psql -U dev_hga_db
+	TEST/VERIFY
+
+IMPORT / DUMP
+$ psql -U dev_hga_db dev_hga_db < C:\PATH\hga-db.sql
+
+Allow access to DB from server machine: 9.6/data/pg_hba.conf
+host    all             all             0.0.0.0/0               md5
+host    all             all             192.168.10.1/0          md5
+
+
+$ cd C:\Program Files\PostgreSQL\9.6\bin
+$ psql -U dev_hga_db < C:\Users\alkesh\Downloads\gh_pools_jcf.sql
+
+// QA Server
+$ psql -h 35.238.35.63 -U qa_jcf_db < C:\repo\email_all.sql
+
+// JCF UAT
+$ psql -h 35.232.116.136 -U uat_jcf_db < C:\repo\email_all.sql
+
+
+--- March 05, 2022
+$ cd C:\Program Files\PostgreSQL\9.6\bin
+$ pg_dump --no-owner -h 35.238.35.63 -U qa_jcf_db -d qa_jcf_db -t gh_composition > C:\repo\a_gh_composition.sql
+$ pg_dump --no-owner -h 35.238.35.63 -U qa_jcf_db -d qa_jcf_db -t gh_performance > C:\repo\a_gh_performance.sql
+$ pg_dump --no-owner -h 35.238.35.63 -U qa_jcf_db -d qa_jcf_db -t gh_segment > C:\repo\a_gh_segment.sql
+
+psql -U dev_hga_db dev_hga_db < C:\repo\a_gh_composition.sql
+psql -U dev_hga_db dev_hga_db < C:\repo\a_gh_performance.sql
+psql -U dev_hga_db dev_hga_db < C:\repo\a_gh_segment.sql
+---
+
+pg_dump --no-owner -h 35.232.116.136 -U uat_jny_db -d uat_jny_db -t fund_rep > C:\repo\fund_rep.sql
+
+
+pg_dump --no-owner -U dev_hga_db -d dev_hga_db -t docs > C:\repo\docs.sql

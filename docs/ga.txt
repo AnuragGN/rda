@@ -1,0 +1,24 @@
+
+
+1.  Click Admin.
+2.  In the Property column, check that you have your new Google Analytics 4 property selected,
+    then click Data Streams, then Web. Click the data stream.
+3.  Under Tagging Instructions, click "Add new on-page tag" and look for "Global Site Tag (gtag.js)".
+    Your Analytics page tag is the entire section of code that appears, beginning with:
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+        and ending with
+    </script>
+4. Copy and paste your entire Analytics page tag immediately after the <head> on each page of your website.
+
+
+
+JCF-PROD-Responsive (298600308)
+STREAM URL          https://prod-jcf.giftingnetwork.org
+STREAM NAME         JCF Prod 2/0
+MEASUREMENT ID      G-935P204N7E
+STREAM ID           3134261476
+
+STREAM URL          https://mqa-jcf.giftingnetwork.com
+STREAM NAME         JCF-UAT-Responsive - GA4
+MEASUREMENT ID      G-557GS6F5ZH
+STREAM ID           3222470638

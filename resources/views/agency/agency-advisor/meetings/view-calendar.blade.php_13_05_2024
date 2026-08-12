@@ -1,0 +1,323 @@
+<?php
+//print_r($prettyCalendarEvents);
+$array1 = $prettyCalendarEvents['items'];
+// Create the $meetings array
+$meetings = [];
+foreach ($array1 as $event) {
+    // Check if both 'summary' and 'attendees' are set for the event
+	if (isset($event['summary']) && isset($event['attendees'])) {
+		$description = "";
+		if(isset($event['description'])){
+                 $description = $event['description'];
+		}
+		$location ="";
+		if(isset($event['location'])){
+                 $location = $event['location'];
+		}
+		$timezone ="";
+		if(isset($event['timeZone'])){
+			$timezone = $event['timeZone'];
+		}
+        $meeting = [
+            'title' => $event['summary']."//".$event['id'],
+            'start_time' => date('Y-m-d H:i:s', strtotime($event['start']['dateTime'])),
+            'end_time' => date('Y-m-d H:i:s', strtotime($event['end']['dateTime'])),
+            'attendees' => array_map(function ($attendee) {
+                return ['email' => $attendee['email']];
+            }, $event['attendees']),
+	    'link' => $event['htmlLink'],
+	    'description' => $description,
+	    'location' => $location,
+	    'timezone' => $timezone , 
+        ];
+        $meetings[] = $meeting;
+    }
+}
+$pageTitle = 'View-Calendar';
+?>
+
+
+
+
+@extends(\App\Helpers\GnUtils::isDonorSession() ? 'donor.layouts.main' : 'agency.layouts.main')
+@section('content')
+    @include('common.page-header', ['pageTitle' => $pageTitle, 'hcXlWidth' => '12'])
+    <div class="container">
+        <div class="form-wrapper form-last">
+            <div class="row">
+                <div class="col-xl-8 col-r-30">
+                    <div class="form-make-grant gn-form">
+                        <div class="form-wrapper form-last">
+                            <div class="row">
+                                <div class="col-xl-12 col-r-15">
+                                    @if(session('success'))
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+					@endif
+					@if(isset($success_message))
+    					<div id="successMessage" class="alert alert-success">
+        				{{ $success_message }}
+    					</div>
+					@endif
+
+                                    <div class="container">
+                                        <div id="calendar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="createEventModal" tabindex="-1" aria-labelledby="createEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createEventModalLabel">Create New Event</h5>
+                    <a href="#" class="btn-close" data-dismiss="modal" aria-label="Close">   
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <!-- Your event creation form goes here -->
+                    <form id="createEventForm" action="{{route('create.event')}}" method="POST">
+                        @csrf
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-3 col-form-label">Title:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="location" class="col-sm-3 col-form-label">Location:</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="location" name="location">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="startDate" class="col-sm-3 col-form-label">Start Date:</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="startDate" name="startDate" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="startTime" class="col-sm-3 col-form-label">Start Time:</label>
+                            <div class="col-sm-9">
+                                <input type="time" class="form-control" id="startTime" name="startTime" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="endDate" class="col-sm-3 col-form-label">End Date:</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="endDate" name="endDate" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="endTime" class="col-sm-3 col-form-label">End Time:</label>
+                            <div class="col-sm-9">
+                                <input type="time" class="form-control" id="endTime" name="endTime" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="timezone" class="col-sm-3 col-form-label">Timezone:</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="timezone" name="timezone">
+                                    <option value="Asia/Kolkata">(GMT+05:30) India</option>
+                                    <option value="America/Los_Angeles">(GMT-08:00) Pacific Time (US & Canada)</option>
+                                    <option value="America/Toronto">(GMT-05:00) Eastern Time (US & Canada)</option>
+                                    <option value="Europe/Moscow">(GMT+03:00) Moscow</option>
+                                    <option value="America/Toronto">(GMT-04:00) Canada</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="description" class="col-sm-3 col-form-label">Description:</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        {{-- <div class="form-group">
+                            <button type="button" class="btn btn-info" id="addMeetLinkBtn">Add Google Meet Video Conferencing</button>
+                        </div> --}}
+                        <button type="submit" class="btn btn-primary">Create Event</button>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- Event Details Modal -->
+    <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventDetailsModalLabel">Event Details</h5>
+                    <a href="#" class="btn-close" data-dismiss="modal" aria-label="Close">   
+                        <i class="fas fa-times"></i>
+                    </a>
+                </div>
+		<div class="modal-body">
+                   <input type="hidden" id="event_id" />
+                    <p><strong>Title:</strong> <span id="eventDetailsModalTitle"></span></p>
+                    <p><strong>Start Time:</strong> <span id="eventDetailsModalStart"></span></p>
+                    <p><strong>End Time:</strong> <span id="eventDetailsModalEnd"></span></p>
+                   <!-- <p><strong>Description:</strong> <span id="eventDetailsModalDescription"></span></p>
+                    <p><strong>Location:</strong> <span id="eventDetailsModalLocation"></span></p>
+                    <p><strong>Timezone:</strong> <span id="eventDetailsModalTimezone"></span></p>-->
+                    {{-- <p><strong>Attendees:</strong></p>
+                    <ul id="eventDetailsModalAttendees"></ul> --}}
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-accent btn-sm" id="deleteEventBtn">Delete Event</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js" crossorigin="anonymous"></script>
+   
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth', // Default view is month
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,dayGridYear' // Add view buttons here
+                },
+                views: {
+                    dayGridMonth: { // Monthly view
+                        type: 'dayGridMonth',
+                        buttonText: 'Month'
+                    },
+                    timeGridWeek: { // Weekly view
+                        type: 'timeGridWeek',
+                        buttonText: 'Week'
+                    },
+                    dayGridYear: { // Yearly view
+                        type: 'dayGrid',
+                        duration: { years: 1 },
+                        buttonText: 'Year'
+                    }
+                },
+			events: [
+				@foreach($meetings as $meeting)
+                    {
+                        title: '{{ $meeting['title'] }}',
+                        start: '{{ $meeting['start_time'] }}',
+			end: '{{ $meeting['end_time'] }}',
+                    },
+                    @endforeach
+			],
+			eventClick: function(info) {
+	              $('#eventDetailsModal').modal('show');
+                    
+		      // Populate modal with event details
+		      var infotitle = info.event.title;
+		      var etitle = infotitle.split("//")[0];
+		      var extractedString = infotitle.split("//")[1];
+		      $('#event_id').val(extractedString);
+                    $('#eventDetailsModalTitle').text(etitle);
+                    $('#eventDetailsModalStart').text(info.event.start.toLocaleString());
+                    $('#eventDetailsModalEnd').text(info.event.end.toLocaleString());
+                    $('#eventDetailsModalDescription').text(info.event.extendedProps.description);
+                    $('#eventDetailsModalLocation').text(info.event.extendedProps.location);
+                    $('#eventDetailsModalTimezone').text(info.event.extendedProps.timezone);
+                },
+                editable: true, // Allow event creation
+                selectable: true, // Allow date range selection
+                select: function(info) {
+                    // Automatically select the clicked date
+                    calendar.gotoDate(info.start);
+                    // Pre-fill the start date input field in the modal
+                    var selectedDate = new Date(info.start);
+                    selectedDate.setDate(selectedDate.getDate() + 1); // Add one day to the selected date
+                    document.getElementById('startDate').valueAsDate = selectedDate;
+                    // Show the modal
+                    $('#createEventModal').modal('show');
+                },
+                // Other callbacks and options...
+            });
+            calendar.render();
+        });
+    </script>
+   <script>
+    // Wait for DOM to be ready
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the success message element
+        var successMessage = document.getElementById('successMessage');
+        
+        // Hide the success message after 10 seconds
+        setTimeout(function () {
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+        }, 10000); // 10 seconds in milliseconds
+    });
+</script>
+
+<script>
+        $(document).ready(function() {
+            $('#deleteEventBtn').on('click', function() {
+                var eventId = $('#event_id').val(); // Get the event ID from a data attribute or any other source
+                deleteEvent(eventId);
+                // $('#eventDetailsModal').modal('hide');
+            });
+        });
+
+        function deleteEvent(eventId) {
+            var message = "Are you sure you want to delete this event?";
+            $.confirm({
+                columnClass: 'medium',
+                title: '',
+                content: message,
+                buttons: {
+                    no: {
+                        text: 'No',
+                        btnClass: 'btn-light',
+                        keys: ['enter', 'shift'],
+                        action: function () {
+                            // no action
+                        }
+                    },
+                    yes: {
+                        text: 'Yes',
+                        btnClass: 'btn-accent',
+                        keys: ['enter', 'shift'],
+                        action: function ()
+                        {
+                            $.ajax({
+                                url: '/m/agency/delete-event',
+                                type: 'GET',
+                                data: { 'eventId':eventId },
+                                success: function () {
+                                    console.log('Success');
+                                    $('#eventDetailsModal').modal('hide');
+                                    // Optionally, you can perform additional actions after successful deletion
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error('Error deleting event:', error);
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>

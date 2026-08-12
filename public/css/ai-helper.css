@@ -1,0 +1,103 @@
+/* ========================================
+   AI HELPER - COMPLETE STYLES
+======================================== */
+
+/* ===== ACTION BUTTONS (RIGHT SIDE) ===== */
+.question-actions {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+	float: right;
+}
+
+/* action button */
+.ai-action {
+	position: relative;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px 6px;
+    border-radius: 6px;
+    color: #4b5563;
+    transition: all 0.2s ease;
+}
+
+/* hover */
+.ai-action:hover {
+    background: #eef2ff;
+    color: #4338ca;
+    transform: translateY(-1px);
+}
+
+/* click */
+.ai-action:active {
+    transform: scale(0.95);
+}
+
+/* disabled (during processing) */
+.ai-action[style*="pointer-events: none"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.answer {
+    margin-top: 7px; /* only spacing */
+}
+
+
+/* ===== LIMIT TEXT ===== */
+.answer-limit {
+    text-align: right;
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+/* ===== EXPLAIN OUTPUT (LIGHT & CLEAN) ===== */
+.ai-explain-output {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: #f9fafb;              /* very light */
+    border-left: 3px solid #6366f1;   /* thinner */
+    border-radius: 4px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #374151;
+}
+
+/* ===== STATUS (MINIMAL INLINE STYLE) ===== */
+.ai-status {
+    display: none;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* loading */
+.ai-status.loading {
+    display: block;
+    color: #4f46e5;
+}
+
+/* error */
+.ai-status.error {
+    display: block;
+    color: #dc2626;
+}
+
+/* icon spacing */
+.ai-status i,
+.ai-explain-output i {
+    margin-right: 5px;
+}
+
+
+/* ===== SMOOTH FADE (VERY SUBTLE) ===== */
+.ai-explain-output,
+.ai-status {
+    animation: fadeSoft 0.15s ease-in-out;
+}
+
+@keyframes fadeSoft {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

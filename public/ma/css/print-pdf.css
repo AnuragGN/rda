@@ -1,0 +1,224 @@
+/*
+ DON'T define font-weight as '500' or '600'.
+ Instead, use 'bold' as numeric weights may not be supported by DOM-PDF
+*/
+
+/** Define the margins of your page **/
+@page {
+    margin: 0 40px 100px;
+}
+
+/* body */
+body {
+    margin: 155px 0 0 0;
+    color: #616161;
+    font-family: Helvetica, sans-serif;
+}
+
+.gg-print {
+    /*font-family: Courier, sans-serif;*/
+    /*font-family: Times-Roman, sans-serif;*/
+    /*font-family: Zapf-Dingbats, sans-serif;*/
+    /*font-family: Arial, sans-serif;*/
+}
+
+/* header */
+.gn-print header {
+    position: fixed;
+    top: 20px;
+    left: 0;
+    right: 0;
+    /*height: 100px;*/
+}
+.gn-print header .left {
+    width: 40%;
+    float: left;
+}
+.gn-print header .right {
+    width: 60%;
+    float: right;
+}
+.gn-print header .right div {
+    text-align: right;
+}
+.gn-print header img {
+    max-width: 300px;
+    max-height: 80px;
+    margin-bottom: 20px;
+}
+.gn-print header .name {
+    font-size: 105%;
+    font-weight: bold;
+    text-align: right;
+    color: #424242;
+    padding-bottom: 4px;
+}
+.gn-print header .address {
+    font-size: 85%;
+    color: #616161;
+    padding-bottom: 5px;
+    /*text-align: right;*/
+}
+
+/* footer */
+.gn-print footer {
+    position: fixed;
+    bottom: -60px;
+    left: 0;
+    right: 0;
+    height: 50px;
+
+    /** Extra personal styles **/
+    text-align: center;
+    line-height: 35px;
+}
+.gn-print footer .footer-text {
+    color: #757575;
+    font-weight: normal !important;
+}
+.gn-print footer .powered-by {
+    font-style: italic;
+    text-align: right;
+    font-weight: normal !important;
+    color: #757575;
+    line-height: 2;
+}
+.gn-print footer .powered-by img {
+    padding-right: 2px;
+    width: 14px;
+}
+
+/* gifts/grants main */
+.gg-print main table {
+    table-layout:fixed;
+    width: 100%
+}
+.gg-print main .title {
+    margin-top: -25px;
+    font-size: 18px;
+    padding: 4px 6px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #212121;
+}
+
+.gg-print main table tr td {
+    line-height: 1.5;
+    color: #616161;
+}
+.gg-print main table tr td{
+    padding: 0 6px;
+}
+.gg-print main table tr td:nth-child(3) {
+    text-align: right;
+}
+.gg-print main table th:nth-child(1) {
+    width: 20%;
+}
+.gg-print main table th:nth-child(2) {
+    width: 60%;
+}
+.gg-print main table th:nth-child(3) {
+    width: 20%;
+}
+.gg-print main table th {
+    background-color:#E0E0E0;
+    color: #000;
+    padding: 2px 0 4px;
+    font-weight: normal;
+}
+.gg-print main .filter {
+    font-size: 90%;
+    padding: 0 0 6px 6px;
+}
+.gg-print main .total {
+    margin-top: 8px;
+    padding: 6px;
+    font-weight: bold;
+    text-align: right;
+    border-top: 1px solid #c4c4c4;
+}
+
+/* Organization details */
+.org-print main .logo, .org-print main .logo img {
+    max-height: 200px;
+    max-width: 600px;
+    margin-bottom: 1rem;
+}
+.org-print main .title {
+    font-size: 130%;
+    padding: 0 0 8px 0;
+    margin: 0;
+    font-weight: bold;
+    color: #414141;
+}
+.org-print main .subtitle {
+    padding-top: 20px;
+    font-size: 110%;
+    font-weight: bold;
+    color: #414141;
+}
+.fund-st-space {
+    height: 3rem;
+}
+
+/* DAF Application */
+.gn-print .form-group .form-title {
+    background: #ddeef3;
+    padding: 0.5rem 1rem;
+    margin: 2rem 0 1rem;
+    color: #212529!important;
+    text-transform: uppercase;
+    font-size: 1rem;
+    border: none;
+    font-weight: 600;
+    width: 100%;
+}
+.gn-print .form-group .form-group-title {
+    padding: 0.5rem 1rem;
+    margin: 2rem 0 1rem;
+    color: #212529!important;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #c4c4c4;
+}
+.form-group > label {
+    width: 19%;
+    text-align: right;
+    margin-right: 1%;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    /*text-transform: uppercase;*/
+}
+.form-group div {
+    width: 29%;
+    text-align: left;
+    display: inline-block;
+    font-size: 14px;
+}
+/*.form-group div:first-child {*/
+/*width: 38%;*/
+/*text-align: right;*/
+/*margin-right: 2%;*/
+/*}*/
+.pdf-pool div:first-child {
+    width: 45%!important;
+    /*float: left;*/
+    text-align: right;
+    /*display: block;*/
+}
+.pdf-pool div:nth-child(2) {
+    padding-left: 1rem;
+    width: 40%!important;
+    /*float: right;*/
+    /*text-align: left;*/
+    /*display: block;*/
+}
+.pdf-pool-title {
+    font-weight: 600;
+    line-height: 2;
+    text-transform: uppercase;
+}
+/* END DAF Application */

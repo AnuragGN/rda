@@ -1,0 +1,12 @@
+header, .gn-navbar {
+    background: url(/images/gmf/header-bg.png) center top no-repeat;
+}
+
+.fund-kv {
+    margin-bottom: 0;
+}
+.fund-pool .pool-values {
+    border-top: 1px solid #e4e4e4;
+    padding: 0.25rem 0 0 1.5rem;
+    margin-top: 0.25rem;
+}
